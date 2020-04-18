@@ -1,0 +1,176 @@
+VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes).
+
+GET /user_exists
+Purpose: Check if a user exists. Useful for a live-checking "username/email already taken" indicator.
+Login required: NO
+Parameters:
+    - username_or_email : A string of the username or email to check.
+Response:
+    - Responds "true" (without quotes) if the username/email given already exists and "false" if it does no.
+
+POST /create_user
+Purpose: Create a new user.
+Login required: NO
+Parameters:
+    - username : The username of the user being created.
+    - display_name : The name that the user wishes to be displayed when they post.
+    - password : The plaintext password of the user.
+    - email : The email of the user.
+Response:
+    - Responds with HTTP 200 if the user was created successfully.
+    - Responds with HTTP 400 if the user was not created successfully.
+        - Response body contains a message explaining the error (username already taken, password too short, etc.)
+
+POST /login_user
+Purpose: Log in a user. Creates a server-side session and sets the session cookie in the browser.
+Login required: NO
+Parameters:
+    - username_or_email : The username or email of the user being logged in.
+    - password : The plaintext password of the user.
+Response:
+    - Responds with HTTP 200 and a Set-Cookie header with the session cookie if the user logged in successfully.
+    - Responds with HTTP 400 if the user did not log in successfully. For security reasons, it does not specify whether the username or password or both were wrong.
+
+POST /logout_user
+Purpose: Log out the currently logged-in user. Destroys the server-side session.
+Login required: YES
+No parameters.
+Response:
+    - Responds with HTTP 200 for a successful logout.
+
+POST /upload_media
+Purpose: Upload a new piece of media to the server.
+Login required: YES
+Parameters:
+    - media_file : The actual file data. See this StackOverflow answer for an example of how to do this with AJAX (https://stackoverflow.com/a/10811427).
+Response:
+    - Responds with HTTP 200 and the media_id of the created media if the media was successfully uploaded.
+    - Responds with HTTP 400 and an error message (file too large, etc.) if the media did not upload successfully.
+
+GET /get_media
+Purpose: Retrieve media from the server for display.
+Login required: NO
+Parameters:
+    - media_id : The id of the media to retrieve. The card that uses this piece of media will store this.
+Response:
+    - Responds with HTTP 200 and the raw data of the media if the media was found successfully. The server will set the MIME type of the response so that the browser can display it correctly.a
+    - Responds with HTTP 400 and an error message if the media could not be found.
+
+POST /create_card
+Purpose: Create a new card.
+Login required: YES
+Parameters:
+    - media_id : The media_id of the media attached to this card. This value should come from the response to a successful /upload_media call.
+    - title : A string for the title of the card.
+    - caption : A string for the caption/description of the card.
+Response:
+    - Responds with HTTP 200 and the card_id of the created card if the card was successfully created.
+    - Responds with HTTP 400 and an error message (media does not exist, media is owned by another user, etc.) if the card failed to be created.
+
+GET /get_card
+Purpose: Retrieve a specific single card from the server.
+Login required: NO
+Parameters:
+    - card_id : The id of the desired card.
+Response:
+    - Responds with HTTP 200 and JSON of the card. The JSON will look like this:
+    {
+        card_id: 532,
+        media_id: 127,
+        title: "Thank You to the Firefighters",
+        caption: "Just a card to say how grateful we are for all the hard work you do.",
+        likes: 345,
+        tags: ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+    }
+    - Responds with HTTP 400 and an error message if the card could not be retrieved.
+
+GET /get_cards
+Purpose: Retrieve up to 100 cards by some criterion.
+Login required: NO
+Parameters (must provide at least one of the following parameters):
+    - tagged_with : A string specifying the tag to search for.
+    - top : An integer specifying to get the top N cards (sorted in ascending order by number of likes).
+    - title_contains : A string search term for the cards' titles.
+    - caption_contains : A string search term for the cards' captions.
+Response:
+    - Returns HTTP 200 and a JSON array of cards like this (if the request was successful):
+    [
+        {
+            card_id: 532,
+            media_id: 127,
+            title: "Thank You to the Firefighters",
+            caption: "Just a card to say how grateful we are for all the hard work you do.",
+            likes: 345,
+            tags: ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+        },
+        {
+            card_id: 2,
+            media_id: 17,
+            title: "Gratitude for Our Nurses",
+            caption: "Just wanna say thanks!",
+            likes: 45,
+            tags: ["thank you", "nurses"]
+        },
+        {
+            card_id: 32,
+            media_id: 27,
+            title: "Our Heroes",
+            caption: "You are the real superheroes.",
+            likes: 245,
+            tags: ["Marvel", "superhero"]
+        }
+    ]
+
+POST /create_or_find_tag
+Purpose: Create a new tag with a given name OR get the id of the existing tag with that name.
+Login required: YES
+Parameters:
+    - content : The name of the tag (max 50 characters). Should be a short word like "Spanish", "firefighters", "nurses", etc.
+Response:
+    - Responds with HTTP 200 and the tag_id of the created tag if the tag was successfully created.
+    - Responds with HTTP 200 and the tag_id of the existing tag of that name if there was already a tag with the specified name.
+
+POST /tag_card
+Purpose: Add a tag to a card.
+Login required: YES
+Parameters:
+    - card_id : The id of the card being tagged. This should come from the response to a successful /create_card request.
+    - tag_id : The id of the tag being attached to the card.
+Response:
+    - Responds with HTTP 200 if the tag was successfully attached to the card.
+    - Responds with HTTP 400 and an error message (card not owned by this user, etc.) if the tag was not successfully attached to the card.
+
+GET /get_tags
+Purpose: Search for up to 100 tags with the given criteria.
+Login required: NO
+Parameters (must provide at least one of the following parameters):
+    - content_contains : A string search term to search for tags containing a certain string.
+    - top : An integer to request the top N tags (sorted in ascending order by how many cards have that tag attached).
+Response:
+    - Returns a JSON list of tags like this (note that cards_tagged is a count of how many cards have the given tag, NOT the id of a specific card):
+    [
+        {
+            tag_id: 1,
+            content: "Spanish",
+            cards_tagged: 27
+        },
+        {
+            tag_id: 47,
+            content: "nurses",
+            cards_tagged: 500
+        },
+        {
+            tag_id: 21
+            content: "firefighters",
+            cards_tagged: 29
+        }
+    ]
+
+POST /like_card
+Purpose: Add one "like" to a card.
+Login required: YES
+Parameters:
+    - card_id : The id of the card to "like".
+Response:
+    - Responds with HTTP 200 if the card was successfully liked.
+    - Responds with HTTP 400 and an error message (card does not exist, etc.) if the like failed.
