@@ -1,0 +1,58 @@
+body, p {
+    margin: 0;
+}
+
+h1, h3, p {
+    font-family: Poppins, sans-serif;
+}
+
+p {
+    font-size: 22px;
+}
+
+header {
+    height: 69px;
+}
+
+.mission-statement-text {
+    padding-left: 5.260vw;
+}
+
+#mission-statement-top {
+    margin-top: 81px;
+}
+
+#mission-statement-top h1 {
+    font-size: 56px;
+    color: #001F70;
+    margin: 0;
+    margin-bottom: 4px;
+}
+
+#mission-statement-top h3, #mission-statement-top p {
+    color: #0057A3;
+}
+
+#mission-statement-top h3 {
+    font-size: 26px;
+    margin: 0;
+}
+
+#mission-statement-top p {
+    margin: 0;
+    margin-top: 36px;
+}
+
+#mission-statement-middle {
+    height: 157px;
+    background-color: #001F70;
+}
+
+#mission-statement-bottom {
+    height: 595px;
+    background-color: #0057A3;
+}
+
+#mission-statement-middle p, #mission-statement-bottom p {
+    color: white;
+}
