@@ -3,7 +3,7 @@ package storage;
 public class Queries {
     public final static String userExists = "SELECT user_id FROM users WHERE username = ? OR email = ?";
 
-    public final static String createUser = "INSERT INTO users (username, display_name, password_hash, email) VALUES (?, ?, ?, ?)";
+    public final static String createUser = "INSERT INTO users (username, display_name, password_hash, password_salt, email) VALUES (?, ?, ?, ?, ?)";
 
     public final static String validateUser = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password_hash = ?";
 

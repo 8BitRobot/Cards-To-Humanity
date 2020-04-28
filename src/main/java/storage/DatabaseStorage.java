@@ -59,16 +59,17 @@ public class DatabaseStorage {
         return false;
     }
 
-    public synchronized int createUser(String username, String display_name, String password_hash, String email) {
+    public synchronized int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
         try {
             createUserStatement.setString(1, username);
             createUserStatement.setString(2, display_name);
-            createUserStatement.setString(3, password_hash);
-            createUserStatement.setString(4, email);
+            createUserStatement.setBytes(3, password_hash);
+            createUserStatement.setBytes(4, password_salt);
+            createUserStatement.setString(5, email);
             createUserStatement.executeUpdate();
             ResultSet generated_keys = createUserStatement.getGeneratedKeys();
             if (generated_keys.first()) {
-                return generated_keys.getInt(1);
+                return generated_keys.getInt("user_id");
             }
         }
         catch (SQLException exception) {

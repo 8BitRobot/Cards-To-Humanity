@@ -22,7 +22,8 @@ USE carecards;
 CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,     -- Identifying key for the user.
                    username VARCHAR(100) NOT NULL,             -- Username for the user (used to log in). Like "xxdogman69xx".
                    display_name VARCHAR(255) NOT NULL,         -- Name that is displayed on the user's posts. Like "Karl Marx".
-                   password_hash VARCHAR(100) NOT NULL,        -- Hashed password for the user. Used for authentication.
+                   password_hash BINARY(64),                   -- The hash (PBKDF2WithHmacSHA512) of the password used to log this user in.
+                   password_salt BINARY(64),                   -- The salt (64 random bytes) used for the password hash.
                    email VARCHAR(100) NOT NULL,                -- The user's email address.
                    UNIQUE INDEX unique_index(username, email)  -- Usernames and emails cannot be shared (since they are used to log in).
 );
