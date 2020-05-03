@@ -14,12 +14,27 @@ header {
     height: 69px;
 }
 
+.circle {
+    border-radius: 50%;
+}
+
+#circle-1 {
+    position: absolute;
+    top: 171px;
+    right: 34.091vw;
+    height: 51px;
+    width: 51px;
+    background-color: #FFBC1F;                          
+}
+
 .mission-statement-text {
-    padding-left: 5.260vw;
+    padding-left: 9.182vw;
+    padding-right: 10.455vw;
 }
 
 #mission-statement-top {
     margin-top: 81px;
+    margin-bottom: 18px;
 }
 
 #mission-statement-top h1 {
@@ -43,16 +58,79 @@ header {
     margin-top: 36px;
 }
 
+.divider {
+    height: 57.94px;
+    background-size: 100% 100%; 
+}
+
+#mission-statement-tm-divider {
+   background-image: url("../img/mission_statement_curve_1_2500px.png");
+}
+
+@media only screen and (max-width: 2250px) {
+    #mission-statement-tm-divider {
+        background-image: url("../img/mission_statement_curve_1_2000px.png");
+    }
+}
+
+@media only screen and (max-width: 1750px) {
+    #mission-statement-tm-divider {
+        background-image: url("../img/mission_statement_curve_1_1500px.png");
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    #mission-statement-tm-divider {
+        background-image: url("../img/mission_statement_curve_1_1000px.png");
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    #mission-statement-tm-divider {
+        background-image: url("../img/mission_statement_curve_1_500px.png");
+    }
+}
+
 #mission-statement-middle {
-    height: 157px;
+    min-height: 75px;
     background-color: #001F70;
 }
 
 #mission-statement-bottom {
-    height: 595px;
+    min-height: 595px;
     background-color: #0057A3;
 }
 
 #mission-statement-middle p, #mission-statement-bottom p {
     color: white;
 }
+
+#mission-statement-mb-divider {
+    background-color: #001F70;
+    background-image: url("../img/mission_statement_curve_2_2500px.png");
+}
+
+@media only screen and (max-width: 2250px) {
+    #mission-statement-mb-divider {
+        background-image: url("../img/mission_statement_curve_2_2000px.png");
+    }
+}
+
+@media only screen and (max-width: 1750px) {
+    #mission-statement-mb-divider {
+        background-image: url("../img/mission_statement_curve_2_1500px.png");
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+    #mission-statement-mb-divider {
+        background-image: url("../img/mission_statement_curve_2_1000px.png");
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    #mission-statement-mb-divider {
+        background-image: url("../img/mission_statement_curve_2_500px.png");
+    }
+}
+
