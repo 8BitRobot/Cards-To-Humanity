@@ -33,7 +33,7 @@ INSERT IGNORE INTO users (username, display_name, password_hash, email) VALUES (
 
 -- Create a table to store all uploaded media. Might move this to Amazon S3 later on.
 CREATE TABLE media(media_id INT AUTO_INCREMENT PRIMARY KEY,
-                   media_type INT,
+                   media_mime_type TEXT,
                    media_content LONGBLOB
 );
 

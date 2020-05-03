@@ -34,7 +34,7 @@ public class PasswordSecurity {
      * @param password The plaintext password to hash.
      * @return A security.HashedPassword object created by hashing the password.
      */
-    public static HashedPassword hashPassword(String password) {
+    public static HashedPassword hashPassword(char[] password) {
         return new HashedPassword(password);
     }
 
@@ -44,7 +44,7 @@ public class PasswordSecurity {
      * @param hashedPassword The hashed password to compare the plaintext password with.
      * @return true if the password was valid. false if the password was invalid.
      */
-    public static boolean validatePassword(String password, HashedPassword hashedPassword) {
+    public static boolean validatePassword(char[] password, HashedPassword hashedPassword) {
         return hashedPassword.validate(password);
     }
 }
