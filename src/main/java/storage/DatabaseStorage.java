@@ -46,6 +46,8 @@ public class DatabaseStorage {
 
     private PreparedStatement getHashedPasswordStatement;
 
+    private PreparedStatement tagCardStatement;
+
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
@@ -62,6 +64,7 @@ public class DatabaseStorage {
             createTagStatement = connection.prepareStatement(Queries.createTag, Statement.RETURN_GENERATED_KEYS);
             getTagIdStatement = connection.prepareStatement(Queries.getTagId);
             getHashedPasswordStatement = connection.prepareStatement(Queries.getHashedPassword);
+            tagCardStatement = connection.prepareStatement(Queries.tagCard, Statement.RETURN_GENERATED_KEYS);
         }
         catch (SQLException exception) {
             exception.printStackTrace();
@@ -229,6 +232,22 @@ public class DatabaseStorage {
             }
             if (results.first()) {
                 return results.getInt("tag_id");
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return -1;
+    }
+
+    public synchronized int tagCard(int card_id, int tag_id) {
+        try {
+            tagCardStatement.setInt(1, card_id);
+            tagCardStatement.setInt(2, tag_id);
+            tagCardStatement.executeUpdate();
+            ResultSet results = tagCardStatement.getGeneratedKeys();
+            if (results.first()) {
+                return results.getInt("tagging_id");
             }
         }
         catch (SQLException exception) {

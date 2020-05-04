@@ -20,4 +20,6 @@ public class Queries {
     public final static String createTag = "INSERT IGNORE INTO tags (content) VALUES (?)";
 
     public final static String getTagId = "SELECT tag_id FROM tags WHERE content = ?";
+
+    public final static String tagCard = "INSERT INTO taggings (card_id, tag_id) VALUES (?, ?)";
 }
