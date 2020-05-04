@@ -55,7 +55,8 @@ CREATE TABLE cards(card_id INT AUTO_INCREMENT PRIMARY KEY,     -- Identifying ke
 
 -- Create a table to store all tags for cards (tags are short phrases that are used to group cards, such as "wholesome" or "firefighters").
 CREATE TABLE tags(tag_id INT AUTO_INCREMENT PRIMARY KEY,
-                  content VARCHAR(50)
+                  content VARCHAR(50),
+                  UNIQUE INDEX unique_index(content)
 );
 
 -- Create a table that associates tags to cards. A card may have multiple tags.

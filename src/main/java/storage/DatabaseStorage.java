@@ -4,20 +4,14 @@ package storage;
  * Code that connects the rest of the application to the database. Persistent storage layer of the server-side code.
  */
 
-import java.sql.*;
-import com.google.gson.Gson;
+import security.HashedPassword;
 
-import javax.xml.transform.Result;
+import java.sql.*;
 
 /**
  * JDBC-based class that connects the application to the database layer. Uses JDBC to talk to MariaDB/MySQL.
  */
 public class DatabaseStorage {
-    /**
-     * A reusable, shared Google Gson object for processing JSON.
-     */
-    private Gson gson;
-
     /**
      * The database connection.
      */
@@ -46,13 +40,18 @@ public class DatabaseStorage {
 
     private PreparedStatement getCardStatement;
 
+    private PreparedStatement createTagStatement;
+
+    private PreparedStatement getTagIdStatement;
+
+    private PreparedStatement getHashedPasswordStatement;
+
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
     public DatabaseStorage() {
         try {
-            gson = new Gson();
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/carecards", "root", "none");
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/carecards", "root", "none");
             userExistsStatement = connection.prepareStatement(Queries.userExists);
             createUserStatement = connection.prepareStatement(Queries.createUser, Statement.RETURN_GENERATED_KEYS);
             validateUserStatement = connection.prepareStatement(Queries.validateUser);
@@ -60,6 +59,9 @@ public class DatabaseStorage {
             getMediaStatement = connection.prepareStatement(Queries.getMedia);
             createCardStatement = connection.prepareStatement(Queries.createCard, Statement.RETURN_GENERATED_KEYS);
             getCardStatement = connection.prepareStatement(Queries.getCard);
+            createTagStatement = connection.prepareStatement(Queries.createTag, Statement.RETURN_GENERATED_KEYS);
+            getTagIdStatement = connection.prepareStatement(Queries.getTagId);
+            getHashedPasswordStatement = connection.prepareStatement(Queries.getHashedPassword);
         }
         catch (SQLException exception) {
             exception.printStackTrace();
@@ -67,16 +69,19 @@ public class DatabaseStorage {
         }
     }
 
-    public synchronized boolean userExists(String username_or_email) {
+    public synchronized int userExists(String username_or_email) {
         try {
             userExistsStatement.setString(1, username_or_email);
+            userExistsStatement.setString(2, username_or_email);
             ResultSet results = userExistsStatement.executeQuery();
-            return results.first();
+            if (results.first()) {
+                return results.getInt("user_id");
+            }
         }
         catch (SQLException exception) {
             exception.printStackTrace();
         }
-        return false;
+        return -1;
     }
 
     public synchronized int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
@@ -96,6 +101,20 @@ public class DatabaseStorage {
             exception.printStackTrace();
         }
         return -1;
+    }
+
+    public synchronized HashedPassword getHashedPassword(int user_id) {
+        try {
+            getHashedPasswordStatement.setInt(1, user_id);
+            ResultSet results = getHashedPasswordStatement.executeQuery();
+            if (results.first()) {
+                return new HashedPassword(results.getBytes("password_salt"), results.getBytes("password_hash"));
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     public synchronized int validateUser(String username_or_email, byte[] password_hash) {
@@ -118,7 +137,8 @@ public class DatabaseStorage {
         try {
             createMediaStatement.setString(1, mime_type);
             createMediaStatement.setBytes(2, content);
-            ResultSet results = createMediaStatement.executeQuery();
+            createMediaStatement.executeUpdate();
+            ResultSet results = createMediaStatement.getGeneratedKeys();
             if (results.first()) {
                 return results.getInt("media_id");
             }
@@ -151,7 +171,8 @@ public class DatabaseStorage {
             createCardStatement.setInt(2, media_id);
             createCardStatement.setString(3, title);
             createCardStatement.setString(4, caption);
-            ResultSet results = createCardStatement.executeQuery();
+            createCardStatement.executeUpdate();
+            ResultSet results = createCardStatement.getGeneratedKeys();
             if (results.first()) {
                 return results.getInt("card_id");
             }
@@ -182,5 +203,37 @@ public class DatabaseStorage {
             exception.printStackTrace();
         }
         return null;
+    }
+
+    private synchronized int getTagId(String content) {
+        try {
+            getTagIdStatement.setString(1, content);
+            ResultSet results = getTagIdStatement.executeQuery();
+            if (results.first()) {
+                return results.getInt("tag_id");
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return -1;
+    }
+
+    public synchronized int createTagOrFindExisting(String content) {
+        try {
+            createTagStatement.setString(1, content);
+            createTagStatement.executeUpdate();
+            ResultSet results = createTagStatement.getGeneratedKeys();
+            if (results == null) {
+                return getTagId(content);
+            }
+            if (results.first()) {
+                return results.getInt("tag_id");
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return -1;
     }
 }

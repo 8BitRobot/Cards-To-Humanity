@@ -31,6 +31,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 
 /**
  * A class that represents the binary data of a hashed password. This includes both the salt and the hash itself.
@@ -129,9 +130,7 @@ public class HashedPassword {
     public boolean validate(char[] password) {
         HashedPassword possiblePassword = new HashedPassword(salt, password);
         byte[] possibleHash = possiblePassword.getHash();
-        for (int i = 0; i < password.length; i++) {
-            password[i] = '\0';
-        }
+        Arrays.fill(password, '\0');
         return slowEquals(possibleHash, hash);
     }
 
@@ -149,5 +148,13 @@ public class HashedPassword {
      */
     public byte[] getHash() {
         return hash;
+    }
+
+    /**
+     * Explicitly zero out the memory that contains the salt and hash. Recommended to do this after you finish using the object so that the salts and hashes don't stay around in RAM.
+     */
+    public void erase() {
+        Arrays.fill(salt, (byte) 0);
+        Arrays.fill(hash, (byte) 0);
     }
 }
