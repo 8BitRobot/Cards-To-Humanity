@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PopulateDummyDatabase {
@@ -20,6 +22,7 @@ public class PopulateDummyDatabase {
 
         // Create fake users.
         System.out.println("Creating " + users_to_create + " fake users...");
+        List<Integer> user_ids = new ArrayList<>();
         for (int i = 0; i < users_to_create; i++) {
             if (i % 10 == 0) {
                 System.out.println(((i / (float) users_to_create) * 100.0) + "%");
@@ -29,13 +32,19 @@ public class PopulateDummyDatabase {
             String display_name = faker.name().fullName();
             String email = faker.internet().emailAddress();
             HashedPassword hashedPassword = new HashedPassword(password.toCharArray());
-            database.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email);
+            int user_id = database.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email);
+            if (user_id == -1) {
+                System.out.println("Failed to create user.");
+                continue;
+            }
+            user_ids.add(user_id);
         }
 
         // Create fake cards with fake images.
         Random random = new Random();
         String[] fileTypes = {"jpeg", "png", "bmp", "gif"};
         System.out.println("Generating " + cards_to_generate + " fake cards...");
+        List<Integer> card_ids = new ArrayList<>();
         for (int i = 0; i < cards_to_generate; i++) {
             if (i % 100 == 0) {
                 System.out.println(((i / (float) cards_to_generate) * 100.0) + "%");
@@ -67,15 +76,18 @@ public class PopulateDummyDatabase {
             // Generate the rest of the fake card.
             String title = faker.funnyName().name();
             String caption = faker.shakespeare().hamletQuote();
-            int user_id = random.nextInt(users_to_create - 1) + 1; // Here, we make the dangerous assumption that user id's are contiguous and sequential. This is ONLY true for when this test is run on an empty database with a single thread. Do not use this assumption anywhere in production.
+            int user_id = user_ids.get(random.nextInt(user_ids.size()));
             int card_id = database.createCard(user_id, media_id, title, caption);
             if (card_id == -1) {
                 System.out.println("Failed to create card in database.");
+                continue;
             }
+            card_ids.add(card_id);
         }
 
         // Create fake tags.
         System.out.println("Creating " + tags_to_generate + " random tags...");
+        List<Integer> tag_ids = new ArrayList<>();
         for (int i = 0; i < tags_to_generate; i++) {
             if (i % 1000 == 0) {
                 System.out.println(((i / (float) tags_to_generate) * 100.0) + "%");
@@ -84,19 +96,24 @@ public class PopulateDummyDatabase {
             int tag_id = database.createTagOrFindExisting(content);
             if (tag_id == -1) {
                 System.out.println("Failed to create tag.");
+                continue;
             }
+            tag_ids.add(tag_id);
         }
 
         // Tag each card with a random number of randomly-chosen tags.
         System.out.println("Tagging cards randomly...");
-        for (int i = 1; i <= cards_to_generate; i++) {
+        for (int i = 0; i < card_ids.size(); i++) {
             if (i % 100 == 0) {
-                System.out.println(((i / (float) cards_to_generate) * 100.0) + "%");
+                System.out.println(((i / (float) card_ids.size()) * 100.0) + "%");
             }
+            int card_id = card_ids.get(i);
             for (int j = 0; j < random.nextInt(10); j++) {
-                int card_id = random.nextInt(cards_to_generate - 1) + 1; // Same dangerous assumption as above. See above comment.
-                int tag_id = random.nextInt(tags_to_generate - 1) + 1; // Same dangerous assumption again.
-                database.tagCard(card_id, tag_id);
+                int tag_id = tag_ids.get(random.nextInt(tag_ids.size()));
+                int tagging_id = database.tagCard(card_id, tag_id);
+                if (tagging_id == -1) {
+                    System.out.println("Failed to tag card.");
+                }
             }
         }
     }

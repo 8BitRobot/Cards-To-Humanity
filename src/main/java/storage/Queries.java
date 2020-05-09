@@ -15,7 +15,7 @@ public class Queries {
 
     public final static String createCard = "INSERT INTO cards (user_id, media_id, title, caption) VALUES (?, ?, ?, ?)";
 
-    public final static String getCard = "SELECT user_id, media_id, title, caption, likes = (SELECT COUNT(*) FROM likes WHERE card_id = ?), tags = (SELECT GROUP_CONCAT(tags.content SEPARATOR ',') FROM tags INNER JOIN taggings ON tags.tag_id = taggings.tag_id WHERE taggings.card_id = ?) FROM cards WHERE card_id = ?";
+    public final static String getCard = "SELECT user_id, media_id, title, caption, (SELECT COUNT(*) FROM likes WHERE card_id = ?) AS likes, (SELECT GROUP_CONCAT(tags.content SEPARATOR ',') FROM tags INNER JOIN taggings ON tags.tag_id = taggings.tag_id WHERE taggings.card_id = ?) AS tags FROM cards WHERE card_id = ?";
 
     public final static String createTag = "INSERT IGNORE INTO tags (content) VALUES (?)";
 
