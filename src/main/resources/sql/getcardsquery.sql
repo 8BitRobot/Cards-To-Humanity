@@ -1,6 +1,4 @@
-USE carecards;
-
--- Create a temporary table that stores the card id's of cards that match the search parameters.
+-- Create a temporary table that stores the card IDs of cards that match the search parameters.
 WITH found_cards_ids AS (SELECT cards.card_id FROM cards
                             INNER JOIN taggings
                                 ON cards.card_id = taggings.card_id
@@ -9,9 +7,9 @@ WITH found_cards_ids AS (SELECT cards.card_id FROM cards
                             WHERE
                                 tags.content = ?                     -- Find cards tagged with a specific tag.
                                 OR
-                                cards.title LIKE ?                   -- Find cards with titles containing a specific string.
+                                cards.title LIKE ?                   -- Find cards with titles containing a specific string. Set NULL to not use this part of the query.
                                 OR
-                                cards.caption LIKE ?                 -- Find cards with captions containing a specific string.
+                                cards.caption LIKE ?                 -- Find cards with captions containing a specific string. Set NULL to not use this part of the query.
                             GROUP BY cards.card_id)                  -- Deduplicate.
 SELECT
     cards.card_id AS card_id,

@@ -56,18 +56,19 @@ public class DatabaseStorage {
     public DatabaseStorage() {
         try {
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/carecards", "root", "none");
-            userExistsStatement = connection.prepareStatement(Queries.userExists);
-            createUserStatement = connection.prepareStatement(Queries.createUser, Statement.RETURN_GENERATED_KEYS);
-            validateUserStatement = connection.prepareStatement(Queries.validateUser);
-            createMediaStatement = connection.prepareStatement(Queries.createMedia, Statement.RETURN_GENERATED_KEYS);
-            getMediaStatement = connection.prepareStatement(Queries.getMedia);
-            createCardStatement = connection.prepareStatement(Queries.createCard, Statement.RETURN_GENERATED_KEYS);
-            getCardStatement = connection.prepareStatement(Queries.getCard);
-            createTagStatement = connection.prepareStatement(Queries.createTag, Statement.RETURN_GENERATED_KEYS);
-            getTagIdStatement = connection.prepareStatement(Queries.getTagId);
-            getHashedPasswordStatement = connection.prepareStatement(Queries.getHashedPassword);
-            tagCardStatement = connection.prepareStatement(Queries.tagCard, Statement.RETURN_GENERATED_KEYS);
-            likeCardStatement = connection.prepareStatement(Queries.likeCard, Statement.RETURN_GENERATED_KEYS);
+            Queries queries = new Queries();
+            userExistsStatement = connection.prepareStatement(queries.userExists);
+            createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);
+            validateUserStatement = connection.prepareStatement(queries.validateUser);
+            createMediaStatement = connection.prepareStatement(queries.createMedia, Statement.RETURN_GENERATED_KEYS);
+            getMediaStatement = connection.prepareStatement(queries.getMedia);
+            createCardStatement = connection.prepareStatement(queries.createCard, Statement.RETURN_GENERATED_KEYS);
+            getCardStatement = connection.prepareStatement(queries.getCard);
+            createTagStatement = connection.prepareStatement(queries.createTag, Statement.RETURN_GENERATED_KEYS);
+            getTagIdStatement = connection.prepareStatement(queries.getTagId);
+            getHashedPasswordStatement = connection.prepareStatement(queries.getHashedPassword);
+            tagCardStatement = connection.prepareStatement(queries.tagCard, Statement.RETURN_GENERATED_KEYS);
+            likeCardStatement = connection.prepareStatement(queries.likeCard, Statement.RETURN_GENERATED_KEYS);
         }
         catch (Exception exception) {
             exception.printStackTrace();
