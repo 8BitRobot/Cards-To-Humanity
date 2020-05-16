@@ -15,6 +15,14 @@ public class PopulateDummyDatabase {
     private static int users_to_create = 100;
     private static int cards_to_generate = 1000;
     private static int tags_to_generate = 10000;
+    private static int likes_per_user = 100;
+
+    /*
+    private static int users_to_create = 10;
+    private static int cards_to_generate = 10;
+    private static int tags_to_generate = 100;
+    private static int likes_per_user = 100;
+    */
 
     public static void main(String[] args) {
         DatabaseStorage database = new DatabaseStorage();
@@ -114,6 +122,16 @@ public class PopulateDummyDatabase {
                 if (tagging_id == -1) {
                     System.out.println("Failed to tag card.");
                 }
+            }
+        }
+
+        // Randomly like cards.
+        System.out.println("Liking cards randomly...");
+        for (int i = 0; i < user_ids.size(); i++) {
+            int user_id = user_ids.get(i);
+            for (int j = 0; j < likes_per_user; j++) {
+                int card_id = card_ids.get(random.nextInt(card_ids.size()));
+                database.likeCard(card_id, user_id);
             }
         }
     }

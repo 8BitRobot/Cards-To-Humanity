@@ -48,6 +48,8 @@ public class DatabaseStorage {
 
     private PreparedStatement tagCardStatement;
 
+    private PreparedStatement likeCardStatement;
+
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
@@ -65,8 +67,9 @@ public class DatabaseStorage {
             getTagIdStatement = connection.prepareStatement(Queries.getTagId);
             getHashedPasswordStatement = connection.prepareStatement(Queries.getHashedPassword);
             tagCardStatement = connection.prepareStatement(Queries.tagCard, Statement.RETURN_GENERATED_KEYS);
+            likeCardStatement = connection.prepareStatement(Queries.likeCard, Statement.RETURN_GENERATED_KEYS);
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
             connection = null;
         }
@@ -81,7 +84,7 @@ public class DatabaseStorage {
                 return results.getInt("user_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -100,7 +103,7 @@ public class DatabaseStorage {
                 return generated_keys.getInt("user_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -114,7 +117,7 @@ public class DatabaseStorage {
                 return new HashedPassword(results.getBytes("password_salt"), results.getBytes("password_hash"));
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return null;
@@ -130,7 +133,7 @@ public class DatabaseStorage {
                 return results.getInt("user_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -146,7 +149,7 @@ public class DatabaseStorage {
                 return results.getInt("media_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -162,7 +165,7 @@ public class DatabaseStorage {
                 return new Media(media_id, media_mime_type, media_content);
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return null;
@@ -180,7 +183,7 @@ public class DatabaseStorage {
                 return results.getInt("card_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -202,7 +205,7 @@ public class DatabaseStorage {
                 return new Card(card_id, user_id, media_id, title, caption, likes, tags);
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return null;
@@ -216,7 +219,7 @@ public class DatabaseStorage {
                 return results.getInt("tag_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -234,7 +237,7 @@ public class DatabaseStorage {
                 return results.getInt("tag_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;
@@ -250,7 +253,23 @@ public class DatabaseStorage {
                 return results.getInt("tagging_id");
             }
         }
-        catch (SQLException exception) {
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return -1;
+    }
+
+    public synchronized int likeCard(int card_id, int user_id) {
+        try {
+            likeCardStatement.setInt(1, card_id);
+            likeCardStatement.setInt(2, user_id);
+            likeCardStatement.executeUpdate();
+            ResultSet results = likeCardStatement.getGeneratedKeys();
+            if (results.first()) {
+                return results.getInt("like_id");
+            }
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
         }
         return -1;

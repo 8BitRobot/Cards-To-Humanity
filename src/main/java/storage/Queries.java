@@ -1,25 +1,33 @@
 package storage;
 
 public class Queries {
-    public final static String userExists = "SELECT user_id FROM users WHERE username = ? OR email = ?";
+    public Queries() {
 
-    public final static String createUser = "INSERT INTO users (username, display_name, password_hash, password_salt, email) VALUES (?, ?, ?, ?, ?)";
+    }
 
-    public final static String getHashedPassword = "SELECT password_hash, password_salt FROM users WHERE user_id = ?";
+    public static final String userExists = "";
 
-    public final static String validateUser = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password_hash = ?";
+    public static final String createUser = "";
 
-    public final static String createMedia = "INSERT INTO media (media_mime_type, media_content) VALUES (?, ?)";
+    public static final String getHashedPassword = "";
 
-    public final static String getMedia = "SELECT media_mime_type, media_content FROM media WHERE media_id = ?";
+    public static final String validateUser = "";
 
-    public final static String createCard = "INSERT INTO cards (user_id, media_id, title, caption) VALUES (?, ?, ?, ?)";
+    public static final String createMedia = "";
 
-    public final static String getCard = "SELECT user_id, media_id, title, caption, (SELECT COUNT(*) FROM likes WHERE card_id = ?) AS likes, (SELECT GROUP_CONCAT(tags.content SEPARATOR ',') FROM tags INNER JOIN taggings ON tags.tag_id = taggings.tag_id WHERE taggings.card_id = ?) AS tags FROM cards WHERE card_id = ?";
+    public static final String getMedia = "";
 
-    public final static String createTag = "INSERT IGNORE INTO tags (content) VALUES (?)";
+    public static final String createCard = "";
 
-    public final static String getTagId = "SELECT tag_id FROM tags WHERE content = ?";
+    public static final String getCard = "";
 
-    public final static String tagCard = "INSERT INTO taggings (card_id, tag_id) VALUES (?, ?)";
+    public static final String getCards = "";
+
+    public static final String createTag = "";
+
+    public static final String getTagId = "";
+
+    public static final String tagCard = "";
+
+    public static final String likeCard = "";
 }

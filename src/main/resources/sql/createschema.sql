@@ -87,5 +87,6 @@ CREATE TABLE likes(like_id INT AUTO_INCREMENT PRIMARY KEY,
                        CONSTRAINT foreign_key_user_id
                        FOREIGN KEY (user_id)
                            REFERENCES users(user_id)
-                           ON DELETE SET NULL
+                           ON DELETE SET NULL,
+                    UNIQUE INDEX unique_like_index(card_id, user_id)  -- Users cannot like a post more than once.
 );
