@@ -40,4 +40,18 @@ public class Card {
     public String getCaption() {
         return caption;
     }
+
+    public String toString() {
+        String repr =  "Card #" + card_id + "\n" +
+                       "user_id: " + user_id + "\n" +
+                       "media_id: " + media_id + "\n" +
+                       "title: " + title + "\n" +
+                       "caption: " + caption + "\n" +
+                       "likes: " + likes + "\n" +
+                       "tags:\n";
+        for (int i = 0; i < tags.length; i++) {
+            repr += "    - " + tags[i] + "\n";
+        }
+        return repr;
+    }
 }

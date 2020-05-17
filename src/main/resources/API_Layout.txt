@@ -1,4 +1,5 @@
-VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes).
+# VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes). -- Initial version
+# VERSION 0.0.2 OF THE CARECARDS API -- Specified how getCards criterion are combined together. Made all returned arrays into objects for security reasons. Specified the attack-mitigation for(;;); at the start of all JSON.
 
 GET /user_exists
 Purpose: Check if a user exists. Useful for a live-checking "username/email already taken" indicator.
@@ -85,7 +86,7 @@ Response:
     - Responds with HTTP 400 and an error message if the card could not be retrieved.
 
 GET /get_cards
-Purpose: Retrieve up to 100 cards by some criterion.
+Purpose: Retrieve up to 100 cards by some criterion (criterion are OR'd together, so cards only have to match ONE of the criterion to be matched).
 Login required: NO
 Parameters (must provide at least one of the following parameters):
     - tagged_with : A string specifying the tag to search for.

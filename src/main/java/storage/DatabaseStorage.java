@@ -7,6 +7,8 @@ package storage;
 import security.HashedPassword;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JDBC-based class that connects the application to the database layer. Uses JDBC to talk to MariaDB/MySQL.
@@ -50,6 +52,10 @@ public class DatabaseStorage {
 
     private PreparedStatement likeCardStatement;
 
+    private PreparedStatement getCardsStatement;
+
+    private PreparedStatement getTagsStatement;
+
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
@@ -69,6 +75,8 @@ public class DatabaseStorage {
             getHashedPasswordStatement = connection.prepareStatement(queries.getHashedPassword);
             tagCardStatement = connection.prepareStatement(queries.tagCard, Statement.RETURN_GENERATED_KEYS);
             likeCardStatement = connection.prepareStatement(queries.likeCard, Statement.RETURN_GENERATED_KEYS);
+            getCardsStatement = connection.prepareStatement(queries.getCards);
+            getTagsStatement = connection.prepareStatement(queries.getTags);
         }
         catch (Exception exception) {
             exception.printStackTrace();
@@ -212,6 +220,47 @@ public class DatabaseStorage {
         return null;
     }
 
+    public synchronized Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
+        try {
+            getCardsStatement.setString(1, tagged_with);
+            if (title_contains == null) {
+                getCardsStatement.setString(2, null);
+            }
+            else {
+                getCardsStatement.setString(2, "%" + title_contains + "%");
+            }
+            if (caption_contains == null) {
+                getCardsStatement.setString(3, null);
+            }
+            else {
+                getCardsStatement.setString(3, "%" + caption_contains + "%");
+            }
+            if (top == null || top > 100) {
+                top = 100;
+            }
+            getCardsStatement.setInt(4, top);
+            ResultSet results = getCardsStatement.executeQuery();
+            List<Card> cards = new ArrayList<>();
+            while (results.next()) {
+                int card_id = results.getInt("card_id");
+                int user_id = results.getInt("user_id");
+                int media_id = results.getInt("media_id");
+                String title = results.getString("title");
+                String caption = results.getString("caption");
+                int likes = results.getInt("likes");
+                String[] tags = results.getString("tags").split(",");
+                cards.add(new Card(card_id, user_id, media_id, title, caption, likes, tags));
+            }
+            Card[] cardsArray = new Card[cards.size()];
+            cards.toArray(cardsArray);
+            return cardsArray;
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new Card[0];
+    }
+
     private synchronized int getTagId(String content) {
         try {
             getTagIdStatement.setString(1, content);
@@ -274,5 +323,30 @@ public class DatabaseStorage {
             exception.printStackTrace();
         }
         return -1;
+    }
+
+    public synchronized Tag[] getTags(String content_contains, Integer top) {
+        try {
+            getTagsStatement.setString(1, content_contains);
+            if (top == null || top > 100) {
+                top = 100;
+            }
+            getTagsStatement.setInt(2, top);
+            ResultSet results = getTagsStatement.executeQuery();
+            List<Tag> tags = new ArrayList<>();
+            while (results.next()) {
+                int tag_id = results.getInt("tag_id");
+                String content = results.getString("content");
+                int cards_tagged = results.getInt("cards_tagged");
+                tags.add(new Tag(tag_id, content, cards_tagged));
+            }
+            Tag[] tags_array = new Tag[tags.size()];
+            tags.toArray(tags_array);
+            return tags_array;
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return new Tag[0];
     }
 }

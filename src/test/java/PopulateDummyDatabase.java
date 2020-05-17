@@ -7,9 +7,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.*;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class PopulateDummyDatabase {
     private static int users_to_create = 100;
@@ -127,11 +126,23 @@ public class PopulateDummyDatabase {
 
         // Randomly like cards.
         System.out.println("Liking cards randomly...");
+        Map<Integer, List<Integer>> likes_done = new HashMap<>();
         for (int i = 0; i < user_ids.size(); i++) {
             int user_id = user_ids.get(i);
             for (int j = 0; j < likes_per_user; j++) {
                 int card_id = card_ids.get(random.nextInt(card_ids.size()));
+                if (likes_done.containsKey(user_id) && likes_done.get(user_id).contains(card_id)) {
+                    continue;
+                }
                 database.likeCard(card_id, user_id);
+                if (likes_done.containsKey(user_id)) {
+                    likes_done.get(user_id).add(card_id);
+                }
+                else {
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(card_id);
+                    likes_done.put(user_id, temp);
+                }
             }
         }
     }
