@@ -32,12 +32,14 @@ public class Main {
             connectionURL = "jdbc:mariadb://localhost:3306/carecards?user=root&password=none";
         }
 
+        final String connectionURLFinal = connectionURL;
+
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/static");
-            config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURL));
+            config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
         }).start(port);
 
-        storage.DatabaseStorage databaseStorage = new DatabaseStorage(connectionURL);
+        storage.DatabaseStorage databaseStorage = new DatabaseStorage(connectionURLFinal);
 
         endpoints.Home home_endpoint = new endpoints.Home();
         endpoints.LoginUser login_user_endpoint = new endpoints.LoginUser(databaseStorage);
