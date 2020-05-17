@@ -2,6 +2,9 @@ import io.javalin.Javalin;
 import org.eclipse.jetty.server.session.*;
 import storage.DatabaseStorage;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class Main {
 
     // Two functions for persisting sessions to the MariaDB database so that they can be shared.
@@ -31,7 +34,22 @@ public class Main {
         if (connectionURL == null || connectionURL.equals("")) {
             connectionURL = "jdbc:mariadb://localhost:3306/carecards?user=root&password=none";
         }
+        else {
+            URI jdbUri = null;
+            try {
+                jdbUri = new URI(connectionURL);
+            }
+            catch (URISyntaxException exception) {
+                exception.printStackTrace();
+                System.out.println("Could not interpret JawsDB Maria URI.");
+                System.exit(-1);
+            }
 
+            String username = jdbUri.getUserInfo().split(":")[0];
+            String password = jdbUri.getUserInfo().split(":")[1];
+            String db_port = String.valueOf(jdbUri.getPort());
+            connectionURL = "jdbc:mariadb://" + jdbUri.getHost() + ":" + db_port + jdbUri.getPath() + "?user=" + username + "&password=" + password;
+        }
         final String connectionURLFinal = connectionURL;
 
         Javalin app = Javalin.create(config -> {
@@ -39,7 +57,7 @@ public class Main {
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
         }).start(port);
 
-        storage.DatabaseStorage databaseStorage = new DatabaseStorage(connectionURLFinal);
+        storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
         endpoints.Home home_endpoint = new endpoints.Home();
         endpoints.LoginUser login_user_endpoint = new endpoints.LoginUser(databaseStorage);

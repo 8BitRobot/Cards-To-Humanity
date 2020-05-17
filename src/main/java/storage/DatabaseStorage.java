@@ -6,6 +6,8 @@ package storage;
 
 import security.HashedPassword;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +58,30 @@ public class DatabaseStorage {
 
     private PreparedStatement getTagsStatement;
 
+    // See https://devcenter.heroku.com/articles/jawsdb-maria#using-jawsdb-maria-with-java
+    private Connection getConnection() throws URISyntaxException, SQLException {
+        String JAWSDB_MARIA_URL = System.getenv("JAWSDB_MARIA_URL");
+        if (JAWSDB_MARIA_URL == null || JAWSDB_MARIA_URL.equals("")) {
+            JAWSDB_MARIA_URL = "jdbc:mariadb://localhost:3306/carecards?user=root&password=none";
+            return DriverManager.getConnection(JAWSDB_MARIA_URL);
+        }
+
+        URI jdbUri = new URI(JAWSDB_MARIA_URL);
+
+        String username = jdbUri.getUserInfo().split(":")[0];
+        String password = jdbUri.getUserInfo().split(":")[1];
+        String port = String.valueOf(jdbUri.getPort());
+        String jdbUrl = "jdbc:mariadb://" + jdbUri.getHost() + ":" + port + jdbUri.getPath();
+
+        return DriverManager.getConnection(jdbUrl, username, password);
+    }
+
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
-    public DatabaseStorage(String connectionURL) {
+    public DatabaseStorage() {
         try {
-            connection = DriverManager.getConnection(connectionURL);
+            connection = getConnection();
             Queries queries = new Queries();
             userExistsStatement = connection.prepareStatement(queries.userExists);
             createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);

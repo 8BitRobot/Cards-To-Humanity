@@ -24,7 +24,7 @@ public class PopulateDummyDatabase {
     */
 
     public static void main(String[] args) {
-        DatabaseStorage database = new DatabaseStorage("jdbc:mariadb://localhost:3306/carecards?user=root&password=none");
+        DatabaseStorage database = new DatabaseStorage();
         Faker faker = new Faker();
 
         // Create fake users.
