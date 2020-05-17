@@ -26,10 +26,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Integer port = Integer.parseInt(System.getProperty("server.port", "4567")); // Passed on the java command line by Heroku in the Procfile. Defaults to 4567 if not passed.
+
         Javalin app = Javalin.create(config -> {
             config.addStaticFiles("/static");
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", "jdbc:mariadb://localhost:3306/carecards?user=root&password=none"));
-        }).start(4567);
+        }).start(port);
 
         storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
