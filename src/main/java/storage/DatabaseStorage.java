@@ -59,9 +59,9 @@ public class DatabaseStorage {
     /**
      * Create a new DatabaseStorage object and connect to the DB.
      */
-    public DatabaseStorage() {
+    public DatabaseStorage(String connectionURL) {
         try {
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/carecards", "root", "none");
+            connection = DriverManager.getConnection(connectionURL);
             Queries queries = new Queries();
             userExistsStatement = connection.prepareStatement(queries.userExists);
             createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);

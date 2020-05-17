@@ -33,7 +33,11 @@ public class Main {
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", "jdbc:mariadb://localhost:3306/carecards?user=root&password=none"));
         }).start(port);
 
-        storage.DatabaseStorage databaseStorage = new DatabaseStorage();
+        String connectionURL = System.getenv("JAWSDB_MARIA_URL");
+        if (connectionURL == null || connectionURL.equals("")) {
+            connectionURL = "jdbc:mariadb://localhost:3306/carecards?user=root&password=none";
+        }
+        storage.DatabaseStorage databaseStorage = new DatabaseStorage(connectionURL);
 
         endpoints.Home home_endpoint = new endpoints.Home();
         endpoints.LoginUser login_user_endpoint = new endpoints.LoginUser(databaseStorage);
