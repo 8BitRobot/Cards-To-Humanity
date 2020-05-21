@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import io.javalin.Javalin;
 import org.eclipse.jetty.server.session.*;
 import storage.DatabaseStorage;
@@ -59,11 +60,19 @@ public class Main {
 
         storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
+        Gson gson = new Gson();
+
         endpoints.Home home_endpoint = new endpoints.Home();
+        endpoints.UserExists user_exists_endpoint = new endpoints.UserExists(gson, databaseStorage);
         endpoints.LoginUser login_user_endpoint = new endpoints.LoginUser(databaseStorage);
         endpoints.CreateUser create_user_endpoint = new endpoints.CreateUser(databaseStorage);
+        endpoints.LogoutUser logout_user_endpoint = new endpoints.LogoutUser();
+        endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage);
         app.get("/", home_endpoint);
+        app.get("/user_exists", user_exists_endpoint);
         app.post("/login_user", login_user_endpoint);
         app.post("/create_user", create_user_endpoint);
+        app.post("/logout_user", logout_user_endpoint);
+        app.post("/upload_media", upload_media_endpoint);
     }
 }

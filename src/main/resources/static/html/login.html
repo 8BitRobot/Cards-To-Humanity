@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" lang="en" />
+        <title>
+            Login
+        </title>
+        <h1>
+            Login
+        </h1>
+    </head>
+    <body>
+        <div id="vue_div">
+            <form>
+                Username or email: <input type="text" v-model="username_or_email">
+                <br>
+                Password: <input type="password" v-model="password">
+                <br>
+                <button>
+                    Login
+                </button>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/scripts/api.js"></script>
+        <script src="/scripts/login.js"></script>
+    </body>
+</html>
