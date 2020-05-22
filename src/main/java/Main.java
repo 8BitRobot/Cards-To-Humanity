@@ -11,7 +11,10 @@ public class Main {
     // Two functions for persisting sessions to the MariaDB database so that they can be shared.
     // See https://javalin.io/tutorials/jetty-session-handling.
     private static SessionHandler sqlSessionHandler(String driver, String url) {
-        SessionHandler sessionHandler = new SessionHandler();
+        final SessionHandler sessionHandler = new SessionHandler();
+        sessionHandler.getSessionCookieConfig().setHttpOnly(true);
+        sessionHandler.getSessionCookieConfig().setSecure(true);
+        sessionHandler.getSessionCookieConfig().setComment("__SAME_SITE_STRICT__");
         SessionCache sessionCache = new DefaultSessionCache(sessionHandler);
         sessionCache.setSessionDataStore(
             jdbcDataStoreFactory(driver, url).getSessionDataStore(sessionHandler)

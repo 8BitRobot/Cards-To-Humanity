@@ -2,22 +2,24 @@ const app = new Vue(
     {
         el: "#vue_div",
         data: {
-            username_or_email: "",
+            username: "",
+            display_name: "",
             password: "",
+            email: "",
             error_message: ""
         },
         methods: {
-            loginButtonClicked: function() {
+            signupButtonClicked: function() {
                 var self = this;
 
-                apiLoginUser(this.username_or_email, this.password)
+                apiCreateUser(this.username, this.display_name, this.password, this.email)
                     .then(function() {
                         console.log("Success.");
-                        window.location.href = "/html/home.html";
+                        window.location.href = "/html/login.html";
                     })
-                    .catch(function() {
+                    .catch(function(error_message) {
                         console.log("Failure.");
-                        self.error_message = "Login failed. Please try again.";
+                        self.error_message = error_message;
                     });
             }
         }
