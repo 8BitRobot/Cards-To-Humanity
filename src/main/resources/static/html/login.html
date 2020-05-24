@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" lang="en" />
+        <title>
+            Login
+        </title>
+        <h1>
+            Login
+        </h1>
+        <link rel="stylesheet" href="/css/login.css">
+    </head>
+    <body>
+        <div id="vue_div">
+            Username or email: <input type="text" v-model="username_or_email" v-on:keyup.enter="$refs.password_field.focus()">
+            <br>
+            Password: <input type="password" v-model="password" ref="password_field" v-on:keyup.enter="loginButtonClicked">
+            <br>
+            <p id="error_message_p">
+                {{ error_message }}
+            </p>
+            <button @click="loginButtonClicked">
+                Login
+            </button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/scripts/api.js"></script>
+        <script src="/scripts/login.js"></script>
+    </body>
+</html>

@@ -1,4 +1,7 @@
-VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes).
+# VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes). -- Initial version
+# VERSION 0.0.2 OF THE CARECARDS API -- Specified how getCards criterion are combined together. Made all returned arrays into objects for security reasons. Specified the attack-mitigation for(;;); at the start of all JSON.
+
+NOTE (added in 0.0.2): All JSON responses are prefixed with for(;;); to mitigate certain AJAX-based attacks.
 
 GET /user_exists
 Purpose: Check if a user exists. Useful for a live-checking "username/email already taken" indicator.
@@ -6,7 +9,7 @@ Login required: NO
 Parameters:
     - username_or_email : A string of the username or email to check.
 Response:
-    - Responds "true" (without quotes) if the username/email given already exists and "false" if it does no.
+    - Responds {"result": true} if the username/email given already exists and {"result": false} if it does not.
 
 POST /create_user
 Purpose: Create a new user.
@@ -65,7 +68,7 @@ Parameters:
     - caption : A string for the caption/description of the card.
 Response:
     - Responds with HTTP 200 and the card_id of the created card if the card was successfully created.
-    - Responds with HTTP 400 and an error message (media does not exist, media is owned by another user, etc.) if the card failed to be created.
+    - Responds with HTTP 400 and an error message if the card failed to be created.
 
 GET /get_card
 Purpose: Retrieve a specific single card from the server.
@@ -75,17 +78,17 @@ Parameters:
 Response:
     - Responds with HTTP 200 and JSON of the card. The JSON will look like this:
     {
-        card_id: 532,
-        media_id: 127,
-        title: "Thank You to the Firefighters",
-        caption: "Just a card to say how grateful we are for all the hard work you do.",
-        likes: 345,
-        tags: ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+        "card_id": 532,
+        "media_id": 127,
+        "title": "Thank You to the Firefighters",
+        "caption": "Just a card to say how grateful we are for all the hard work you do.",
+        "likes": 345,
+        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"]
     }
     - Responds with HTTP 400 and an error message if the card could not be retrieved.
 
 GET /get_cards
-Purpose: Retrieve up to 100 cards by some criterion.
+Purpose: Retrieve up to 100 cards by some criterion (criterion are OR'd together, so cards only have to match ONE of the criterion to be matched).
 Login required: NO
 Parameters (must provide at least one of the following parameters):
     - tagged_with : A string specifying the tag to search for.
@@ -94,32 +97,34 @@ Parameters (must provide at least one of the following parameters):
     - caption_contains : A string search term for the cards' captions.
 Response:
     - Returns HTTP 200 and a JSON array of cards like this (if the request was successful):
-    [
-        {
-            card_id: 532,
-            media_id: 127,
-            title: "Thank You to the Firefighters",
-            caption: "Just a card to say how grateful we are for all the hard work you do.",
-            likes: 345,
-            tags: ["firefighter", "firefighters", "english", "wholesome", "grateful"]
-        },
-        {
-            card_id: 2,
-            media_id: 17,
-            title: "Gratitude for Our Nurses",
-            caption: "Just wanna say thanks!",
-            likes: 45,
-            tags: ["thank you", "nurses"]
-        },
-        {
-            card_id: 32,
-            media_id: 27,
-            title: "Our Heroes",
-            caption: "You are the real superheroes.",
-            likes: 245,
-            tags: ["Marvel", "superhero"]
-        }
-    ]
+    {
+        "result": [
+                    {
+                        "card_id": 532,
+                        "media_id": 127,
+                        "title": "Thank You to the Firefighters",
+                        "caption": "Just a card to say how grateful we are for all the hard work you do.",
+                        "likes": 345,
+                        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+                    },
+                    {
+                        "card_id": 2,
+                        "media_id": 17,
+                        "title": "Gratitude for Our Nurses",
+                        "caption": "Just wanna say thanks!",
+                        "likes": 45,
+                        "tags": ["thank you", "nurses"]
+                    },
+                    {
+                        "card_id": 32,
+                        "media_id": 27,
+                        "title": "Our Heroes",
+                        "caption": "You are the real superheroes.",
+                        "likes": 245,
+                        "tags": ["Marvel", "superhero"]
+                    }
+        ]
+    }
 
 POST /create_or_find_tag
 Purpose: Create a new tag with a given name OR get the id of the existing tag with that name.
@@ -148,23 +153,25 @@ Parameters (must provide at least one of the following parameters):
     - top : An integer to request the top N tags (sorted in ascending order by how many cards have that tag attached).
 Response:
     - Returns a JSON list of tags like this (note that cards_tagged is a count of how many cards have the given tag, NOT the id of a specific card):
-    [
-        {
-            tag_id: 1,
-            content: "Spanish",
-            cards_tagged: 27
-        },
-        {
-            tag_id: 47,
-            content: "nurses",
-            cards_tagged: 500
-        },
-        {
-            tag_id: 21
-            content: "firefighters",
-            cards_tagged: 29
-        }
-    ]
+    {
+    "result": [
+            {
+                "tag_id": 1,
+                "content": "Spanish",
+                "cards_tagged": 27
+            },
+            {
+                "tag_id": 47,
+                "content": "nurses",
+                "cards_tagged": 500
+            },
+            {
+                "tag_id": 21
+                "content": "firefighters",
+                "cards_tagged": 29
+            }
+        ]
+    }
 
 POST /like_card
 Purpose: Add one "like" to a card.

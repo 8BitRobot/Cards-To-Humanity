@@ -19,14 +19,17 @@ CREATE DATABASE carecards
 USE carecards;
 
 -- Create a table to store all users of the system.
-CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,     -- Identifying key for the user.
-                   username VARCHAR(100) NOT NULL,             -- Username for the user (used to log in). Like "xxdogman69xx".
-                   display_name VARCHAR(255) NOT NULL,         -- Name that is displayed on the user's posts. Like "Karl Marx".
-                   password_hash BINARY(64),                   -- The hash (PBKDF2WithHmacSHA512) of the password used to log this user in.
-                   password_salt BINARY(64),                   -- The salt (64 random bytes) used for the password hash.
-                   email VARCHAR(100) NOT NULL,                -- The user's email address.
-                   UNIQUE INDEX unique_index(username, email)  -- Usernames and emails cannot be shared (since they are used to log in).
+CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifying key for the user.
+                   username VARCHAR(100) NOT NULL,               -- Username for the user (used to log in). Like "xxdogman69xx".
+                   display_name VARCHAR(255) NOT NULL,           -- Name that is displayed on the user's posts. Like "Karl Marx".
+                   password_hash BINARY(64),                     -- The hash (PBKDF2WithHmacSHA512) of the password used to log this user in.
+                   password_salt BINARY(64),                     -- The salt (64 random bytes) used for the password hash.
+                   email VARCHAR(100) NOT NULL,                  -- The user's email address.
+                   UNIQUE INDEX unique_username_index(username), -- Usernames cannot be shared (since they are used to log in).
+                   UNIQUE INDEX unique_email_index(email),       -- Emails cannot be shared.
+                   UNIQUE INDEX unique_username_or_email_index(username, email) -- Combinations of usernames and emails cannot be shared.
 );
+-- Note that this table's constraints DO NOT prevent a user signing up with somebody else's email as their username. Use the userExists query to check for this attack in the code when a user is signing up.
 
 -- Create the special anonymous user that is associated with all cards/tags/likes from non-registered users.
 INSERT IGNORE INTO users (username, display_name, password_hash, email) VALUES ("anonymous", "Anonymous", "", "");
@@ -55,7 +58,8 @@ CREATE TABLE cards(card_id INT AUTO_INCREMENT PRIMARY KEY,     -- Identifying ke
 
 -- Create a table to store all tags for cards (tags are short phrases that are used to group cards, such as "wholesome" or "firefighters").
 CREATE TABLE tags(tag_id INT AUTO_INCREMENT PRIMARY KEY,
-                  content VARCHAR(50)
+                  content VARCHAR(50),
+                  UNIQUE INDEX unique_index(content)
 );
 
 -- Create a table that associates tags to cards. A card may have multiple tags.
@@ -83,5 +87,6 @@ CREATE TABLE likes(like_id INT AUTO_INCREMENT PRIMARY KEY,
                        CONSTRAINT foreign_key_user_id
                        FOREIGN KEY (user_id)
                            REFERENCES users(user_id)
-                           ON DELETE SET NULL
+                           ON DELETE SET NULL,
+                    UNIQUE INDEX unique_like_index(card_id, user_id)  -- Users cannot like a post more than once.
 );

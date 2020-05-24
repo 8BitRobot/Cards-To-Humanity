@@ -1,17 +1,62 @@
 package storage;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
+
 public class Queries {
-    public final static String userExists = "SELECT user_id FROM users WHERE username = ? OR email = ?";
+    public final String userExists;
 
-    public final static String createUser = "INSERT INTO users (username, display_name, password_hash, password_salt, email) VALUES (?, ?, ?, ?, ?)";
+    public final String createUser;
 
-    public final static String validateUser = "SELECT * FROM users WHERE (username = ? OR email = ?) AND password_hash = ?";
+    public final String getHashedPassword;
 
-    public final static String createMedia = "INSERT INTO media (media_mime_type, media_content) VALUES (?, ?)";
+    public final String validateUser;
 
-    public final static String getMedia = "SELECT media_mime_type, media_content FROM media WHERE media_id = ?";
+    public final String createMedia;
 
-    public final static String createCard = "INSERT INTO cards (user_id, media_id, title, caption) VALUES (?, ?, ?, ?)";
+    public final String getMedia;
 
-    public final static String getCard = "SELECT user_id, media_id, title, caption, likes = (SELECT COUNT(*) FROM likes WHERE card_id = ?), tags = (SELECT GROUP_CONCAT(tags.content SEPARATOR ',') FROM tags INNER JOIN taggings ON tags.tag_id = taggings.tag_id WHERE taggings.card_id = ?) FROM cards WHERE card_id = ?";
+    public final String createCard;
+
+    public final String getCard;
+
+    public final String getCards;
+
+    public final String createTag;
+
+    public final String getTagId;
+
+    public final String tagCard;
+
+    public final String likeCard;
+
+    public final String getTags;
+
+    private ClassLoader classLoader;
+
+    private String readResourceFile(String fileName) {
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+        return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
+    }
+
+    public Queries() {
+        classLoader = Thread.currentThread().getContextClassLoader();
+        userExists = readResourceFile("sql/userexistsquery.sql");
+        createUser = readResourceFile("sql/createuserquery.sql");
+        getHashedPassword = readResourceFile("sql/gethashedpasswordquery.sql");
+        validateUser = readResourceFile("sql/validateuserquery.sql");
+        createMedia = readResourceFile("sql/createmediaquery.sql");
+        getMedia = readResourceFile("sql/getmediaquery.sql");
+        createCard = readResourceFile("sql/createcardquery.sql");
+        getCard = readResourceFile("sql/getcardquery.sql");
+        getCards = readResourceFile("sql/getcardsquery.sql");
+        createTag = readResourceFile("sql/createtagquery.sql");
+        getTagId = readResourceFile("sql/gettagidquery.sql");
+        tagCard = readResourceFile("sql/tagcardquery.sql");
+        likeCard = readResourceFile("sql/likecardquery.sql");
+        getTags = readResourceFile("sql/gettagsquery.sql");
+    }
 }
