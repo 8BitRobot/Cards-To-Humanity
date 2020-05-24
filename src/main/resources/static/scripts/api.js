@@ -36,3 +36,18 @@ function apiCreateUser(username, display_name, password, email) {
         }
     );
 }
+
+function apiUploadMedia(file_upload_input) {
+    return new Promise((resolve, reject) => {
+        const params = new FormData();
+        params.append("media_file", file_upload_input.files[0]);
+
+        axios.post("/upload_media", params, {headers: {"content-type": "multipart/form-data"}})
+            .then(function(response) {
+                resolve(parseInt(response.data));
+            })
+            .catch(function(error) {
+                reject(error.response.data);
+            });
+    });
+}

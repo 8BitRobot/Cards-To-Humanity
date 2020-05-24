@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" lang="en" />
+        <title>
+            Create Card
+        </title>
+        <h1>
+            Create Card
+        </h1>
+        <link rel="stylesheet" href="/css/create_card.css">
+    </head>
+    <body>
+        <div id="vue_div">
+            Title: <input type="text" v-model="title">
+            <br>
+            Caption: <input type="text" v-model="caption">
+            <br>
+            Upload image (png, jpeg, jpg, bmp, gif): <input type="file" ref="file_upload" @input="uploadMediaFile">
+            <br>
+            <p id="error_message_p">
+                {{ error_message }}
+            </p>
+            Uploaded image preview will show below:
+            <br>
+            <img v-bind:src="uploaded_image_url" />
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/scripts/api.js"></script>
+        <script src="/scripts/create_card.js"></script>
+    </body>
+</html>

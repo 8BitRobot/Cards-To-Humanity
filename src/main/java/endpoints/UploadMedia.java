@@ -2,10 +2,10 @@ package endpoints;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.UploadedFile;
-import org.eclipse.jetty.util.ByteArrayOutputStream2;
 import storage.DatabaseStorage;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,10 +33,12 @@ public class UploadMedia implements Handler {
         InputStream inputStream = uploadedFile.getContent();
         try {
             BufferedImage image = ImageIO.read(inputStream);
-            ByteArrayOutputStream convertedImage = new ByteArrayOutputStream();
-            ImageIO.write(image, "jpeg", convertedImage);
-            byte[] convertedImageData = convertedImage.toByteArray();
-            int media_id = databaseStorage.createMedia("image/jpeg", convertedImageData);
+            BufferedImage image_jpeg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+            image_jpeg.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+            ByteArrayOutputStream jpeg_data_stream = new ByteArrayOutputStream();
+            ImageIO.write(image_jpeg, "jpeg", jpeg_data_stream);
+            byte[] jpeg_image_data = jpeg_data_stream.toByteArray();
+            int media_id = databaseStorage.createMedia("image/jpeg", jpeg_image_data);
             if (media_id < 0) {
                 ctx.result("Database failed to create media.");
                 ctx.status(400);
