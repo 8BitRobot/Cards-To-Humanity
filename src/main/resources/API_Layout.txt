@@ -68,7 +68,7 @@ Parameters:
     - caption : A string for the caption/description of the card.
 Response:
     - Responds with HTTP 200 and the card_id of the created card if the card was successfully created.
-    - Responds with HTTP 400 and an error message (media does not exist, media is owned by another user, etc.) if the card failed to be created.
+    - Responds with HTTP 400 and an error message if the card failed to be created.
 
 GET /get_card
 Purpose: Retrieve a specific single card from the server.
