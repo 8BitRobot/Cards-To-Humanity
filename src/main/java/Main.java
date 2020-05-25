@@ -1,10 +1,14 @@
 import com.google.gson.Gson;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
 import org.eclipse.jetty.server.session.*;
 import storage.DatabaseStorage;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
 
 public class Main {
 
@@ -57,9 +61,26 @@ public class Main {
         final String connectionURLFinal = connectionURL;
 
         Javalin app = Javalin.create(config -> {
-            config.addStaticFiles("/static");
+            //config.addStaticFiles("/static");
+            config.addStaticFiles("src/main/resources/static", Location.EXTERNAL); // TODO: Switch this line back to the previous commented line when not using live-reload for dev work.
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
         }).start(port);
+
+        app.before(ctx -> {
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+            Enumeration<String> headerNames = ctx.req.getHeaderNames();
+
+            while (headerNames.hasMoreElements()) {
+                String headerName = headerNames.nextElement();
+                System.out.println(headerName + ": " + ctx.req.getHeader(headerName));
+            }
+
+            InputStream inputStream = ctx.req.getInputStream();
+            byte[] raw_request_body_bytes = inputStream.readAllBytes();
+            String raw_request_body = new String(raw_request_body_bytes, StandardCharsets.UTF_8);
+            System.out.println(raw_request_body);
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+        });
 
         storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
