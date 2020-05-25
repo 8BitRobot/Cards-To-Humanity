@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
 import org.eclipse.jetty.server.session.*;
 import storage.DatabaseStorage;
 
@@ -57,7 +58,8 @@ public class Main {
         final String connectionURLFinal = connectionURL;
 
         Javalin app = Javalin.create(config -> {
-            config.addStaticFiles("/static");
+            //config.addStaticFiles("/static");
+            config.addStaticFiles("src/main/resources/static", Location.EXTERNAL); // TODO: Switch this line back to the previous commented line when not using live-reload for dev work.
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
         }).start(port);
 
