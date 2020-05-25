@@ -8,9 +8,17 @@ const app = new Vue(
                 uploaded_image_url: ""
         },
         methods: {
-                uploadMediaFile: function() {
+                previewMediaFile: function () {
                         var self = this;
 
+                        let reader = new FileReader();
+                        let upload = this.$refs.file_upload;
+                        
+                },
+
+                uploadMediaFile: function() {
+                        var self = this;
+                        
                         apiUploadMedia(this.$refs.file_upload)
                             .then(function(media_id) {
                                 console.log(`Media upload successful, returned media_id ${media_id}.`);
