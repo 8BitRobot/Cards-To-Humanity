@@ -4,11 +4,8 @@ import io.javalin.http.staticfiles.Location;
 import org.eclipse.jetty.server.session.*;
 import storage.DatabaseStorage;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
 
 public class Main {
 
@@ -64,8 +61,10 @@ public class Main {
             //config.addStaticFiles("/static");
             config.addStaticFiles("src/main/resources/static", Location.EXTERNAL); // TODO: Switch this line back to the previous commented line when not using live-reload for dev work.
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
+            config.dynamicGzip = false; // This prevents a 500 error when crawled by Facebook due to issues with how Javalin and Jetty cooperate when compressing data.
         }).start(port);
 
+        /*
         app.before(ctx -> {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~");
             Enumeration<String> headerNames = ctx.req.getHeaderNames();
@@ -81,6 +80,7 @@ public class Main {
             System.out.println(raw_request_body);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~");
         });
+        */
 
         storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
