@@ -72,14 +72,9 @@ public class Main {
 
             while (headerNames.hasMoreElements()) {
                 String headerName = headerNames.nextElement();
-                Enumeration<String> headers = ctx.req.getHeaders(headerName);
-                System.out.println("HEADER: " + headerName);
-                while (headers.hasMoreElements()) {
-                    System.out.println("    " + headers.nextElement());
-                }
+                System.out.println(headerName + ": " + ctx.req.getHeader(headerName));
             }
 
-            System.out.println("BODY:");
             InputStream inputStream = ctx.req.getInputStream();
             byte[] raw_request_body_bytes = inputStream.readAllBytes();
             String raw_request_body = new String(raw_request_body_bytes, StandardCharsets.UTF_8);
