@@ -64,8 +64,10 @@ public class Main {
             //config.addStaticFiles("/static");
             config.addStaticFiles("src/main/resources/static", Location.EXTERNAL); // TODO: Switch this line back to the previous commented line when not using live-reload for dev work.
             config.sessionHandler(() -> sqlSessionHandler("org.mariadb.jdbc.Driver", connectionURLFinal));
+            config.dynamicGzip = false;
         }).start(port);
 
+        /*
         app.before(ctx -> {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~");
             Enumeration<String> headerNames = ctx.req.getHeaderNames();
@@ -81,6 +83,14 @@ public class Main {
             System.out.println(raw_request_body);
             System.out.println("~~~~~~~~~~~~~~~~~~~~~");
         });
+
+        app.after(ctx -> {
+            System.out.println(ctx.resultString());
+            if (ctx.resultString() == null) {
+                ctx.res.setContentLength(0);
+            }
+        });
+        */
 
         storage.DatabaseStorage databaseStorage = new DatabaseStorage();
 
