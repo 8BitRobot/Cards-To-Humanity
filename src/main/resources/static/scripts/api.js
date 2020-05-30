@@ -18,7 +18,7 @@ function apiUserExists(username_or_email) {
             })
             .catch(function(error) {
                 console.log("User exists endpoint error.");
-                resolve(false);
+                reject(false);
             });
     });
 }
@@ -53,7 +53,6 @@ function apiCreateUser(username, display_name, password, email) {
                     resolve("User created successfully.");
                 })
                 .catch(function(error) {
-                    console.table(error);
                     reject(error.response.data);
                 });
         }
@@ -90,4 +89,69 @@ function apiCreateCard(media_id, title, caption) {
                 reject(error.response.data);
             });
     });
+}
+
+function apiGetCard(card_id) {
+    return new Promise((resolve, reject) => {
+        axios.get("/get_card", {
+            params: {
+                card_id: card_id
+            }
+        })
+            .then(function(response) {
+                var decoded = apiDecodeJsonResponse(response.data);
+                resolve(decoded);
+            })
+            .catch(function(error) {
+                console.log("Get card endpoint error.");
+                reject();
+            });
+    });
+}
+
+function apiGetCards(tagged_width, top, title_contains, caption_contains) {
+    var post_parameters = {};
+    if (tagged_width != null) {
+        post_parameters.tagged_with = tagged_width;
+    }
+    if (top != null) {
+        post_parameters.top = top;
+    }
+    if (title_contains != null) {
+        post_parameters.title_contains = title_contains;
+    }
+    if (caption_contains != null) {
+        post_parameters.caption_contains = caption_contains;
+    }
+
+    return new Promise((resolve, reject) => {
+        axios.get("/get_cards", {
+            params: post_parameters
+        })
+            .then(function(response) {
+                var decoded = apiDecodeJsonResponse(response.data);
+                resolve(decoded["result"]);
+            })
+            .catch(function(error) {
+                console.log("Get cards endpoint error.");
+                reject();
+            });
+    });
+}
+
+function apiCreateOrFindTag(content) {
+    return new Promise((resolve, reject) => {
+            const params = new URLSearchParams();
+            params.append("content", content);
+
+            axios.post("/create_or_find_tag", params)
+                .then(function (response) {
+                    resolve(parseInt(response.data));
+                })
+                .catch(function (error) {
+                    console.log("Create or find tag endpoint error.");
+                    reject();
+                });
+        }
+    );
 }
