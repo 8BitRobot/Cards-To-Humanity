@@ -94,6 +94,7 @@ public class Main {
         endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage);
         endpoints.GetMedia get_media_endpoint = new endpoints.GetMedia(databaseStorage);
         endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage);
+        endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);
         app.get("/", home_endpoint);
         app.get("/user_exists", user_exists_endpoint);
         app.post("/login_user", login_user_endpoint);
@@ -102,5 +103,6 @@ public class Main {
         app.post("/upload_media", upload_media_endpoint);
         app.get("/get_media", get_media_endpoint);
         app.post("/create_card", create_card_endpoint);
+        app.get("/get_card", get_card_endpoint);
     }
 }
