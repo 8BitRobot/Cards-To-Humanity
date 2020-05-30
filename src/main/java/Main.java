@@ -95,6 +95,8 @@ public class Main {
         endpoints.GetMedia get_media_endpoint = new endpoints.GetMedia(databaseStorage);
         endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage);
         endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);
+        endpoints.GetCards get_cards_endpoint = new endpoints.GetCards(gson, databaseStorage);
+        endpoints.CreateOrFindTag create_or_find_tag_endpoint = new endpoints.CreateOrFindTag(databaseStorage);
         app.get("/", home_endpoint);
         app.get("/user_exists", user_exists_endpoint);
         app.post("/login_user", login_user_endpoint);
@@ -104,5 +106,7 @@ public class Main {
         app.get("/get_media", get_media_endpoint);
         app.post("/create_card", create_card_endpoint);
         app.get("/get_card", get_card_endpoint);
+        app.get("/get_cards", get_cards_endpoint);
+        app.post("/create_or_find_tag", create_or_find_tag_endpoint);
     }
 }
