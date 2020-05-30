@@ -5,15 +5,18 @@ const app = new Vue(
                 title: "",
                 caption: "",
                 error_message: "",
-                uploaded_image_url: ""
+                uploaded_image_base64: ""
         },
         methods: {
                 previewMediaFile: function () {
-                        var self = this;
-
+                        let files = this.$refs.file_upload.files;
                         let reader = new FileReader();
-                        let upload = this.$refs.file_upload;
-                        
+                        if (files && files[0]) {
+                            reader.onload = (e) => {
+                                this.uploaded_image_base64 = e.target.result;
+                            }
+                            let upload = reader.readAsDataURL(files[0]);
+                        }
                 },
 
                 uploadMediaFile: function() {
