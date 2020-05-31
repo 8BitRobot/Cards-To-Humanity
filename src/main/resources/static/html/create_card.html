@@ -19,14 +19,14 @@
             <br>
             Caption: <input type="text" v-model="caption">
             <br>
-            Upload image (png, jpeg, jpg, bmp, gif): <input type="file" ref="file_upload" @input="uploadMediaFile">
+            Upload image (png, jpeg, jpg, bmp, gif): <input type="file" ref="file_upload" @input="previewMediaFile">
             <br>
             <p id="error_message_p">
                 {{ error_message }}
             </p>
             Uploaded image preview will show below:
             <br>
-            <img v-bind:src="uploaded_image_url" />
+            <img :src="uploaded_image_base64" />
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

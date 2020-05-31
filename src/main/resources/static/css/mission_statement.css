@@ -209,30 +209,30 @@ header {
 }
 
 #mission-statement-tm-divider {
-   background-image: url("../img/mission_statement_curve_1_2500px.png");
+   background-image: url("../img/mission_statement/curve_1_2500px.png");
 }
 
 @media only screen and (max-width: 2250px) {
     #mission-statement-tm-divider {
-        background-image: url("../img/mission_statement_curve_1_2000px.png");
+        background-image: url("../img/mission_statement/curve_1_2000px.png");
     }
 }
 
 @media only screen and (max-width: 1750px) {
     #mission-statement-tm-divider {
-        background-image: url("../img/mission_statement_curve_1_1500px.png");
+        background-image: url("../img/mission_statement/curve_1_1500px.png");
     }
 }
 
 @media only screen and (max-width: 1250px) {
     #mission-statement-tm-divider {
-        background-image: url("../img/mission_statement_curve_1_1000px.png");
+        background-image: url("../img/mission_statement/curve_1_1000px.png");
     }
 }
 
 @media only screen and (max-width: 750px) {
     #mission-statement-tm-divider {
-        background-image: url("../img/mission_statement_curve_1_500px.png");
+        background-image: url("../img/mission_statement/curve_1_500px.png");
     }
 }
 
@@ -253,30 +253,30 @@ header {
 
 #mission-statement-mb-divider {
     background-color: #001F70;
-    background-image: url("../img/mission_statement_curve_2_2500px.png");
+    background-image: url("../img/mission_statement/curve_2_2500px.png");
 }
 
 @media only screen and (max-width: 2250px) {
     #mission-statement-mb-divider {
-        background-image: url("../img/mission_statement_curve_2_2000px.png");
+        background-image: url("../img/mission_statement/curve_2_2000px.png");
     }
 }
 
 @media only screen and (max-width: 1750px) {
     #mission-statement-mb-divider {
-        background-image: url("../img/mission_statement_curve_2_1500px.png");
+        background-image: url("../img/mission_statement/curve_2_1500px.png");
     }
 }
 
 @media only screen and (max-width: 1250px) {
     #mission-statement-mb-divider {
-        background-image: url("../img/mission_statement_curve_2_1000px.png");
+        background-image: url("../img/mission_statement/curve_2_1000px.png");
     }
 }
 
 @media only screen and (max-width: 750px) {
     #mission-statement-mb-divider {
-        background-image: url("../img/mission_statement_curve_2_500px.png");
+        background-image: url("../img/mission_statement/curve_2_500px.png");
     }
 }
 
