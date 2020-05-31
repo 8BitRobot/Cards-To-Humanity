@@ -347,7 +347,7 @@ public class DatabaseStorage {
 
     public synchronized Tag[] getTags(String content_contains, Integer top) {
         try {
-            getTagsStatement.setString(1, content_contains);
+            getTagsStatement.setString(1, "%" + content_contains + "%");
             if (top == null || top > 100) {
                 top = 100;
             }

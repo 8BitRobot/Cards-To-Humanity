@@ -13,7 +13,7 @@ import java.util.List;
 public class PopulateDummyDatabase {
     private static int users_to_create = 100;
     private static int cards_to_generate = 1000;
-    private static int tags_to_generate = 10000;
+    private static int tags_to_generate = 100;
     private static int likes_per_user = 100;
 
     /*

@@ -143,7 +143,7 @@ Parameters:
     - tag_id : The id of the tag being attached to the card.
 Response:
     - Responds with HTTP 200 if the tag was successfully attached to the card.
-    - Responds with HTTP 400 and an error message (card not owned by this user, etc.) if the tag was not successfully attached to the card.
+    - Responds with HTTP 400 and an error message if the tag was not successfully attached to the card.
 
 GET /get_tags
 Purpose: Search for up to 100 tags with the given criteria.

@@ -97,6 +97,9 @@ public class Main {
         endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);
         endpoints.GetCards get_cards_endpoint = new endpoints.GetCards(gson, databaseStorage);
         endpoints.CreateOrFindTag create_or_find_tag_endpoint = new endpoints.CreateOrFindTag(databaseStorage);
+        endpoints.TagCard tag_card_endpoint = new endpoints.TagCard(databaseStorage);
+        endpoints.GetTags get_tags_endpoint = new endpoints.GetTags(gson, databaseStorage);
+        endpoints.LikeCard like_card_endpoint = new endpoints.LikeCard(databaseStorage);
         app.get("/", home_endpoint);
         app.get("/user_exists", user_exists_endpoint);
         app.post("/login_user", login_user_endpoint);
@@ -108,5 +111,8 @@ public class Main {
         app.get("/get_card", get_card_endpoint);
         app.get("/get_cards", get_cards_endpoint);
         app.post("/create_or_find_tag", create_or_find_tag_endpoint);
+        app.post("/tag_card", tag_card_endpoint);
+        app.get("/get_tags", get_tags_endpoint);
+        app.post("/like_card", like_card_endpoint);
     }
 }
