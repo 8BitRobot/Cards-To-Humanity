@@ -73,7 +73,8 @@ CREATE TABLE taggings(tagging_id INT AUTO_INCREMENT PRIMARY KEY,
                           CONSTRAINT foreign_key_tag_id
                           FOREIGN KEY (tag_id)
                               REFERENCES tags(tag_id)
-                              ON DELETE CASCADE
+                              ON DELETE CASCADE,
+                      UNIQUE INDEX unique_tagging_index(card_id, tag_id)
 );
 
 -- Create a table that stores who "liked" a card.

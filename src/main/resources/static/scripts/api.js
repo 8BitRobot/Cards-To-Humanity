@@ -110,23 +110,23 @@ function apiGetCard(card_id) {
 }
 
 function apiGetCards(tagged_width, top, title_contains, caption_contains) {
-    var post_parameters = {};
+    var get_parameters = {};
     if (tagged_width != null) {
-        post_parameters.tagged_with = tagged_width;
+        get_parameters.tagged_with = tagged_width;
     }
     if (top != null) {
-        post_parameters.top = top;
+        get_parameters.top = top;
     }
     if (title_contains != null) {
-        post_parameters.title_contains = title_contains;
+        get_parameters.title_contains = title_contains;
     }
     if (caption_contains != null) {
-        post_parameters.caption_contains = caption_contains;
+        get_parameters.caption_contains = caption_contains;
     }
 
     return new Promise((resolve, reject) => {
         axios.get("/get_cards", {
-            params: post_parameters
+            params: get_parameters
         })
             .then(function(response) {
                 var decoded = apiDecodeJsonResponse(response.data);
@@ -151,6 +151,65 @@ function apiCreateOrFindTag(content) {
                 .catch(function (error) {
                     console.log("Create or find tag endpoint error.");
                     reject();
+                });
+        }
+    );
+}
+
+function apiTagCard(card_id, tag_id) {
+    return new Promise((resolve, reject) => {
+            const params = new URLSearchParams();
+            params.append("card_id", card_id);
+            params.append("tag_id", tag_id);
+
+            axios.post("/tag_card", params)
+                .then(function (response) {
+                    resolve();
+                })
+                .catch(function (error) {
+                    console.log("Tag card endpoint error.");
+                    reject();
+                });
+        }
+    );
+}
+
+function apiGetTags(content_contains, top) {
+    var post_parameters = {};
+    if (content_contains != null) {
+        post_parameters.content_contains = content_contains;
+    }
+    if (top != null) {
+        post_parameters.top = top;
+    }
+
+    return new Promise((resolve, reject) => {
+        axios.get("/get_tags", {
+            params: post_parameters
+        })
+            .then(function(response) {
+                var decoded = apiDecodeJsonResponse(response.data);
+                resolve(decoded["result"]);
+            })
+            .catch(function(error) {
+                console.log("Get tags endpoint error.");
+                reject();
+            });
+    });
+}
+
+function apiLikeCard(card_id) {
+    return new Promise((resolve, reject) => {
+            const params = new URLSearchParams();
+            params.append("card_id", card_id);
+
+            axios.post("/like_card", params)
+                .then(function (response) {
+                    resolve();
+                })
+                .catch(function (error) {
+                    console.log("Like card endpoint error.");
+                    reject(error.response.data);
                 });
         }
     );
