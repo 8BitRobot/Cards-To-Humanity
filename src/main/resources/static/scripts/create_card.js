@@ -5,7 +5,7 @@ const app = new Vue(
                 title: "",
                 caption: "",
                 error_message: "",
-                uploaded_image_base64: ""
+                uploaded_image_base64: "/img/create_card/smiley_card_placeholder.png"
         },
         methods: {
                 previewMediaFile: function () {
