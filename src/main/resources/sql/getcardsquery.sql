@@ -5,10 +5,10 @@ WITH found_cards_ids AS (SELECT cards.card_id FROM cards
                             INNER JOIN tags
                                 ON taggings.tag_id = tags.tag_id
                             WHERE
-                                tags.content = ?                     -- Find cards tagged with a specific tag. Parameter #1.
-                                OR
+                                tags.content LIKE ?                  -- Find cards tagged with a specific tag. Parameter #1.
+                                AND
                                 cards.title LIKE ?                   -- Find cards with titles containing a specific string. Set NULL to not use this part of the query. Parameter #2.
-                                OR
+                                AND
                                 cards.caption LIKE ?                 -- Find cards with captions containing a specific string. Set NULL to not use this part of the query. Parameter #3
                             GROUP BY cards.card_id)                  -- Deduplicate.
 SELECT

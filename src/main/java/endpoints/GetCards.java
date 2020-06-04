@@ -18,7 +18,13 @@ public class GetCards implements Handler {
 
     public void handle(Context ctx) {
         String tagged_with = ctx.queryParam("tagged_with");
-        int top = Integer.parseInt(ctx.queryParam("top", "100"));
+        int top = 100;
+        try {
+            top = Integer.parseInt(ctx.queryParam("top", "100"));
+        }
+        catch (java.lang.NumberFormatException e) {
+            // Pass.
+        }
         String title_contains = ctx.queryParam("title_contains");
         String caption_contains = ctx.queryParam("caption_contains");
 

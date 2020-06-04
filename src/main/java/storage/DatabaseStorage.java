@@ -242,15 +242,20 @@ public class DatabaseStorage {
 
     public synchronized Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
         try {
-            getCardsStatement.setString(1, tagged_with);
+            if (tagged_with == null) {
+                getCardsStatement.setString(1, "%");
+            }
+            else {
+                getCardsStatement.setString(1, "%" + tagged_with + "%");
+            }
             if (title_contains == null) {
-                getCardsStatement.setString(2, null);
+                getCardsStatement.setString(2, "%");
             }
             else {
                 getCardsStatement.setString(2, "%" + title_contains + "%");
             }
             if (caption_contains == null) {
-                getCardsStatement.setString(3, null);
+                getCardsStatement.setString(3, "%");
             }
             else {
                 getCardsStatement.setString(3, "%" + caption_contains + "%");

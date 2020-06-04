@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" lang="en" />
+        <meta property="og:title" content="Cards To Humanity">
+        <meta property="og:url" content="https://cards-to-humanity.herokuapp.com/html/gallery.html">
+        <meta property="og:description" content="Spreading positivity, one card at a time.">
+        <title>
+            Gallery
+        </title>
+        <h1>
+            Gallery
+        </h1>
+        <link rel="stylesheet" href="/css/gallery.css">
+    </head>
+    <body>
+        <div id="vue_div">
+            <h2>
+                Currently Viewing:
+            </h2>
+            Cards tagged with: <input type="text" v-model="tagged_with_search_term" @change="fetchCards">
+            <br>
+            Top <input type="number" v-model="top_n_cards" @change="fetchCards"> cards.
+            <br>
+            Title contains: <input type="text" v-model="title_contains_search_term" @change="fetchCards">
+            <br>
+            Caption contains: <input type="text" v-model="caption_contains_search_term" @change="fetchCards">
+            <br>
+            <h2>
+                Cards ({{ cards.length}} shown)
+            </h2>
+            <div class="card" v-for="card in cards" :key="card.card_id">
+                <p>
+                    {{ card.title }}
+                </p>
+                <img v-bind:src="'/get_media?media_id=' + card.media_id">
+                <br>
+                Tags:
+                <ul v-for="tag in card.tags">
+                    <li>
+                        {{ tag }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/scripts/api.js"></script>
+        <script src="/scripts/gallery.js"></script>
+    </body>
+</html>
