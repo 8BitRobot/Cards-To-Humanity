@@ -168,10 +168,9 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createMedia(String mime_type, byte[] content) {
+    public synchronized int createMedia(String image_url) {
         try {
-            createMediaStatement.setString(1, mime_type);
-            createMediaStatement.setBytes(2, content);
+            createMediaStatement.setString(1, image_url);
             createMediaStatement.executeUpdate();
             ResultSet results = createMediaStatement.getGeneratedKeys();
             if (results.first()) {

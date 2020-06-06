@@ -91,7 +91,12 @@ public class Main {
         endpoints.LoginUser login_user_endpoint = new endpoints.LoginUser(databaseStorage);
         endpoints.CreateUser create_user_endpoint = new endpoints.CreateUser(databaseStorage);
         endpoints.LogoutUser logout_user_endpoint = new endpoints.LogoutUser();
-        endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage);
+        String s3BucketName = System.getenv("S3_BUCKET_NAME");
+        if (s3BucketName == null || s3BucketName.equals("")) {
+            System.out.println("The S3_BUCKET_NAME environment variable must be set to the name of the Amazon S3 bucket to be used. The S3 bucket must be in the US_WEST_1 region.");
+            System.exit(-1);
+        }
+        endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage, s3BucketName);
         endpoints.GetMedia get_media_endpoint = new endpoints.GetMedia(databaseStorage);
         endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage);
         endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);

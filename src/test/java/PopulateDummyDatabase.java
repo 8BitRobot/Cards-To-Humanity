@@ -56,6 +56,7 @@ public class PopulateDummyDatabase {
             if (i % 100 == 0) {
                 System.out.println(((i / (float) cards_to_generate) * 100.0) + "%");
             }
+            /*
             // Generate fake image data in a variety of different image file formats.
             int width = random.nextInt(1000) + 100;
             int height = random.nextInt(1000) + 100;
@@ -75,7 +76,8 @@ public class PopulateDummyDatabase {
                 exception.printStackTrace();
                 continue;
             }
-            int media_id = database.createMedia("image/" + fileType, imageOutputStream.toByteArray());
+            */
+            int media_id = database.createMedia("https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg");
             if (media_id == -1) {
                 System.out.println("Failed to create media in database.");
                 continue;
