@@ -77,7 +77,8 @@ public class PopulateDummyDatabase {
                 continue;
             }
             */
-            int media_id = database.createMedia("https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg");
+            // Add a media object that links to a placeholder image. The random n= parameter is there just so that the URLs look different in the database.
+            int media_id = database.createMedia("https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg?n=" + random.nextInt(1000));
             if (media_id == -1) {
                 System.out.println("Failed to create media in database.");
                 continue;

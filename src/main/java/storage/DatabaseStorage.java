@@ -38,8 +38,6 @@ public class DatabaseStorage {
 
     private PreparedStatement createMediaStatement;
 
-    private PreparedStatement getMediaStatement;
-
     private PreparedStatement createCardStatement;
 
     private PreparedStatement getCardStatement;
@@ -87,7 +85,6 @@ public class DatabaseStorage {
             createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);
             validateUserStatement = connection.prepareStatement(queries.validateUser);
             createMediaStatement = connection.prepareStatement(queries.createMedia, Statement.RETURN_GENERATED_KEYS);
-            getMediaStatement = connection.prepareStatement(queries.getMedia);
             createCardStatement = connection.prepareStatement(queries.createCard, Statement.RETURN_GENERATED_KEYS);
             getCardStatement = connection.prepareStatement(queries.getCard);
             createTagStatement = connection.prepareStatement(queries.createTag, Statement.RETURN_GENERATED_KEYS);
@@ -183,22 +180,6 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized Media getMedia(int media_id) {
-        try {
-            getMediaStatement.setInt(1, media_id);
-            ResultSet results = getMediaStatement.executeQuery();
-            if (results.first()) {
-                String media_mime_type = results.getString("media_mime_type");
-                byte[] media_content = results.getBytes("media_content");
-                return new Media(media_id, media_mime_type, media_content);
-            }
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return null;
-    }
-
     public synchronized int createCard(int user_id, int media_id, String title, String caption) {
         try {
             createCardStatement.setInt(1, user_id);
@@ -225,12 +206,12 @@ public class DatabaseStorage {
             ResultSet results = getCardStatement.executeQuery();
             if (results.first()) {
                 int user_id = results.getInt("user_id");
-                int media_id = results.getInt("media_id");
+                String media_url = results.getString("media_url");
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
                 String[] tags = results.getString("tags").split(",");
-                return new Card(card_id, user_id, media_id, title, caption, likes, tags);
+                return new Card(card_id, user_id, media_url, title, caption, likes, tags);
             }
         }
         catch (Exception exception) {
@@ -268,12 +249,12 @@ public class DatabaseStorage {
             while (results.next()) {
                 int card_id = results.getInt("card_id");
                 int user_id = results.getInt("user_id");
-                int media_id = results.getInt("media_id");
+                String media_url = results.getString("media_url");
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
                 String[] tags = results.getString("tags").split(",");
-                cards.add(new Card(card_id, user_id, media_id, title, caption, likes, tags));
+                cards.add(new Card(card_id, user_id, media_url, title, caption, likes, tags));
             }
             Card[] cardsArray = new Card[cards.size()];
             cards.toArray(cardsArray);

@@ -97,7 +97,6 @@ public class Main {
             System.exit(-1);
         }
         endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage, s3BucketName);
-        endpoints.GetMedia get_media_endpoint = new endpoints.GetMedia(databaseStorage);
         endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage);
         endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);
         endpoints.GetCards get_cards_endpoint = new endpoints.GetCards(gson, databaseStorage);
@@ -111,7 +110,6 @@ public class Main {
         app.post("/create_user", create_user_endpoint);
         app.post("/logout_user", logout_user_endpoint);
         app.post("/upload_media", upload_media_endpoint);
-        app.get("/get_media", get_media_endpoint);
         app.post("/create_card", create_card_endpoint);
         app.get("/get_card", get_card_endpoint);
         app.get("/get_cards", get_cards_endpoint);

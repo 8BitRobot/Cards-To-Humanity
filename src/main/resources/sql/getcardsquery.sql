@@ -14,7 +14,7 @@ WITH found_cards_ids AS (SELECT cards.card_id FROM cards
 SELECT
     cards.card_id AS card_id,
     cards.user_id AS user_id,
-    media_id,
+    media.media_url AS media_url,
     title,
     caption,
     (
@@ -34,5 +34,7 @@ SELECT
 FROM cards
     INNER JOIN found_cards_ids
         ON cards.card_id = found_cards_ids.card_id
+    INNER JOIN media
+        ON cards.media_id = media.media_id
     ORDER BY likes DESC
     LIMIT ? -- Specifies how many of the most-liked cards to retrieve. Parameter #4.

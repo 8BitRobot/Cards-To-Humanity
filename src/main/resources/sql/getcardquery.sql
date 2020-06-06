@@ -1,6 +1,6 @@
 SELECT user_id,
-       media_id,
        title,
+       media.media_url AS media_url,
        caption,
        (
            SELECT COUNT(*) FROM likes
@@ -16,4 +16,7 @@ SELECT user_id,
        )
        AS tags
 FROM cards
-    WHERE card_id = ?
+    INNER JOIN media
+        ON cards.media_id = media.media_id
+    WHERE
+          card_id = ?
