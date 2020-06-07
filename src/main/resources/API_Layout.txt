@@ -1,5 +1,6 @@
 # VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes). -- Initial version
 # VERSION 0.0.2 OF THE CARECARDS API -- Specified how getCards criterion are combined together. Made all returned arrays into objects for security reasons. Specified the attack-mitigation for(;;); at the start of all JSON.
+# VERSION 0.0.3 OF THE CARECARDS API -- Redesigned API significantly in order to use AWS S3 for storing images, and to retrieve image URLs with cards.
 
 NOTE (added in 0.0.2): All JSON responses are prefixed with for(;;); to mitigate certain AJAX-based attacks.
 
@@ -50,15 +51,6 @@ Response:
     - Responds with HTTP 200 and the media_id of the created media if the media was successfully uploaded.
     - Responds with HTTP 400 and an error message (file too large, etc.) if the media did not upload successfully.
 
-GET /get_media
-Purpose: Retrieve media from the server for display.
-Login required: NO
-Parameters:
-    - media_id : The id of the media to retrieve. The card that uses this piece of media will store this.
-Response:
-    - Responds with HTTP 200 and the raw data of the media if the media was found successfully. The server will set the MIME type of the response so that the browser can display it correctly.a
-    - Responds with HTTP 400 and an error message if the media could not be found.
-
 POST /create_card
 Purpose: Create a new card.
 Login required: YES
@@ -79,7 +71,7 @@ Response:
     - Responds with HTTP 200 and JSON of the card. The JSON will look like this:
     {
         "card_id": 532,
-        "media_id": 127,
+        "media_url": "https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg",
         "title": "Thank You to the Firefighters",
         "caption": "Just a card to say how grateful we are for all the hard work you do.",
         "likes": 345,
@@ -101,7 +93,7 @@ Response:
         "result": [
                     {
                         "card_id": 532,
-                        "media_id": 127,
+                        "media_url": "https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg",
                         "title": "Thank You to the Firefighters",
                         "caption": "Just a card to say how grateful we are for all the hard work you do.",
                         "likes": 345,
@@ -109,7 +101,7 @@ Response:
                     },
                     {
                         "card_id": 2,
-                        "media_id": 17,
+                        "media_url": "https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg",
                         "title": "Gratitude for Our Nurses",
                         "caption": "Just wanna say thanks!",
                         "likes": 45,
@@ -117,7 +109,7 @@ Response:
                     },
                     {
                         "card_id": 32,
-                        "media_id": 27,
+                        "media_url": "https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg",
                         "title": "Our Heroes",
                         "caption": "You are the real superheroes.",
                         "likes": 245,

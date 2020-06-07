@@ -34,10 +34,9 @@ CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifying 
 -- Create the special anonymous user that is associated with all cards/tags/likes from non-registered users.
 INSERT IGNORE INTO users (username, display_name, password_hash, email) VALUES ("anonymous", "Anonymous", "", "");
 
--- Create a table to store all uploaded media. Might move this to Amazon S3 later on.
+-- Create a table to store the Amazon S3 URLs of all uploaded media.
 CREATE TABLE media(media_id INT AUTO_INCREMENT PRIMARY KEY,
-                   media_mime_type TEXT,
-                   media_content LONGBLOB
+                   media_url TEXT
 );
 
 -- Create a table to store all cards in the system.

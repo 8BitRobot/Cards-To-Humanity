@@ -38,8 +38,6 @@ public class DatabaseStorage {
 
     private PreparedStatement createMediaStatement;
 
-    private PreparedStatement getMediaStatement;
-
     private PreparedStatement createCardStatement;
 
     private PreparedStatement getCardStatement;
@@ -87,7 +85,6 @@ public class DatabaseStorage {
             createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);
             validateUserStatement = connection.prepareStatement(queries.validateUser);
             createMediaStatement = connection.prepareStatement(queries.createMedia, Statement.RETURN_GENERATED_KEYS);
-            getMediaStatement = connection.prepareStatement(queries.getMedia);
             createCardStatement = connection.prepareStatement(queries.createCard, Statement.RETURN_GENERATED_KEYS);
             getCardStatement = connection.prepareStatement(queries.getCard);
             createTagStatement = connection.prepareStatement(queries.createTag, Statement.RETURN_GENERATED_KEYS);
@@ -168,10 +165,9 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createMedia(String mime_type, byte[] content) {
+    public synchronized int createMedia(String image_url) {
         try {
-            createMediaStatement.setString(1, mime_type);
-            createMediaStatement.setBytes(2, content);
+            createMediaStatement.setString(1, image_url);
             createMediaStatement.executeUpdate();
             ResultSet results = createMediaStatement.getGeneratedKeys();
             if (results.first()) {
@@ -182,22 +178,6 @@ public class DatabaseStorage {
             exception.printStackTrace();
         }
         return -1;
-    }
-
-    public synchronized Media getMedia(int media_id) {
-        try {
-            getMediaStatement.setInt(1, media_id);
-            ResultSet results = getMediaStatement.executeQuery();
-            if (results.first()) {
-                String media_mime_type = results.getString("media_mime_type");
-                byte[] media_content = results.getBytes("media_content");
-                return new Media(media_id, media_mime_type, media_content);
-            }
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return null;
     }
 
     public synchronized int createCard(int user_id, int media_id, String title, String caption) {
@@ -226,12 +206,18 @@ public class DatabaseStorage {
             ResultSet results = getCardStatement.executeQuery();
             if (results.first()) {
                 int user_id = results.getInt("user_id");
-                int media_id = results.getInt("media_id");
+                String media_url = results.getString("media_url");
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
-                String[] tags = results.getString("tags").split(",");
-                return new Card(card_id, user_id, media_id, title, caption, likes, tags);
+                String[] tags;
+                if (results.getString("tags").equals("")) {
+                    tags = new String[0];
+                }
+                else {
+                    tags = results.getString("tags").split(",");
+                }
+                return new Card(card_id, user_id, media_url, title, caption, likes, tags);
             }
         }
         catch (Exception exception) {
@@ -242,15 +228,20 @@ public class DatabaseStorage {
 
     public synchronized Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
         try {
-            getCardsStatement.setString(1, tagged_with);
+            if (tagged_with == null) {
+                getCardsStatement.setString(1, "%");
+            }
+            else {
+                getCardsStatement.setString(1, "%" + tagged_with + "%");
+            }
             if (title_contains == null) {
-                getCardsStatement.setString(2, null);
+                getCardsStatement.setString(2, "%");
             }
             else {
                 getCardsStatement.setString(2, "%" + title_contains + "%");
             }
             if (caption_contains == null) {
-                getCardsStatement.setString(3, null);
+                getCardsStatement.setString(3, "%");
             }
             else {
                 getCardsStatement.setString(3, "%" + caption_contains + "%");
@@ -264,12 +255,18 @@ public class DatabaseStorage {
             while (results.next()) {
                 int card_id = results.getInt("card_id");
                 int user_id = results.getInt("user_id");
-                int media_id = results.getInt("media_id");
+                String media_url = results.getString("media_url");
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
-                String[] tags = results.getString("tags").split(",");
-                cards.add(new Card(card_id, user_id, media_id, title, caption, likes, tags));
+                String[] tags;
+                if (results.getString("tags").equals("")) {
+                    tags = new String[0];
+                }
+                else {
+                    tags = results.getString("tags").split(",");
+                }
+                cards.add(new Card(card_id, user_id, media_url, title, caption, likes, tags));
             }
             Card[] cardsArray = new Card[cards.size()];
             cards.toArray(cardsArray);

@@ -1,6 +1,6 @@
 SELECT user_id,
-       media_id,
        title,
+       media.media_url AS media_url,
        caption,
        (
            SELECT COUNT(*) FROM likes
@@ -8,12 +8,20 @@ SELECT user_id,
                    card_id = ?
        )
        AS likes,
-       (
-           SELECT GROUP_CONCAT(tags.content SEPARATOR ',') FROM tags
-               INNER JOIN taggings
-                   ON tags.tag_id = taggings.tag_id
-               WHERE taggings.card_id = ?
+       COALESCE(
+           (
+                SELECT GROUP_CONCAT(tags.content SEPARATOR ',')
+                FROM tags
+                    INNER JOIN taggings
+                        ON tags.tag_id = taggings.tag_id
+                    WHERE
+                        taggings.card_id = ?
+           )
+           , ''
        )
        AS tags
 FROM cards
-    WHERE card_id = ?
+    INNER JOIN media
+        ON cards.media_id = media.media_id
+    WHERE
+          card_id = ?

@@ -3,17 +3,17 @@ package storage;
 public class Card {
     private int card_id;
     private int user_id;
-    private int media_id;
+    private String media_url;
     private String title;
     private String caption;
 
     private int likes;
     private String[] tags;
 
-    public Card(int card_id, int user_id, int media_id, String title, String caption, int likes, String[] tags) {
+    public Card(int card_id, int user_id, String media_url, String title, String caption, int likes, String[] tags) {
         this.card_id = card_id;
         this.user_id = user_id;
-        this.media_id = media_id;
+        this.media_url = media_url;
         this.title = title;
         this.caption = caption;
 
@@ -29,8 +29,8 @@ public class Card {
         return user_id;
     }
 
-    public int getMediaId() {
-        return media_id;
+    public String getMediaUrl() {
+        return media_url;
     }
 
     public String getTitle() {
@@ -44,7 +44,7 @@ public class Card {
     public String toString() {
         String repr =  "Card #" + card_id + "\n" +
                        "user_id: " + user_id + "\n" +
-                       "media_id: " + media_id + "\n" +
+                       "media_url: " + media_url + "\n" +
                        "title: " + title + "\n" +
                        "caption: " + caption + "\n" +
                        "likes: " + likes + "\n" +

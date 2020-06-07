@@ -17,8 +17,6 @@ public class Queries {
 
     public final String createMedia;
 
-    public final String getMedia;
-
     public final String createCard;
 
     public final String getCard;
@@ -49,7 +47,6 @@ public class Queries {
         getHashedPassword = readResourceFile("sql/gethashedpasswordquery.sql");
         validateUser = readResourceFile("sql/validateuserquery.sql");
         createMedia = readResourceFile("sql/createmediaquery.sql");
-        getMedia = readResourceFile("sql/getmediaquery.sql");
         createCard = readResourceFile("sql/createcardquery.sql");
         getCard = readResourceFile("sql/getcardquery.sql");
         getCards = readResourceFile("sql/getcardsquery.sql");
