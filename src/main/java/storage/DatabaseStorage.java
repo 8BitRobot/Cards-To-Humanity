@@ -210,7 +210,13 @@ public class DatabaseStorage {
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
-                String[] tags = results.getString("tags").split(",");
+                String[] tags;
+                if (results.getString("tags").equals("")) {
+                    tags = new String[0];
+                }
+                else {
+                    tags = results.getString("tags").split(",");
+                }
                 return new Card(card_id, user_id, media_url, title, caption, likes, tags);
             }
         }
@@ -253,7 +259,13 @@ public class DatabaseStorage {
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
-                String[] tags = results.getString("tags").split(",");
+                String[] tags;
+                if (results.getString("tags").equals("")) {
+                    tags = new String[0];
+                }
+                else {
+                    tags = results.getString("tags").split(",");
+                }
                 cards.add(new Card(card_id, user_id, media_url, title, caption, likes, tags));
             }
             Card[] cardsArray = new Card[cards.size()];
