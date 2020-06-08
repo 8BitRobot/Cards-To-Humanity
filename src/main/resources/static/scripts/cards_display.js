@@ -58,7 +58,7 @@ Vue.component("cards-display", {
                     </p>
                 </div>
                 <img v-bind:src="card.media_url" v-bind:alt="card.caption" class="card-image">
-                <a class="view-button">View</a>
+                <a class="view-button" v-bind:href="'/html/view_card.html?card_id=' + card.card_id">View</a>
             </div>
         </div>
     `

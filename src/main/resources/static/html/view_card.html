@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" lang="en" />
+        <meta property="og:title" content="Cards To Humanity">
+        <meta property="og:url" content="https://cards-to-humanity.herokuapp.com/html/view_card.html">
+        <meta property="og:description" content="Spreading positivity, one card at a time.">
+        <title>
+            View Card
+        </title>
+        <link rel="stylesheet" href="/css/signup.css">
+    </head>
+    <body>
+        <div id="vue_div">
+            <h1>
+                Viewing Card: {{ card.title }}
+            </h1>
+            <br>
+            <img v-bind:src="card.media_url">
+            <br>
+            <p>
+                {{ card.caption }}
+            </p>
+            <p>
+                Tagged with: {{ card.tags.join(", ") }}
+            </p>
+            <p>
+                {{ card.likes }} people liked this card.
+            </p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/scripts/api.js"></script>
+        <script src="/scripts/view_card.js"></script>
+    </body>
+</html>
