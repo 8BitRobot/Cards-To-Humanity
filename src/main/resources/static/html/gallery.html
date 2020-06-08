@@ -33,7 +33,10 @@
                 <p>
                     {{ card.title }}
                 </p>
-                <img v-bind:src="card.media_url">
+                <img v-bind:src="card.media_url" v-bind:alt="card.caption">
+                <p>
+                    {{ card.caption }}
+                </p>
                 <br>
                 Tags:
                 <ul v-for="tag in card.tags">
@@ -41,7 +44,9 @@
                         {{ tag }}
                     </li>
                 </ul>
-                {{ card.likes }} likes
+                <p>
+                    {{ card.likes }} likes
+                </p>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
