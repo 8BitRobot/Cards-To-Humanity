@@ -12,6 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,600;1,300;1,500;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/cards_display.css">
         <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
@@ -23,56 +24,23 @@
             </div>
             <h1>Welcome</h1>
             <div id="currently-viewing-dropdown">
-                <p>Currently viewing:</h2>
+                <p>Currently viewing:</p>
+                <br>
+                <span>Cards tagged with:</span> <input type="text" v-model="tagged_with_search_term">
+                <br>
+                <span>Top</span> <input type="number" v-model="top_n_cards"> <span>cards.</span>
+                <br>
+                <span>Title contains:</span> <input type="text" v-model="title_contains_search_term">
+                <br>
+                <span>Caption contains:</span> <input type="text" v-model="caption_contains_search_term">
             </div>
-            <div id="cards">
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-                <div class="card">
-                    <div class="card-info">
-                        <p><em>Profile Name</em></p>
-                        <p><em>Date created</em></p>
-                    </div>
-                    <a class="view-button">View</a>
-                </div>
-            </div>
+            <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
+            </cards-display>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/scripts/api.js"></script>
+        <script src="/scripts/cards_display.js"></script>
         <script src="/scripts/home.js"></script>
     </body>
 </html>

@@ -47,59 +47,14 @@ a {
 #currently-viewing-dropdown {
     width: 90vw;
     margin-left: 5vw;
-    height: 46px;
     background-color: #001F70;
     border-radius: 23px; 
     margin-bottom: 25px;
 }
 
-#currently-viewing-dropdown p {
+#currently-viewing-dropdown p, #currently-viewing-dropdown span {
     color: white;
     display: inline-block;
     line-height: 46px;
     margin-left: 1%;
-}
-
-#cards {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    margin-left: 10vw;
-    margin-right: 10vw;
-}
-
-.card {
-    border: 3px solid #001F70;
-    min-width: 400px;
-    height: 300px;
-    margin-bottom: 25px;
-    border-radius: 13px;
-    position: relative;
-}
-
-.card-info {
-    background-color: #8884;
-    width: 47%;
-    margin-left: 3%;
-    margin-top: 2%;
-    border-radius: 10px;
-}
-
-.card-info p {
-    padding: 6px 0 6px 6px;
-}
-
-.view-button {
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    display: inline-block;
-    position: absolute;
-    bottom: 10px;
-    background-color: #EF4764;
-    color: white;
-    height: 35px;
-    line-height: 35px;
-    border-radius: 17.5px;
-    text-align: center;
 }
