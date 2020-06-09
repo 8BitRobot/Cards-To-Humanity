@@ -16,11 +16,14 @@ class DatabaseConnectionPool {
 
         if (JAWSDB_MARIA_URL == null || JAWSDB_MARIA_URL.equals("")) {
             dataSource.setUrl("jdbc:mariadb://localhost:3306/carecards");
+            dataSource.setValidationQuery("SELECT * FROM users WHERE user_id = 1");
+            dataSource.setValidationQueryTimeout(3);
+            dataSource.setTimeBetweenEvictionRunsMillis(5000);
+            dataSource.setMaxConnLifetimeMillis(60 * 1000);
             dataSource.setUsername("root");
             dataSource.setPassword("none");
             dataSource.setMinIdle(5);
             dataSource.setMaxIdle(10);
-            dataSource.setMaxOpenPreparedStatements(100);
         }
         else {
             try {
@@ -32,11 +35,14 @@ class DatabaseConnectionPool {
                 String jdbUrl = "jdbc:mariadb://" + jdbUri.getHost() + ":" + port + jdbUri.getPath();
 
                 dataSource.setUrl(jdbUrl);
+                dataSource.setValidationQuery("SELECT * FROM users WHERE user_id = 1");
+                dataSource.setValidationQueryTimeout(3);
+                dataSource.setTimeBetweenEvictionRunsMillis(5000);
+                dataSource.setMaxConnLifetimeMillis(60 * 1000);
                 dataSource.setUsername(username);
                 dataSource.setPassword(password);
                 dataSource.setMinIdle(5);
                 dataSource.setMaxIdle(10);
-                dataSource.setMaxOpenPreparedStatements(100);
             }
             catch (URISyntaxException exception) {
                 exception.printStackTrace();
