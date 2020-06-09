@@ -19,6 +19,7 @@ dependencies {
     compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.1.7'
     compile platform('software.amazon.awssdk:bom:2.13.26')
     compile 'software.amazon.awssdk:s3'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.7.0'
     // Dependencies for the tests.
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'

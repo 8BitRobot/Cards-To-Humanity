@@ -6,8 +6,6 @@ package storage;
 
 import security.HashedPassword;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,93 +14,11 @@ import java.util.List;
  * JDBC-based class that connects the application to the database layer. Uses JDBC to talk to MariaDB/MySQL.
  */
 public class DatabaseStorage {
-    /**
-     * The database connection.
-     */
-    private Connection connection;
-
-    /**
-     * Parameterized SQL query to check if a user with a given username/email exists.
-     */
-    private PreparedStatement userExistsStatement;
-
-    /**
-     * Parameterized SQL query to create a new user.
-     */
-    private PreparedStatement createUserStatement;
-
-    /**
-     * Parameterized SQL query to validate a user (for logging in).
-     */
-    private PreparedStatement validateUserStatement;
-
-    private PreparedStatement createMediaStatement;
-
-    private PreparedStatement createCardStatement;
-
-    private PreparedStatement getCardStatement;
-
-    private PreparedStatement createTagStatement;
-
-    private PreparedStatement getTagIdStatement;
-
-    private PreparedStatement getHashedPasswordStatement;
-
-    private PreparedStatement tagCardStatement;
-
-    private PreparedStatement likeCardStatement;
-
-    private PreparedStatement getCardsStatement;
-
-    private PreparedStatement getTagsStatement;
-
-    // See https://devcenter.heroku.com/articles/jawsdb-maria#using-jawsdb-maria-with-java
-    private Connection getConnection() throws URISyntaxException, SQLException {
-        String JAWSDB_MARIA_URL = System.getenv("JAWSDB_MARIA_URL");
-        if (JAWSDB_MARIA_URL == null || JAWSDB_MARIA_URL.equals("")) {
-            JAWSDB_MARIA_URL = "jdbc:mariadb://localhost:3306/carecards?user=root&password=none";
-            return DriverManager.getConnection(JAWSDB_MARIA_URL);
-        }
-
-        URI jdbUri = new URI(JAWSDB_MARIA_URL);
-
-        String username = jdbUri.getUserInfo().split(":")[0];
-        String password = jdbUri.getUserInfo().split(":")[1];
-        String port = String.valueOf(jdbUri.getPort());
-        String jdbUrl = "jdbc:mariadb://" + jdbUri.getHost() + ":" + port + jdbUri.getPath();
-
-        return DriverManager.getConnection(jdbUrl, username, password);
-    }
-
-    /**
-     * Create a new DatabaseStorage object and connect to the DB.
-     */
-    public DatabaseStorage() {
+    public int userExists(String username_or_email) {
         try {
-            connection = getConnection();
-            Queries queries = new Queries();
-            userExistsStatement = connection.prepareStatement(queries.userExists);
-            createUserStatement = connection.prepareStatement(queries.createUser, Statement.RETURN_GENERATED_KEYS);
-            validateUserStatement = connection.prepareStatement(queries.validateUser);
-            createMediaStatement = connection.prepareStatement(queries.createMedia, Statement.RETURN_GENERATED_KEYS);
-            createCardStatement = connection.prepareStatement(queries.createCard, Statement.RETURN_GENERATED_KEYS);
-            getCardStatement = connection.prepareStatement(queries.getCard);
-            createTagStatement = connection.prepareStatement(queries.createTag, Statement.RETURN_GENERATED_KEYS);
-            getTagIdStatement = connection.prepareStatement(queries.getTagId);
-            getHashedPasswordStatement = connection.prepareStatement(queries.getHashedPassword);
-            tagCardStatement = connection.prepareStatement(queries.tagCard, Statement.RETURN_GENERATED_KEYS);
-            likeCardStatement = connection.prepareStatement(queries.likeCard, Statement.RETURN_GENERATED_KEYS);
-            getCardsStatement = connection.prepareStatement(queries.getCards);
-            getTagsStatement = connection.prepareStatement(queries.getTags);
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-            connection = null;
-        }
-    }
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement userExistsStatement = connection.getUserExistsStatement();
 
-    public synchronized int userExists(String username_or_email) {
-        try {
             userExistsStatement.setString(1, username_or_email);
             userExistsStatement.setString(2, username_or_email);
             ResultSet results = userExistsStatement.executeQuery();
@@ -116,8 +32,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
+    public int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement createUserStatement = connection.getCreateUserStatement();
+
             createUserStatement.setString(1, username);
             createUserStatement.setString(2, display_name);
             createUserStatement.setBytes(3, password_hash);
@@ -135,8 +54,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized HashedPassword getHashedPassword(int user_id) {
+    public HashedPassword getHashedPassword(int user_id) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement getHashedPasswordStatement = connection.getGetHashedPasswordStatement();
+
             getHashedPasswordStatement.setInt(1, user_id);
             ResultSet results = getHashedPasswordStatement.executeQuery();
             if (results.first()) {
@@ -149,8 +71,11 @@ public class DatabaseStorage {
         return null;
     }
 
-    public synchronized int validateUser(String username_or_email, byte[] password_hash) {
+    public int validateUser(String username_or_email, byte[] password_hash) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement validateUserStatement = connection.getValidateUserStatement();
+
             validateUserStatement.setString(1, username_or_email);
             validateUserStatement.setString(2, username_or_email);
             validateUserStatement.setBytes(3, password_hash);
@@ -165,8 +90,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createMedia(String image_url) {
+    public int createMedia(String image_url) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement createMediaStatement = connection.getCreateMediaStatement();
+
             createMediaStatement.setString(1, image_url);
             createMediaStatement.executeUpdate();
             ResultSet results = createMediaStatement.getGeneratedKeys();
@@ -180,8 +108,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createCard(int user_id, int media_id, String title, String caption) {
+    public int createCard(int user_id, int media_id, String title, String caption) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement createCardStatement = connection.getCreateCardStatement();
+
             createCardStatement.setInt(1, user_id);
             createCardStatement.setInt(2, media_id);
             createCardStatement.setString(3, title);
@@ -198,8 +129,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized Card getCard(int card_id) {
+    public Card getCard(int card_id) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement getCardStatement = connection.getGetCardStatement();
+
             getCardStatement.setInt(1, card_id);
             getCardStatement.setInt(2, card_id);
             getCardStatement.setInt(3, card_id);
@@ -226,8 +160,11 @@ public class DatabaseStorage {
         return null;
     }
 
-    public synchronized Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
+    public Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement getCardsStatement = connection.getGetCardsStatement();
+
             if (tagged_with == null) {
                 getCardsStatement.setString(1, "%");
             }
@@ -278,8 +215,11 @@ public class DatabaseStorage {
         return new Card[0];
     }
 
-    private synchronized int getTagId(String content) {
+    private int getTagId(String content) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement getTagIdStatement = connection.getGetTagIdStatement();
+
             getTagIdStatement.setString(1, content);
             ResultSet results = getTagIdStatement.executeQuery();
             if (results.first()) {
@@ -292,8 +232,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int createTagOrFindExisting(String content) {
+    public int createTagOrFindExisting(String content) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement createTagStatement = connection.getCreateTagStatement();
+
             createTagStatement.setString(1, content);
             createTagStatement.executeUpdate();
             ResultSet results = createTagStatement.getGeneratedKeys();
@@ -310,8 +253,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int tagCard(int card_id, int tag_id) {
+    public int tagCard(int card_id, int tag_id) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement tagCardStatement = connection.getTagCardStatement();
+
             tagCardStatement.setInt(1, card_id);
             tagCardStatement.setInt(2, tag_id);
             tagCardStatement.executeUpdate();
@@ -326,8 +272,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized int likeCard(int card_id, int user_id) {
+    public int likeCard(int card_id, int user_id) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement likeCardStatement = connection.getLikeCardStatement();
+
             likeCardStatement.setInt(1, card_id);
             likeCardStatement.setInt(2, user_id);
             likeCardStatement.executeUpdate();
@@ -342,8 +291,11 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public synchronized Tag[] getTags(String content_contains, Integer top) {
+    public Tag[] getTags(String content_contains, Integer top) {
         try {
+            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
+            PreparedStatement getTagsStatement = connection.getGetTagsStatement();
+
             getTagsStatement.setString(1, "%" + content_contains + "%");
             if (top == null || top > 100) {
                 top = 100;
