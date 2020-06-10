@@ -14,10 +14,32 @@ import java.util.List;
  * JDBC-based class that connects the application to the database layer. Uses JDBC to talk to MariaDB/MySQL.
  */
 public class DatabaseStorage {
+    private void cleanup(Connection connection, PreparedStatement preparedStatement) {
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            }
+            catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            }
+            catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
     public int userExists(String username_or_email) {
+        Connection connection = null;
+        PreparedStatement userExistsStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement userExistsStatement = connection.getUserExistsStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            userExistsStatement = connection.prepareStatement(Queries.userExists);
 
             userExistsStatement.setString(1, username_or_email);
             userExistsStatement.setString(2, username_or_email);
@@ -29,13 +51,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, userExistsStatement);
+        }
         return -1;
     }
 
     public int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
+        Connection connection = null;
+        PreparedStatement createUserStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement createUserStatement = connection.getCreateUserStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            createUserStatement = connection.prepareStatement(Queries.createUser, Statement.RETURN_GENERATED_KEYS);
 
             createUserStatement.setString(1, username);
             createUserStatement.setString(2, display_name);
@@ -51,13 +79,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, createUserStatement);
+        }
         return -1;
     }
 
     public HashedPassword getHashedPassword(int user_id) {
+        Connection connection = null;
+        PreparedStatement getHashedPasswordStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement getHashedPasswordStatement = connection.getGetHashedPasswordStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            getHashedPasswordStatement = connection.prepareStatement(Queries.getHashedPassword);
 
             getHashedPasswordStatement.setInt(1, user_id);
             ResultSet results = getHashedPasswordStatement.executeQuery();
@@ -68,13 +102,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, getHashedPasswordStatement);
+        }
         return null;
     }
 
     public int validateUser(String username_or_email, byte[] password_hash) {
+        Connection connection = null;
+        PreparedStatement validateUserStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement validateUserStatement = connection.getValidateUserStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            validateUserStatement = connection.prepareStatement(Queries.validateUser);
 
             validateUserStatement.setString(1, username_or_email);
             validateUserStatement.setString(2, username_or_email);
@@ -87,13 +127,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, validateUserStatement);
+        }
         return -1;
     }
 
     public int createMedia(String image_url) {
+        Connection connection = null;
+        PreparedStatement createMediaStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement createMediaStatement = connection.getCreateMediaStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            createMediaStatement = connection.prepareStatement(Queries.createMedia, Statement.RETURN_GENERATED_KEYS);
 
             createMediaStatement.setString(1, image_url);
             createMediaStatement.executeUpdate();
@@ -105,13 +151,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, createMediaStatement);
+        }
         return -1;
     }
 
     public int createCard(int user_id, int media_id, String title, String caption) {
+        Connection connection = null;
+        PreparedStatement createCardStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement createCardStatement = connection.getCreateCardStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            createCardStatement = connection.prepareStatement(Queries.createCard, Statement.RETURN_GENERATED_KEYS);
 
             createCardStatement.setInt(1, user_id);
             createCardStatement.setInt(2, media_id);
@@ -126,13 +178,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, createCardStatement);
+        }
         return -1;
     }
 
     public Card getCard(int card_id) {
+        Connection connection = null;
+        PreparedStatement getCardStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement getCardStatement = connection.getGetCardStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            getCardStatement = connection.prepareStatement(Queries.getCard);
 
             getCardStatement.setInt(1, card_id);
             getCardStatement.setInt(2, card_id);
@@ -157,13 +215,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, getCardStatement);
+        }
         return null;
     }
 
     public Card[] getCards(String tagged_with, Integer top, String title_contains, String caption_contains) {
+        Connection connection = null;
+        PreparedStatement getCardsStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement getCardsStatement = connection.getGetCardsStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            getCardsStatement = connection.prepareStatement(Queries.getCards);
 
             if (tagged_with == null) {
                 getCardsStatement.setString(1, "%");
@@ -212,13 +276,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, getCardsStatement);
+        }
         return new Card[0];
     }
 
     private int getTagId(String content) {
+        Connection connection = null;
+        PreparedStatement getTagIdStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement getTagIdStatement = connection.getGetTagIdStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            getTagIdStatement = connection.prepareStatement(Queries.getTagId);
 
             getTagIdStatement.setString(1, content);
             ResultSet results = getTagIdStatement.executeQuery();
@@ -229,13 +299,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, getTagIdStatement);
+        }
         return -1;
     }
 
     public int createTagOrFindExisting(String content) {
+        Connection connection = null;
+        PreparedStatement createTagStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement createTagStatement = connection.getCreateTagStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            createTagStatement = connection.prepareStatement(Queries.createTag, Statement.RETURN_GENERATED_KEYS);
 
             createTagStatement.setString(1, content);
             createTagStatement.executeUpdate();
@@ -250,13 +326,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, createTagStatement);
+        }
         return -1;
     }
 
     public int tagCard(int card_id, int tag_id) {
+        Connection connection = null;
+        PreparedStatement tagCardStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement tagCardStatement = connection.getTagCardStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            tagCardStatement = connection.prepareStatement(Queries.tagCard, Statement.RETURN_GENERATED_KEYS);
 
             tagCardStatement.setInt(1, card_id);
             tagCardStatement.setInt(2, tag_id);
@@ -269,13 +351,19 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, tagCardStatement);
+        }
         return -1;
     }
 
     public int likeCard(int card_id, int user_id) {
+        Connection connection = null;
+        PreparedStatement likeCardStatement = null;
+
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement likeCardStatement = connection.getLikeCardStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            likeCardStatement = connection.prepareStatement(Queries.likeCard, Statement.RETURN_GENERATED_KEYS);
 
             likeCardStatement.setInt(1, card_id);
             likeCardStatement.setInt(2, user_id);
@@ -288,13 +376,18 @@ public class DatabaseStorage {
         catch (Exception exception) {
             exception.printStackTrace();
         }
+        finally {
+            cleanup(connection, likeCardStatement);
+        }
         return -1;
     }
 
     public Tag[] getTags(String content_contains, Integer top) {
+        Connection connection = null;
+        PreparedStatement getTagsStatement = null;
         try {
-            DatabaseConnection connection = DatabaseConnectionPool.getDatabaseConnection();
-            PreparedStatement getTagsStatement = connection.getGetTagsStatement();
+            connection = DatabaseConnectionPool.getConnection();
+            getTagsStatement = connection.prepareStatement(Queries.getTags);
 
             getTagsStatement.setString(1, "%" + content_contains + "%");
             if (top == null || top > 100) {
@@ -315,6 +408,9 @@ public class DatabaseStorage {
         }
         catch (Exception exception) {
             exception.printStackTrace();
+        }
+        finally {
+            cleanup(connection, getTagsStatement);
         }
         return new Tag[0];
     }

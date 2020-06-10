@@ -7,40 +7,40 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 public class Queries {
-    public final String userExists;
+    public static final String userExists;
 
-    public final String createUser;
+    public static final String createUser;
 
-    public final String getHashedPassword;
+    public static final String getHashedPassword;
 
-    public final String validateUser;
+    public static final String validateUser;
 
-    public final String createMedia;
+    public static final String createMedia;
 
-    public final String createCard;
+    public static final String createCard;
 
-    public final String getCard;
+    public static final String getCard;
 
-    public final String getCards;
+    public static final String getCards;
 
-    public final String createTag;
+    public static final String createTag;
 
-    public final String getTagId;
+    public static final String getTagId;
 
-    public final String tagCard;
+    public static final String tagCard;
 
-    public final String likeCard;
+    public static final String likeCard;
 
-    public final String getTags;
+    public static final String getTags;
 
-    private ClassLoader classLoader;
+    private static ClassLoader classLoader;
 
-    private String readResourceFile(String fileName) {
+    private static String readResourceFile(String fileName) {
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
         return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
     }
 
-    public Queries() {
+    static {
         classLoader = Thread.currentThread().getContextClassLoader();
         userExists = readResourceFile("sql/userexistsquery.sql");
         createUser = readResourceFile("sql/createuserquery.sql");
