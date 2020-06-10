@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 class DatabaseConnectionPool {
 
+    private static int MAX_ALLOWED_DB_CONNECTIONS = 10;
     private static BasicDataSource dataSource = new BasicDataSource();
 
     static {
@@ -24,6 +25,7 @@ class DatabaseConnectionPool {
             dataSource.setPassword("none");
             dataSource.setMinIdle(5);
             dataSource.setMaxIdle(10);
+            dataSource.setMaxTotal(MAX_ALLOWED_DB_CONNECTIONS - 2);
         }
         else {
             try {
@@ -43,6 +45,7 @@ class DatabaseConnectionPool {
                 dataSource.setPassword(password);
                 dataSource.setMinIdle(5);
                 dataSource.setMaxIdle(10);
+                dataSource.setMaxTotal(MAX_ALLOWED_DB_CONNECTIONS - 2);
             }
             catch (URISyntaxException exception) {
                 exception.printStackTrace();
