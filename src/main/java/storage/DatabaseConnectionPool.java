@@ -31,6 +31,7 @@ class DatabaseConnectionPool {
                 dataSource.setAutoCommitOnClose(true);
                 dataSource.setAutomaticTestTable("connection_pooling_test_table");
                 dataSource.setIdleConnectionTestPeriod(60);
+                dataSource.setTestConnectionOnCheckout(true); // TODO: Remove this if at all possible because it impedes performance.
                 dataSource.setMaxConnectionAge(60 * 5);
                 dataSource.setMaxStatementsPerConnection(50);
             }
@@ -55,6 +56,7 @@ class DatabaseConnectionPool {
                     dataSource.setAutoCommitOnClose(true);
                     dataSource.setAutomaticTestTable("connection_pooling_test_table");
                     dataSource.setIdleConnectionTestPeriod(60);
+                    dataSource.setTestConnectionOnCheckout(true); // TODO: Remove this if at all possible because it impedes performance.
                     dataSource.setMaxConnectionAge(60 * 5);
                     dataSource.setMaxStatementsPerConnection(50);
                 } catch (URISyntaxException exception) {
