@@ -20,6 +20,7 @@ dependencies {
     compile platform('software.amazon.awssdk:bom:2.13.26')
     compile 'software.amazon.awssdk:s3'
     compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.5'
+    compile 'com.sendgrid:sendgrid-java:4.6.0'
     // Dependencies for the tests.
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
