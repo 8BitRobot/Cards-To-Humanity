@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import org.eclipse.jetty.server.session.*;
+import outreach.EmailSender;
 import storage.DatabaseStorage;
 
 import java.net.URI;
@@ -117,5 +118,17 @@ public class Main {
         app.post("/tag_card", tag_card_endpoint);
         app.get("/get_tags", get_tags_endpoint);
         app.post("/like_card", like_card_endpoint);
+
+        EmailSender emailSender = null;
+        String SENDGRID_API_KEY = System.getenv("SENDGRID_API_KEY");
+        if (SENDGRID_API_KEY == null || SENDGRID_API_KEY.equals("")) {
+            System.out.println("Warning: Please set the SENDGRID_API_KEY environment variable for CardsToHumanity to be able to send emails.");
+        }
+        else {
+            emailSender = new EmailSender(SENDGRID_API_KEY, databaseStorage);
+            String[] to = {"featherfeet5436@gmail.com", "ot3099@pleasantonusd.net", "olivertrevor@sbcglobal.net", "suchin.ravi@wonksknow.com"};
+            boolean sent = emailSender.scheduleEmail(to, null, "Test Email from CardsToHumanity", 1592108195);
+            System.out.println("sent: " + sent);
+        }
     }
 }

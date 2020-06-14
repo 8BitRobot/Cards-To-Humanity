@@ -95,7 +95,7 @@ CREATE TABLE likes(like_id INT AUTO_INCREMENT PRIMARY KEY,
 CREATE TABLE emails(email_id INT AUTO_INCREMENT PRIMARY KEY,
                     scheduled_sending_time DATETIME,            -- The date and time that the email is scheduled to be sent at.
                     actual_sending_time DATETIME,               -- The date and time that the SendGrid program actually sent the email at.
-                    sent BOOLEAN                               -- true if the email has been sent. false if it has not yet been sent.
+                    sent BOOLEAN                                -- true if the email has been sent. false if it has not yet been sent.
 );
 
 -- Create a table that stores which cards were sent in which emails. A single email can contain multiple cards.
