@@ -1,10 +1,6 @@
 package outreach;
 
 import com.sendgrid.*;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
-import com.sendgrid.helpers.mail.objects.Personalization;
 import storage.DatabaseStorage;
 
 import java.io.IOException;
@@ -31,11 +27,11 @@ public class EmailSender {
 
         Request request = new Request();
         try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
+            request.method = Method.POST;
+            request.endpoint = "mail/send";
+            request.body = mail.build();
             Response response = sendGrid.api(request);
-            if (response.getStatusCode() == 200) {
+            if (response.statusCode == 200) {
                 return true;
             }
         }
