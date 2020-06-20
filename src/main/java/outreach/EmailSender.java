@@ -18,6 +18,7 @@ public class EmailSender {
         for (int i = 0; i < recipients.length; i++) {
             personalization.addBcc(new Email(recipients[i]));
         }
+        personalization.addTo(new Email("empty@cardstohumanity.org"));
         mail.addPersonalization(personalization);
         mail.setFrom(new Email("outgoingcards@cardstohumanity.org"));
         mail.setSubject(subject);

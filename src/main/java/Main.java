@@ -127,7 +127,7 @@ public class Main {
         else {
             emailSender = new EmailSender(SENDGRID_API_KEY, databaseStorage);
             String[] to = {"featherfeet5436@gmail.com", "ot3099@pleasantonusd.net", "olivertrevor@sbcglobal.net", "suchin.ravi@wonksknow.com"};
-            boolean sent = emailSender.scheduleEmail(to, null, "Test Email from CardsToHumanity", 1592109978);
+            boolean sent = emailSender.scheduleEmail(to, null, "Test Email from CardsToHumanity", 1592615315);
             System.out.println("sent: " + sent);
         }
     }
