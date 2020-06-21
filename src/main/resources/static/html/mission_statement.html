@@ -15,6 +15,7 @@
     <body>
         <header>
             <img src="/img/logo.png">
+            <i onclick="mobileMenu(this)" id="mobile-dropdown" class="fas fa-chevron-down"></i>
             <div id="nav-links">
                 <a href="/home.html">Home</a>
                 <a href="/mission_statement.html">About Us</a>
@@ -23,7 +24,28 @@
                 <a href="PAYPAL_LINK">Donate</a>
                 <a id="create-card-button" href="/create_card.html">Submit</a>
             </div>
+            <div id="nav-links-mobile">
+                <a href="/home.html">Home</a>
+                <a href="/mission_statement.html">About Us</a>
+                <a href="/instructions.html">Instructions</a>
+                <a href="/resources.html">Resources</a>
+                <a href="PAYPAL_LINK">Donate</a>
+                <a id="create-card-button" href="/create_card.html">Submit</a>
+            </div>
         </header>
+        <script>
+            function mobileMenu(el) {
+                el.style.transition = "0.3s";
+                if (document.getElementById("nav-links-mobile").style.display == "none") {
+                    document.getElementById("nav-links-mobile").style.display = "block";
+                    el.style.transform = "rotate(180deg)";
+                } else {
+                    document.getElementById("nav-links-mobile").style.display = "none";
+                    el.style.transform = "rotate(0deg)";
+                }
+            }
+            mobileMenu(document.getElementById("mobile-dropdown"));
+        </script>
         <div id="circle-1" class="circle"></div>
         <div id="circle-2" class="circle"></div>
         <div id="circle-3" class="circle"></div>
