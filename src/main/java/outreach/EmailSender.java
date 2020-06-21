@@ -18,11 +18,11 @@ public class EmailSender {
         for (int i = 0; i < recipients.length; i++) {
             personalization.addBcc(new Email(recipients[i]));
         }
-        personalization.addTo(new Email("empty@cardstohumanity.org"));
+        personalization.addTo(new Email("empty@cardstohumanity.com"));
         mail.addPersonalization(personalization);
-        mail.setFrom(new Email("outgoingcards@cardstohumanity.org"));
+        mail.setFrom(new Email("outgoingcards@cardstohumanity.com", "Cards To Humanity"));
         mail.setSubject(subject);
-        Content content = new Content("text/plain", "HELLO WORLD!");
+        Content content = new Content("text/plain", "HELLO WORLD again!");
         mail.addContent(content);
         mail.setSendAt(sendingTime);
 
@@ -32,7 +32,10 @@ public class EmailSender {
             request.endpoint = "mail/send";
             request.body = mail.build();
             Response response = sendGrid.api(request);
-            if (response.statusCode == 200) {
+            System.out.println(response);
+            System.out.println(response.body);
+            System.out.println(response.statusCode);
+            if (response.statusCode == 200 || response.statusCode == 202) {
                 return true;
             }
         }
