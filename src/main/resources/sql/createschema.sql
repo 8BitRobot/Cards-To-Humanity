@@ -90,3 +90,37 @@ CREATE TABLE likes(like_id INT AUTO_INCREMENT PRIMARY KEY,
                            ON DELETE SET NULL,
                     UNIQUE INDEX unique_like_index(card_id, user_id)  -- Users cannot like a post more than once.
 );
+
+-- Create a table that stores emails to be sent and that have been sent.
+CREATE TABLE emails(email_id INT AUTO_INCREMENT PRIMARY KEY,
+                    scheduled_sending_time DATETIME,            -- The date and time that the email is scheduled to be sent at.
+                    actual_sending_time DATETIME,               -- The date and time that the SendGrid program actually sent the email at.
+                    sent BOOLEAN                                -- true if the email has been sent. false if it has not yet been sent.
+);
+
+-- Create a table that stores which cards were sent in which emails. A single email can contain multiple cards.
+CREATE TABLE email_contents(email_content_id INT AUTO_INCREMENT PRIMARY KEY,
+                            email_id INT,
+                                CONSTRAINT foreign_key_email_id
+                                FOREIGN KEY (email_id)
+                                    REFERENCES emails(email_id)
+                                    ON DELETE CASCADE,
+                            card_id INT,
+                                CONSTRAINT foreign_key_card_id
+                                FOREIGN KEY (card_id)
+                                    REFERENCES cards(card_id)
+                                    ON DELETE CASCADE,
+                            UNIQUE INDEX unique_email_content_index(email_id, card_id)
+);
+
+-- Create a table that stores to whom emails were sent. A single email can have multiple recipients.
+CREATE TABLE email_recipients(email_recipient_id INT AUTO_INCREMENT PRIMARY KEY,
+                              email_id INT,
+                                  CONSTRAINT foreign_key_email_id
+                                  FOREIGN KEY (email_id)
+                                      REFERENCES emails(email_id)
+                                      ON DELETE CASCADE,
+                              recipient_address VARCHAR(254),
+                              UNIQUE INDEX unique_email_recipient_index(email_id, recipient_address)
+);
+

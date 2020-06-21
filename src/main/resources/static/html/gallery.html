@@ -9,6 +9,10 @@
         <title>
             Gallery
         </title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,600;1,300;1,500;1,600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/cards_display.css">
         <link rel="stylesheet" href="/css/gallery.css">
     </head>
     <body>
@@ -27,40 +31,21 @@
             <h2>
                 Currently Viewing:
             </h2>
-            Cards tagged with: <input type="text" v-model="tagged_with_search_term" @change="fetchCards">
+            Cards tagged with: <input type="text" v-model="tagged_with_search_term">
             <br>
-            Top <input type="number" v-model="top_n_cards" @change="fetchCards"> cards.
+            Top <input type="number" v-model="top_n_cards"> cards.
             <br>
-            Title contains: <input type="text" v-model="title_contains_search_term" @change="fetchCards">
+            Title contains: <input type="text" v-model="title_contains_search_term">
             <br>
-            Caption contains: <input type="text" v-model="caption_contains_search_term" @change="fetchCards">
+            Caption contains: <input type="text" v-model="caption_contains_search_term">
             <br>
-            <h2>
-                Cards ({{ cards.length}} shown)
-            </h2>
-            <div class="card" v-for="card in cards" :key="card.card_id">
-                <p>
-                    {{ card.title }}
-                </p>
-                <img v-bind:src="card.media_url" v-bind:alt="card.caption">
-                <p>
-                    {{ card.caption }}
-                </p>
-                <br>
-                Tags:
-                <ul v-for="tag in card.tags">
-                    <li>
-                        {{ tag }}
-                    </li>
-                </ul>
-                <p>
-                    {{ card.likes }} likes
-                </p>
-            </div>
+            <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
+            </cards-display>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/scripts/api.js"></script>
+        <script src="/scripts/cards_display.js"></script>
         <script src="/scripts/gallery.js"></script>
     </body>
 </html>
