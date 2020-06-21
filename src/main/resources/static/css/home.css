@@ -57,15 +57,22 @@ a {
     color: white;
     display: inline-block;
     line-height: 46px;
-    margin-left: 1%;
+    margin-left: 20px;
+}
+
+#currently-viewing-dropdown i {
+    color: white;
+    float: right;
+    line-height: 46px;
+    margin-right: 20px;
 }
 
 #cards {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
-    margin-left: 10vw;
-    margin-right: 10vw;
+    justify-content: center;
+    margin-left: 5vw;
+    margin-right: 5vw;
 }
 
 .card {
@@ -73,6 +80,8 @@ a {
     min-width: 400px;
     height: 300px;
     margin-bottom: 25px;
+    margin-left: 12.5px;
+    margin-right: 12.5px;
     border-radius: 13px;
     position: relative;
 }
@@ -102,4 +111,52 @@ a {
     line-height: 35px;
     border-radius: 17.5px;
     text-align: center;
+}
+
+@media only screen and (max-width: 1480px) {
+    #flying-cards img:first-child {
+        left: 100px;
+    }
+}
+
+@media only screen and (max-width: 1175px) {
+    #flying-cards img:first-child {
+        top: 95px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    #flying-cards img:last-child {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    #flying-cards img:first-child {
+        left: 190px;
+    }
+
+    #flying-cards img:nth-child(2) {
+        left: 10px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .card {
+        min-width: unset;
+        width: 90vw;
+    }
+
+    .card-info {
+        width: 94%;
+    }
+
+    h1 {
+        font-size: 55px;
+        line-height: 55px;
+    }
+
+    #flying-cards {
+        display: none;
+    }
 }

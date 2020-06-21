@@ -14,6 +14,8 @@ const app = new Vue(
                         if (files && files[0]) {
                             reader.onload = (e) => {
                                 this.uploaded_image_base64 = e.target.result;
+                                document.querySelector("#uploaded-image-container img").style.width = "90%";
+                                document.querySelector("#card-container p").style.display = "none";
                             }
                             let upload = reader.readAsDataURL(files[0]);
                         }

@@ -14,8 +14,7 @@ h1, h3, p, input, button, label {
 }
 
 #instructions-container {
-    margin-top: 11.915vh;
-    margin-left: 10.365vw;
+    margin-left: 10vw;
     float: left;
     width: 20.177vw;
 }
@@ -49,6 +48,7 @@ input[type="file"] {
 }
 
 .submit-button {
+    outline: none;
     border: none;
     border-radius: 21px;
     background-color: #EF476F;
@@ -85,10 +85,15 @@ input[type="file"] {
 
 #uploaded-image-container {
     line-height: 38.231vh;
+    height: 100%;
+    width: 100%;
 }
 
 #uploaded-image-container img {
     width: 11.458vw;
+    height: 90%;
+    border-radius: 30px;
+    object-fit: contain;
     display: inline-block;
     vertical-align: middle; 
 }
@@ -101,7 +106,7 @@ input[type="file"] {
     line-height: 17px;
     margin-left: auto;
     margin-right: auto;
-    width: 14.375vw;
+    width: 80%;
 }
 
 #inputs {
@@ -170,6 +175,30 @@ input[type="file"] {
     z-index: -2;
 }
 
+@media only screen and (min-width: 750px) {
+    #wavy-line-background {
+        background-image: url("../img/create_card/curve_1_1000px.png");
+    }
+}
+
+@media only screen and (min-width: 1250px) {
+    #wavy-line-background {
+        background-image: url("../img/create_card/curve_1_1500px.png");
+    }
+}
+
+@media only screen and (min-width: 1750px) {
+    #wavy-line-background {
+        background-image: url("../img/create_card/curve_1_2000px.png");
+    }
+}
+
+@media only screen and (min-width: 2250px) {
+    #wavy-line-background {
+        background-image: url("../img/create_card/curve_1_2500px.png");
+    }
+}
+
 #card-circles-left {
 	position: absolute;
     bottom: -90px;
@@ -185,6 +214,71 @@ input[type="file"] {
 }
 
 #card-circles-right {
+    text-align: right;
     position: absolute;
     right: 0;
+    bottom: 0;
+}
+
+#card-circles-right img {
+    width: 66%;
+}
+
+@media only screen and (max-width: 1200px) {
+    .decorative-image {
+        display: none;
+    }
+
+    #card-container {
+        margin-right: 7vw;
+        margin-top: 137px;
+        width: 46.823vw;
+    }
+
+    #inputs {
+        width: 46.823vw;
+        min-width: 300px;
+    }
+}
+
+@media only screen and (max-width: 930px) {
+    #instructions-container, #upload-container {
+        width: 90vw;
+        margin-left: 5vw;
+        float: none;
+    }
+
+    #upload-container {
+        width: max-content;
+        min-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #card-container {
+        margin-right: 0;
+        margin-top: 50px;
+        min-width: 300px;
+    }
+
+    #uploaded-image-container img {
+        width: 130px;
+    }
+
+    #inputs input {
+        width: 98%;
+        margin-right: 0;
+        min-width: 290px;
+        padding-left: 10px;
+    }
+
+    #submit {
+        margin-bottom: 30px;
+    }
+
+    #wavy-line-background {
+        height: 100%;
+        min-height: 74vh;
+        background-position: bottom;
+    }
 }

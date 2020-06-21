@@ -6,16 +6,16 @@ body, p {
     margin: 0;
 }
 
+body {
+    margin-bottom: -442px;
+}
+
 h1, h3, p {
     font-family: Poppins, sans-serif;
 }
 
 p {
     font-size: 22px;
-}
-
-header {
-    height: 69px;
 }
 
 .circle {
@@ -111,6 +111,10 @@ header {
 }
 
 @media only screen and (max-width: 1200px) {
+    body {
+        margin-bottom: -316px;
+    }
+
     #circle-5 {
         bottom: 120px;
     }
@@ -131,6 +135,10 @@ header {
 }
 
 @media only screen and (max-width: 1000px) {
+    body {
+        margin-bottom: -275px;
+    }
+
     #circle-6 {
         display: none;
     }
@@ -146,6 +154,10 @@ header {
 }
 
 @media only screen and (max-width: 600px) {
+    body {
+        margin-bottom: 0;
+    }
+
     #circle-5, #circle-7 {
         display: none;
     }

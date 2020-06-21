@@ -1,0 +1,94 @@
+#vue_div {
+    padding-top: 100px;
+}
+
+header {
+    height: 69px;
+    width: 100vw;
+    background-color: white;
+    position: fixed;
+}
+
+header img {
+    height: 100%;
+    margin-left: 3.75vw;
+}
+
+#nav-links {
+    float: right;
+    line-height: 69px;
+    text-align: right;
+}
+
+#nav-links a {
+    font-family: Poppins, sans-serif;
+    text-decoration: none;
+    color: #0057A3;
+    font-size: 22px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 15px;
+}
+
+#nav-links .create-card-button, #nav-links-mobile .create-card-button {
+    color: white;
+    background-color: #EF476F;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    margin-top: 30px;
+    border-radius: 30px;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+#nav-links a:hover, #nav-links #create-card-button:hover {
+    background-color: #0057A3;
+    color: white;
+}
+
+#nav-links-mobile {
+    background-color: white;
+    display: none;
+    margin-top: -4px;
+    padding-bottom: 4px;
+}
+
+#mobile-dropdown {
+    display: none;
+    line-height: 69px;
+    float: right;
+    margin-right: 20px;
+    padding: 0 10px;
+    font-size: 25px;
+    vertical-align: top;
+    color: black;
+}
+
+#nav-links-mobile a {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    margin: 5px 0;
+    text-decoration: none;
+    font-family: Poppins, sans-serif;
+    color: black;
+}
+
+#nav-links-mobile a:first-child {
+    margin-top: 0;
+}
+
+@media only screen and (max-width: 1054px) {
+    #nav-links {
+        display: none;
+    }
+
+    #nav-links-mobile {
+        display: none;
+    }
+
+    #mobile-dropdown {
+        display: inline-block;
+    }
+}

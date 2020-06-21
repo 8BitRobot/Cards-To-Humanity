@@ -1,0 +1,93 @@
+body {
+    background-image: url(/img/daily_card_sign_up/background.png);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    min-height: 100vh;
+    background-color: #0057A3;
+}
+
+h1, h3 {
+    text-align: center;
+    color: white;
+    margin-bottom: 57px;
+}
+
+h1 {
+    font-size: 56px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 34px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#container {
+    background-color: white;
+}
+
+#form input {
+    border: 5px solid #0057A3;
+}
+
+#form .row1 {
+    display: block;
+    width: 42%;
+    margin: 35px 7px;
+}
+
+#form .row2 {
+    width: 95%;
+    padding-left: 15px;
+}
+
+#form .row1.first {
+    float: left;
+}
+
+#form .row1.second {
+    float: right;
+}
+
+#form {
+    padding-bottom: 30px;
+}
+
+@media only screen and (max-width: 700px) {
+    h1 {
+        font-size: 44px;
+        line-height: 58px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h3 {
+        width: 70%;
+    }
+
+    #form {
+        padding-top: 10px;
+    }
+
+    #form input.row1.first, #form input.row1.second, #form input.row2 {
+        margin: 20px auto 0;
+        float: unset;
+    }
+
+    #form .row1 {
+        width: 90%;
+    }
+
+    #form input.row2 {
+        padding-left: 10px;
+        width: 90%;
+    }
+
+    #form button {
+        margin-top: 20px;
+    }
+}
