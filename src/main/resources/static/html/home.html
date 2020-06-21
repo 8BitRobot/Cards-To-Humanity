@@ -60,7 +60,6 @@
             <h1>Welcome</h1>
             <div id="currently-viewing-dropdown">
                 <p>Currently viewing:</p>
-<<<<<<< HEAD
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div id="cards">
@@ -106,16 +105,6 @@
                     </div>
                     <a class="view-button">View</a>
                 </div>
-=======
-                <br>
-                <span>Cards tagged with:</span> <input type="text" v-model="tagged_with_search_term">
-                <br>
-                <span>Top</span> <input type="number" v-model="top_n_cards"> <span>cards.</span>
-                <br>
-                <span>Title contains:</span> <input type="text" v-model="title_contains_search_term">
-                <br>
-                <span>Caption contains:</span> <input type="text" v-model="caption_contains_search_term">
->>>>>>> 0cb13c38a64e15645be3321b88e34eede26c84b8
             </div>
             <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
             </cards-display>
