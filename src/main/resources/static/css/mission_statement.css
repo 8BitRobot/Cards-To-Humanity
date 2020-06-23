@@ -204,9 +204,20 @@ p {
     color: #0057A3;
 }
 
-#mission-statement-top h3 {
+h3 {
     font-size: 26px;
     margin: 0;
+    color: white;
+}
+
+.instructions-text {
+    padding-right: 15.455vw;
+    padding-bottom: 130px;
+}
+
+.instructions-text h3 {
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 #mission-statement-top p {
@@ -292,3 +303,21 @@ p {
     }
 }
 
+p a {
+    color: white;
+    text-decoration: none;
+}
+
+p a:hover {
+    color: #EF476F;
+}
+
+.ol-on-a-budget {
+    margin: 20px 0 20px 20px;
+}
+
+@media only screen and (max-width: 450px) {
+    h1#instructions-h1 {
+        font-size: 40px;
+    }
+}
