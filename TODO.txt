@@ -1,0 +1,4 @@
+BACKEND:
+Add timestamps to various parts of the software.
+Add profile pictures to users.
+Finish email scheduling and sending.

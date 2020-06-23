@@ -1,6 +1,7 @@
-# VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make breaking changes). -- Initial version
+# VERSION 0.0.1 OF THE CARECARDS API (change this version number if you make changes). -- Initial version
 # VERSION 0.0.2 OF THE CARECARDS API -- Specified how getCards criterion are combined together. Made all returned arrays into objects for security reasons. Specified the attack-mitigation for(;;); at the start of all JSON.
 # VERSION 0.0.3 OF THE CARECARDS API -- Redesigned API significantly in order to use AWS S3 for storing images, and to retrieve image URLs with cards.
+# VERSION 0.0.4 OF THE CARECARDS API -- Added the /get_user_info API endpoint.
 
 NOTE (added in 0.0.2): All JSON responses are prefixed with for(;;); to mitigate certain AJAX-based attacks.
 
@@ -41,6 +42,19 @@ Login required: YES
 No parameters.
 Response:
     - Responds with HTTP 200 for a successful logout.
+
+GET /get_user_info
+Purpose: Retrieve the profile information of a logged-in user.
+Login required: YES
+No parameters.
+Response:
+    - Responds with HTTP 200 and JSON like this:
+    {
+        username: "dogsarekool",
+        display_name: "Dogs Are Cool",
+        email: "dogsarekool@gmail.com"
+    }
+    - Responds with HTTP 400 and an error message if something failed.
 
 POST /upload_media
 Purpose: Upload a new piece of media to the server.

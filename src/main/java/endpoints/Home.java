@@ -4,6 +4,6 @@ import io.javalin.http.Handler;
 
 public class Home implements Handler {
     public void handle(Context ctx) {
-        ctx.redirect("/html/home.html");
+        ctx.redirect("/home.html");
     }
 }

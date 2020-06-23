@@ -175,17 +175,17 @@ function apiTagCard(card_id, tag_id) {
 }
 
 function apiGetTags(content_contains, top) {
-    var post_parameters = {};
+    var get_parameters = {};
     if (content_contains != null) {
-        post_parameters.content_contains = content_contains;
+        get_parameters.content_contains = content_contains;
     }
     if (top != null) {
-        post_parameters.top = top;
+        get_parameters.top = top;
     }
 
     return new Promise((resolve, reject) => {
         axios.get("/get_tags", {
-            params: post_parameters
+            params: get_parameters
         })
             .then(function(response) {
                 var decoded = apiDecodeJsonResponse(response.data);
@@ -213,4 +213,19 @@ function apiLikeCard(card_id) {
                 });
         }
     );
+}
+
+function apiGetUserInfo() {
+    return new Promise((resolve, reject) => {
+        axios.get("/get_user_info", {
+        })
+            .then(function(response) {
+                var decoded = apiDecodeJsonResponse(response.data);
+                resolve(decoded);
+            })
+            .catch(function(error) {
+                console.log("Get user info endpoint error.");
+                reject(error.response.data);
+            })
+    });
 }

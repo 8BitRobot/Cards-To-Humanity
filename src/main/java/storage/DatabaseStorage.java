@@ -57,6 +57,32 @@ public class DatabaseStorage {
         return -1;
     }
 
+    public UserInfo getUserInfo(int user_id) {
+        Connection connection = null;
+        PreparedStatement getUserInfoStatement = null;
+
+        try {
+            connection = DatabaseConnectionPool.getConnection();
+            getUserInfoStatement = connection.prepareStatement(Queries.getUserInfo);
+
+            getUserInfoStatement.setInt(1, user_id);
+            ResultSet results = getUserInfoStatement.executeQuery();
+            if (results.first()) {
+                String username = results.getString("username");
+                String display_name = results.getString("display_name");
+                String email = results.getString("email");
+                return new UserInfo(username, display_name, email);
+            }
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            cleanup(connection, getUserInfoStatement);
+        }
+        return null;
+    }
+
     public int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
         Connection connection = null;
         PreparedStatement createUserStatement = null;
