@@ -1,4 +1,10 @@
 BACKEND:
-Add timestamps to various parts of the software.
-Add profile pictures to users.
-Finish email scheduling and sending.
+    Add timestamps to various parts of the software.
+    Add profile pictures to users.
+    Finish email scheduling and sending.
+
+FRONTEND:
+    Fix login and signup page issues:
+        The sign up page redirects to the old login page location (with the html/ in the URL).
+        The login page doesn't tell the user that their login failed (unless they look at the JS console lol).
+        The login page redirects to html/home.html.
