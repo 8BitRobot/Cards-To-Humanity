@@ -5,10 +5,16 @@ const app = new Vue(
                 title: "",
                 caption: "",
                 error_message: "",
-                uploaded_image_base64: "/img/create_card/smiley_card_placeholder.png"
+                tags: "",
+                uploaded_image_base64: "/img/create_card/smiley_card_placeholder.png",
+        },
+        computed: {
+            submitButtonDisabled: function() {
+                return this.title === "" || this.$refs.file_upload.files.length == 0;
+            }
         },
         methods: {
-                previewMediaFile: function () {
+                previewMediaFile: function() {
                         let files = this.$refs.file_upload.files;
                         let reader = new FileReader();
                         if (files && files[0]) {
@@ -20,18 +26,20 @@ const app = new Vue(
                             let upload = reader.readAsDataURL(files[0]);
                         }
                 },
+                finishCardCreation: function() {
+                    var self = this;
 
-                uploadMediaFile: function() {
-                        var self = this;
-                        
-                        apiUploadMedia(this.$refs.file_upload)
-                            .then(function(media_id) {
-                                console.log(`Media upload successful, returned media_id ${media_id}.`);
-                                self.uploaded_image_url = `/get_media?media_id=${media_id}`;
-                            })
-                            .catch(function(error) {
-                                self.error_message = error;
-                            });
+                    if (self.submitButtonDisabled) {
+                        return;
+                    }
+
+                    apiCreateCard(this.title, this.caption, this.tags, this.$refs.file_upload)
+                        .then(function(response) {
+                            window.location.href = "/home.html";
+                        })
+                        .catch(function(error) {
+                            self.error_message = error;
+                        });
                 }
         }
     }

@@ -7,9 +7,37 @@ import java.io.IOException;
 
 public class EmailSender {
     private SendGrid sendGrid;
+    private DatabaseStorage databaseStorage;
+
+    private class BackgroundThread implements Runnable {
+        private boolean stopFlag = false;
+
+        public synchronized void stop() {
+            stopFlag = true;
+        }
+
+        // Every minute, this thread checks for any unsent emails with scheduled sending times greater than or equal to the current time. If any are found, they are sent.
+        @Override
+        public void run() {
+            while (!stopFlag) {
+                System.out.println("SENDING EMAIL...");
+                try {
+                    Thread.sleep(60L * 1000L);
+                    //PendingEmail[] pendingEmails = databaseStorage.getPendingEmails();
+                }
+                catch (InterruptedException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
 
     public EmailSender(String SENDGRID_API_KEY, DatabaseStorage databaseStorage) {
-        sendGrid = new SendGrid(SENDGRID_API_KEY);
+        this.sendGrid = new SendGrid(SENDGRID_API_KEY);
+        this.databaseStorage = databaseStorage;
+        BackgroundThread backgroundThread = new BackgroundThread();
+        Thread backgroundThreadThread = new Thread(backgroundThread);
+        backgroundThreadThread.start();
     }
 
     public boolean scheduleEmail(String[] recipients, int[] card_ids, String subject, long sendingTime) {

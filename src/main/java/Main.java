@@ -97,8 +97,7 @@ public class Main {
             System.out.println("The S3_BUCKET_NAME environment variable must be set to the name of the Amazon S3 bucket to be used. The S3 bucket must be in the US_WEST_1 region.");
             System.exit(-1);
         }
-        endpoints.UploadMedia upload_media_endpoint = new endpoints.UploadMedia(databaseStorage, s3BucketName);
-        endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage);
+        endpoints.CreateCard create_card_endpoint = new endpoints.CreateCard(databaseStorage, s3BucketName);
         endpoints.GetCard get_card_endpoint = new endpoints.GetCard(gson, databaseStorage);
         endpoints.GetCards get_cards_endpoint = new endpoints.GetCards(gson, databaseStorage);
         endpoints.CreateOrFindTag create_or_find_tag_endpoint = new endpoints.CreateOrFindTag(databaseStorage);
@@ -111,7 +110,6 @@ public class Main {
         app.post("/login_user", login_user_endpoint);
         app.post("/create_user", create_user_endpoint);
         app.post("/logout_user", logout_user_endpoint);
-        app.post("/upload_media", upload_media_endpoint);
         app.post("/create_card", create_card_endpoint);
         app.get("/get_card", get_card_endpoint);
         app.get("/get_cards", get_cards_endpoint);

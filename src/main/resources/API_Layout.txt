@@ -2,6 +2,7 @@
 # VERSION 0.0.2 OF THE CARECARDS API -- Specified how getCards criterion are combined together. Made all returned arrays into objects for security reasons. Specified the attack-mitigation for(;;); at the start of all JSON.
 # VERSION 0.0.3 OF THE CARECARDS API -- Redesigned API significantly in order to use AWS S3 for storing images, and to retrieve image URLs with cards.
 # VERSION 0.0.4 OF THE CARECARDS API -- Added the /get_user_info API endpoint.
+# VERSION 0.0.5 OF THE CARECARDS API -- Redesigned the /create_card endpoint to allow creating the entire card in two API calls.
 
 NOTE (added in 0.0.2): All JSON responses are prefixed with for(;;); to mitigate certain AJAX-based attacks.
 
@@ -56,22 +57,14 @@ Response:
     }
     - Responds with HTTP 400 and an error message if something failed.
 
-POST /upload_media
-Purpose: Upload a new piece of media to the server.
-Login required: YES
-Parameters:
-    - media_file : The actual file data. See this StackOverflow answer for an example of how to do this with AJAX (https://stackoverflow.com/a/10811427).
-Response:
-    - Responds with HTTP 200 and the media_id of the created media if the media was successfully uploaded.
-    - Responds with HTTP 400 and an error message (file too large, etc.) if the media did not upload successfully.
-
 POST /create_card
 Purpose: Create a new card.
 Login required: YES
 Parameters:
-    - media_id : The media_id of the media attached to this card. This value should come from the response to a successful /upload_media call.
     - title : A string for the title of the card.
     - caption : A string for the caption/description of the card.
+    - media_file : The actual file data of the image being uploaded as media. See this StackOverflow answer for an example of how to do this with AJAX (https://stackoverflow.com/a/10811427).
+    - tags: A comma-separated list of tags. Tags may NOT contain commas.
 Response:
     - Responds with HTTP 200 and the card_id of the created card if the card was successfully created.
     - Responds with HTTP 400 and an error message if the card failed to be created.

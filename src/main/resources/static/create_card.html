@@ -69,8 +69,8 @@
                 <div id="inputs">
                     <input id="title-box" class="title-caption" type="text" placeholder="Title" v-model="title">
                     <input id="caption-box" class="title-caption" type="text" placeholder="Caption" v-model="caption">
-                    <input id="tags-box" class="title-caption" type="text" placeholder="Tags" v-model="tags">
-                    <button id="submit" class="submit-button">Send it!</button>
+                    <input id="tags-box" class="title-caption" type="text" placeholder="Write as many tags as you want, separated by commas." v-model="tags">
+                    <button id="submit" class="submit-button" v-bind:class="{disabled: submitButtonDisabled}" @click="finishCardCreation">Send it!</button>
                 </div>
                 <p style="display: none;" id="error_message_p">
                     {{ error_message }}
@@ -85,7 +85,7 @@
             </div>
         </div>
         <footer style="background-color: white; height: 168px; z-index: 1000; position: absolute; bottom: 0;"></footer>
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/scripts/api.js"></script>
         <script src="/scripts/create_card.js"></script>
