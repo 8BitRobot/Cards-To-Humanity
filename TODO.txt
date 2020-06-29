@@ -8,3 +8,10 @@ FRONTEND:
         The sign up page redirects to the old login page location (with the html/ in the URL).
         The login page doesn't tell the user that their login failed (unless they look at the JS console lol).
         The login page redirects to html/home.html.
+    Change colors on some pages:
+	Yellow at top of ABOUT US
+	Green at top of INSTRUCTIONS
+	Light blue background for HOME
+    Make CREATE CARD page responsive on computers that aren't my own
+    Link header logo to HOME
+    Add Paypal link to DONATE in header 
