@@ -23,14 +23,14 @@
             <i onclick="mobileMenu(this)" id="mobile-dropdown" class="fas fa-chevron-down"></i>
             <div id="nav-links">
                 <a href="/home.html">Home</a>
-                <a href="/mission_statement.html">About Us</a>
+                <a href="/mission_statement\.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
             </div>
             <div id="nav-links-mobile">
                 <a href="/home.html">Home</a>
-                <a href="/mission_statement.html">About Us</a>
+                <a href="/mission_statement\.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
@@ -59,13 +59,13 @@
                     <div>
                         <label for="password">Password</label><input name="password" type="password" v-model="password" ref="password_field" v-on:keyup.enter="loginButtonClicked">
                     </div>
-                    <p id="error_message_p">
+                    <p id="error_message_p" :class="{ hidden: error_message.length == 0 }">
                         {{ error_message }}
                     </p>
                     <button @click="loginButtonClicked">
                         Login
                     </button>
-                    <p>Don't have an account? <a href="/signup">Sign up!</a></p>
+                    <p>Don't have an account? <a href="/signup.html">Sign up!</a></p>
                 </div>
             </div>
         </div>

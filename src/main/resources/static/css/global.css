@@ -7,7 +7,7 @@ header {
     width: 100vw;
     background-color: white;
     position: fixed;
-    z-index: 2000;
+    z-index: 2001;
 }
 
 header img {
@@ -53,6 +53,8 @@ header img {
     display: none;
     margin-top: -4px;
     padding-bottom: 4px;
+    font-size: 22px;
+    width: 100vw;
 }
 
 #mobile-dropdown {

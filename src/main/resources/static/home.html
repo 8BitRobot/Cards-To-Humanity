@@ -24,14 +24,14 @@
             <i onclick="mobileMenu(this)" id="mobile-dropdown" class="fas fa-chevron-down"></i>
             <div id="nav-links">
                 <a href="/home.html">Home</a>
-                <a href="/mission_statement.html">About Us</a>
+                <a href="/mission_statement\.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
             </div>
             <div id="nav-links-mobile">
                 <a href="/home.html">Home</a>
-                <a href="/mission_statement.html">About Us</a>
+                <a href="/mission_statement\.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
@@ -62,7 +62,7 @@
                 <br>
                 <span>Cards tagged with:</span> <input type="text" v-model="tagged_with_search_term">
                 <br>
-                <span>Top</span> <input type="number" v-model="top_n_cards"> <span>cards.</span>
+                <span class="around-number-input">Top</span> <input type="number" id="number-input" v-model="top_n_cards"> <span class="around-number-input">cards.</span>
                 <br>
                 <span>Title contains:</span> <input type="text" v-model="title_contains_search_term">
                 <br>

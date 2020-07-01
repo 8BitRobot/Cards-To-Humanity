@@ -1,4 +1,4 @@
-html, html * {
+html, html *:not(header) {
     overflow-x: hidden;
 }
 
@@ -16,12 +16,14 @@ h1, h3, p {
 
 p {
     font-size: 22px;
+    position: relative;
+    z-index: 300;
 }
 
 .circle {
     border-radius: 50%;
     position: absolute;
-    z-index: -1;
+    z-index: -3;
 }
 
 #circle-1 {
@@ -58,7 +60,6 @@ p {
 }
 
 #circle-5 {
-    bottom: 240px;
     right: -5.243vw;
     height: 279px;
     width: 279px;
@@ -69,7 +70,6 @@ p {
 }
 
 #circle-6 {
-    bottom: 97px;
     left: -8.056vw;
     height: 195px;
     width: 195px;
@@ -79,7 +79,6 @@ p {
 }
 
 #circle-7 {
-    bottom: 333px;
     left: 21.419vw;
 	height: 251px;
   	width: 251px;
@@ -89,7 +88,6 @@ p {
 }
 
 #circle-8 {
-    bottom: 212px;
     right: 33.056vw;
     height: 66px;
     width: 66px;
@@ -100,7 +98,6 @@ p {
 }
 
 #circle-9 {
-    bottom: 179px;
     right: 13.734vw;
     height: 82px;
     width: 82px;
@@ -110,76 +107,6 @@ p {
     float: right;
 }
 
-@media only screen and (max-width: 1200px) {
-    body {
-        margin-bottom: -316px;
-    }
-
-    #circle-5 {
-        bottom: 120px;
-    }
-
-    #circle-7 {
-        height: 125px;
-        width: 125px;
-        bottom: 237px;
-    }
-
-    #circle-8 {
-        display: none;
-    }
-
-    #circle-9 {
-        background-color: #EF476F;
-    }
-}
-
-@media only screen and (max-width: 1000px) {
-    body {
-        margin-bottom: -275px;
-    }
-
-    #circle-6 {
-        display: none;
-    }
-
-    #circle-7 {
-        left: 35.383vw;
-        bottom: 30px;
-    }
-
-    #circle-9 {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    body {
-        margin-bottom: 0;
-    }
-
-    #circle-5, #circle-7 {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    #circle-4 {
-        top: 695px;
-    }
-}
-
-@media only screen and (max-width: 415px) {
-    #circle-4 {
-        top: 730px;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    #circle-1, #circle-4 {
-        display: none;
-    }
-}
 .mission-statement-text {
     margin-top: -4px;
     margin-bottom: -4px;
@@ -268,6 +195,8 @@ h3 {
     min-height: 595px;
     background-color: #0057A3;
     padding-bottom: 50px;
+    height: 0;
+    overflow-y: hidden;
 }
 
 #mission-statement-middle p, #mission-statement-bottom p {
@@ -316,8 +245,135 @@ p a:hover {
     margin: 20px 0 20px 20px;
 }
 
+#mission-statement-middle.instructions-text-bottom {
+    min-height: 660px;
+    height: 0;
+    overflow-y: hidden;
+}
+
+@media only screen and (max-width: 1200px) {
+    body {
+        margin-bottom: -316px;
+    }
+
+    #circle-5 {
+        bottom: 120px;
+    }
+
+    #circle-7 {
+        height: 125px;
+        width: 125px;
+        bottom: 237px;
+    }
+
+    #circle-8 {
+        display: none;
+    }
+
+    #circle-9 {
+        background-color: #EF476F;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    body {
+        margin-bottom: -275px;
+    }
+
+    #circle-6 {
+        display: none;
+    }
+
+    #circle-7 {
+        left: 35.383vw;
+        bottom: 30px;
+    }
+
+    #circle-9 {
+        display: none;
+    }
+
+    #mission-statement-bottom {
+        min-height: 700px;
+    }    
+}
+
+@media only screen and (max-width: 800px) {
+    #mission-statement-bottom {
+        min-height: 900px;
+    }
+
+    #circle-7 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin-bottom: 0;
+    }
+
+    #circle-5 {
+        display: none;
+    }
+
+    #mission-statement-bottom {
+        min-height: 1070px;
+    }
+
+    .instructions-text-bottom {
+        min-height: 500px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #circle-4 {
+        top: 695px;
+    }
+
+    #mission-statement-bottom {
+        min-height: 1190px;
+    }
+}
+
 @media only screen and (max-width: 450px) {
     h1#instructions-h1 {
         font-size: 40px;
+    }
+
+    #mission-statement-bottom {
+        min-height: 1260px;
+    }
+}
+
+@media only screen and (max-width: 415px) {
+    #circle-4 {
+        top: 730px;
+    }
+
+    #mission-statement-bottom {
+        min-height: 1300px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #circle-1, #circle-4 {
+        display: none;
+    }
+
+    #mission-statement-bottom {
+        min-height: 1470px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    #mission-statement-bottom {
+        min-height: 1575px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    #mission-statement-bottom {
+        min-height: 1710px;
     }
 }

@@ -6,6 +6,10 @@ h1, h3, p, input, button, label {
     font-family: Poppins, sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
 #container {
     width: 547px;
     margin-left: auto;
@@ -29,8 +33,10 @@ h1, h3, p, input, button, label {
     line-height: 22px;
 }
 
-#error_message_p {
-    display: none;
+p#error_message_p {
+    padding: 0;
+    padding-top: 20px;
+    color: #FBB;
 }
 
 #form {

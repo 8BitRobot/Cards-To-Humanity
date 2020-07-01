@@ -1,6 +1,6 @@
 body {
     font-family: Poppins, sans-serif;
-    background-color: #70d2ff;
+    background-color: #9DE1FF;
 }
 
 h1 {
@@ -21,6 +21,7 @@ a {
 
 #flying-cards {
     position: absolute;
+    top: 140px;
 }
 
 #flying-cards img {
@@ -64,6 +65,25 @@ a {
     float: right;
     line-height: 46px;
     margin-right: 20px;
+}
+
+#currently-viewing-dropdown span {
+    text-align: right;
+    padding-right: 20px;
+}
+
+#currently-viewing-dropdown input {
+    width: 20%;
+    border-radius: 20px;
+    border: none;
+    height: 25px;
+    outline: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+input#number-input {
+    width: 10%;
 }
 
 #cards {
@@ -157,5 +177,30 @@ a {
 
     #flying-cards {
         display: none;
+    }
+
+    #currently-viewing-dropdown {
+        padding-bottom: 20px;
+    }
+
+    #currently-viewing-dropdown span {
+        display: block;
+        margin-left: 20px;
+        text-align: left;
+    }
+
+    #currently-viewing-dropdown input {
+        margin-left: 20px;
+        width: calc(100% - 60px);
+    }
+
+    #currently-viewing-dropdown #number-input {
+        width: 30%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    #currently-viewing-dropdown .around-number-input {
+        display: inline-block;
     }
 }
