@@ -12,6 +12,5 @@ FRONTEND:
         Yellow at top of ABOUT US
         Green at top of INSTRUCTIONS
         Light blue background for HOME
-    Make CREATE CARD page responsive on computers that aren't my own
     Link header logo to HOME
     Add Paypal link to DONATE in header 
