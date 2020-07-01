@@ -2,7 +2,7 @@ const app = new Vue(
     {
         el: "#vue_div",
         data: {
-            card: {}
+            card: {tags: []}
         },
         mounted: function() {
             var self = this;

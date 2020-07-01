@@ -8,7 +8,7 @@ Find us at cardstohumanity.org
 
 * Premkumar Giridhar - Frontend (JavaScript + HTML + CSS + JS)
 
-* Will Liang - Frontend (JavaScript + HTML + CSS + JS)
+* Will Liang - Machine Learning (Python w/ TensorFlow)
 
 ## Running
 The following environment variables must be set (preferably as Heroku parameters) for the software to run correctly:

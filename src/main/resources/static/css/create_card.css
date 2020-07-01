@@ -63,6 +63,16 @@ input[type="file"] {
     z-index: 2000;
 }
 
+.submit-button.disabled {
+    background-color: grey;
+}
+
+.submit-button.disabled:hover {
+    background-color: grey;
+    color: white;
+    cursor: not-allowed;
+}
+
 .submit-button:hover {
     background-color: white;
     color: #EF476F;
