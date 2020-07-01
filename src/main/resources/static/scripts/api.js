@@ -74,7 +74,7 @@ function apiUploadMedia(file_upload_input) {
     });
 }
 
-function apiCreateCard(media_id, title, caption) {
+function apiCreateCard(media_id, title, caption, tags) {
     return new Promise((resolve, reject) => {
         const params = new URLSearchParams();
         params.append("media_id", media_id);

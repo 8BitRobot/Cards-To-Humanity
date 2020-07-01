@@ -4,6 +4,7 @@ const app = new Vue(
         data: {
                 title: "",
                 caption: "",
+                tags: "",
                 error_message: "",
                 uploaded_image_base64: "/img/create_card/smiley_card_placeholder.png"
         },
