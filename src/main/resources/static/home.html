@@ -59,14 +59,25 @@
             <h1>Welcome</h1>
             <div id="currently-viewing-dropdown">
                 <p>Currently viewing:</p>
-                <br>
-                <span>Cards tagged with:</span> <input type="text" v-model="tagged_with_search_term">
-                <br>
-                <span class="around-number-input">Top</span> <input type="number" id="number-input" v-model="top_n_cards"> <span class="around-number-input">cards.</span>
-                <br>
-                <span>Title contains:</span> <input type="text" v-model="title_contains_search_term">
-                <br>
-                <span>Caption contains:</span> <input type="text" v-model="caption_contains_search_term">
+                <div id="dropdown-inputs">
+                    <div class="dropdown-row">
+                        <span>Cards tagged with:</span>
+                        <input type="text" v-model="tagged_with_search_term">
+                    </div>
+                    <div class="dropdown-row">
+                        <span class="around-number-input">Top</span>
+                        <input type="number" id="number-input" v-model="top_n_cards">
+                        <span class="around-number-input">cards.</span>
+                    </div>
+                    <div class="dropdown-row">
+                        <span>Title contains:</span>
+                        <input type="text" v-model="title_contains_search_term">
+                    </div>
+                    <div class="dropdown-row">
+                        <span>Caption contains:</span>
+                        <input type="text" v-model="caption_contains_search_term">
+                    </div>
+                </div>
             </div>
             <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
             </cards-display>
