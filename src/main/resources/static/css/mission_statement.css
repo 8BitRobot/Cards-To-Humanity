@@ -109,7 +109,7 @@ p {
 
 .mission-statement-text {
     margin-top: -4px;
-    margin-bottom: -4px;
+    /* margin-bottom: -4px; */
     padding-left: 9.182vw;
     padding-right: 10.455vw;
 }
