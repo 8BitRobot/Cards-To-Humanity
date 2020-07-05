@@ -58,8 +58,28 @@ Vue.component("cards-display", {
                     </p>
                 </div>
                 <img v-bind:src="card.media_url" v-bind:alt="card.caption" class="card-image">
-                <a class="view-button" v-bind:href="'/view_card.html?card_id=' + card.card_id">View</a>
+                <a class="view-button" @click="show_modal=true;modal_img=card.media_url;">View</a>
             </div>
         </div>
     `
 });
+
+Vue.component("card-modal", {
+    data: function () {
+        return {}
+    },
+    props: {
+        modal_img: String,
+    },
+    template: `
+        <div id="modal-container">
+            <div id="close-button">
+                <i class="fas fa-times"></i>
+            </div>
+            <div id="img-container">
+                <img :src="modal_img">
+            </div>
+        </div>
+    `
+
+})
