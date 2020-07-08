@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 html, html *:not(header) {
     overflow-x: hidden;
 }
@@ -7,7 +14,10 @@ body, p {
 }
 
 body {
-    margin-bottom: -442px;
+    background-image: url("../img/mission_statement/top_circles.png");
+    background-position: top right;
+    background-size: 500px;
+    background-repeat: no-repeat;
 }
 
 h1, h3, p {
@@ -18,93 +28,6 @@ p {
     font-size: 22px;
     position: relative;
     z-index: 300;
-}
-
-.circle {
-    border-radius: 50%;
-    position: absolute;
-    z-index: -3;
-}
-
-#circle-1 {
-    top: 171px;
-    right: 34.091vw;
-    height: 51px;
-    width: 51px;
-    background-color: #FFBC1F;                          
-}
-
-#circle-2 {
-    top: 43px;
-    right: -5.727vw;
-    height: 154px;
-    width: 154px;
-    background-color: #05D69E;
-}
-
-#circle-3 {
-    top: 367px;
-    right: 2.000vw;
-    height: 44px;
-    width: 44px;
-    background-color: #EF476F;
-}
-
-#circle-4 {
-    top: 607px;
-    right: 1.455vw;
-    height: 60px;
-    width: 60px;
-    background-color: #05D69E;
-    z-index: 2;
-}
-
-#circle-5 {
-    right: -5.243vw;
-    height: 279px;
-    width: 279px;
-    background-color: #EF476F;
-    z-index: 2;
-    position: relative;
-    float: right;
-}
-
-#circle-6 {
-    left: -8.056vw;
-    height: 195px;
-    width: 195px;
-    background-color: #05D69E;
-    z-index: 2;
-    position: relative;
-}
-
-#circle-7 {
-    left: 21.419vw;
-	height: 251px;
-  	width: 251px;
-    background-color: #FFBC1F;
-    z-index: 2;
-    position: relative;
-}
-
-#circle-8 {
-    right: 33.056vw;
-    height: 66px;
-    width: 66px;
-    background-color: #EF476F;
-    z-index: 2;
-    position: relative;
-    float: right;
-}
-
-#circle-9 {
-    right: 13.734vw;
-    height: 82px;
-    width: 82px;
-    background-color: #FFBC1F;
-    z-index: 2;
-    position: relative;
-    float: right;
 }
 
 .mission-statement-text {
@@ -191,12 +114,13 @@ h3 {
     background-color: #001F70;
 }
 
-#mission-statement-bottom {
-    min-height: 595px;
+#mission-statement-bottom, .instructions-text-bottom {
     background-color: #0057A3;
     padding-bottom: 50px;
-    height: 0;
-    overflow-y: hidden;
+    background-image: url("../img/mission_statement/bottom_circles.png");
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 1000px;
 }
 
 #mission-statement-middle p, #mission-statement-bottom p {
@@ -246,134 +170,12 @@ p a:hover {
 }
 
 #mission-statement-middle.instructions-text-bottom {
-    min-height: 660px;
-    height: 0;
+    height: 660px;
     overflow-y: hidden;
 }
 
-@media only screen and (max-width: 1200px) {
-    body {
-        margin-bottom: -316px;
-    }
-
-    #circle-5 {
-        bottom: 120px;
-    }
-
-    #circle-7 {
-        height: 125px;
-        width: 125px;
-        bottom: 237px;
-    }
-
-    #circle-8 {
-        display: none;
-    }
-
-    #circle-9 {
-        background-color: #EF476F;
-    }
-}
-
-@media only screen and (max-width: 1000px) {
-    body {
-        margin-bottom: -275px;
-    }
-
-    #circle-6 {
-        display: none;
-    }
-
-    #circle-7 {
-        left: 35.383vw;
-        bottom: 30px;
-    }
-
-    #circle-9 {
-        display: none;
-    }
-
-    #mission-statement-bottom {
-        min-height: 700px;
-    }    
-}
-
-@media only screen and (max-width: 800px) {
-    #mission-statement-bottom {
-        min-height: 900px;
-    }
-
-    #circle-7 {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    body {
-        margin-bottom: 0;
-    }
-
-    #circle-5 {
-        display: none;
-    }
-
-    #mission-statement-bottom {
-        min-height: 1070px;
-    }
-
-    .instructions-text-bottom {
-        min-height: 500px;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    #circle-4 {
-        top: 695px;
-    }
-
-    #mission-statement-bottom {
-        min-height: 1190px;
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    h1#instructions-h1 {
-        font-size: 40px;
-    }
-
-    #mission-statement-bottom {
-        min-height: 1260px;
-    }
-}
-
-@media only screen and (max-width: 415px) {
-    #circle-4 {
-        top: 730px;
-    }
-
-    #mission-statement-bottom {
-        min-height: 1300px;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    #circle-1, #circle-4 {
-        display: none;
-    }
-
-    #mission-statement-bottom {
-        min-height: 1470px;
-    }
-}
-
-@media only screen and (max-width: 375px) {
-    #mission-statement-bottom {
-        min-height: 1575px;
-    }
-}
-
-@media only screen and (max-width: 350px) {
-    #mission-statement-bottom {
-        min-height: 1710px;
+@media only screen and (max-width: 760px) {
+    body, #mission-statement-bottom, .instructions-text-bottom {
+        background-image: none;
     }
 }
