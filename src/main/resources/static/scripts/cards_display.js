@@ -72,12 +72,14 @@ Vue.component("card-modal", {
         modal_img: String,
     },
     template: `
-        <div id="modal-container">
-            <div id="close-button">
-                <i class="fas fa-times"></i>
-            </div>
-            <div id="img-container">
-                <img :src="modal_img">
+        <div id="modal-background">
+            <div id="modal-container">
+                <div id="close-button" @click="$emit('hide-modal');">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div id="img-container">
+                    <img :src="modal_img">
+                </div>
             </div>
         </div>
     `

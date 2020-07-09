@@ -79,10 +79,22 @@
                     </div>
                 </div>
             </div>
-            <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
-            </cards-display>
-            <card-modal v-show="show_modal" v-bind:modal_img="modal_img">
+            <div id="cards">
+                <div class="card">
+                    <div class="card-info">
+                        <p>
+                            yuh (3 likes)
+                        </p>
+                    </div>
+                    <img src="https://falconhacks.org/olivegarden.png" alt="cardcaption" class="card-image">
+                    <a class="view-button" @click="show_modal=true;modal_img='https://falconhacks.org/olivegarden.png';">View</a>
+                </div>
+            </div>
+            <!-- <cards-display v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
+            </cards-display> --> 
+            <card-modal @hide-modal="show_modal=false" v-show="show_modal" v-bind:modal_img="modal_img">
             </card-modal>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

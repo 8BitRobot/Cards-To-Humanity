@@ -103,7 +103,7 @@ input#number-input {
 }
 
 .card {
-    border: 3px solid #001F70;
+    border: 3px solid #0057A3;
     min-width: 400px;
     height: 300px;
     margin-bottom: 25px;
@@ -138,6 +138,51 @@ input#number-input {
     line-height: 35px;
     border-radius: 17.5px;
     text-align: center;
+}
+
+#modal-background {
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000099;
+}
+
+#modal-container {
+    width: 50vw;
+    height: 50vh;
+    margin-top: 25vh;
+    margin-left: 25vw;
+    border: 4px solid black;
+    background-color: #888888;
+}
+
+#close-button {
+    float: left;
+    font-size: 24px;
+    padding: 6px 10px;
+    margin-top: -23px;
+    margin-left: -23px;
+    border-radius: 30px;
+    border: 3px solid black;
+    background-color: white;
+}
+
+#img-container {
+    display: block;
+    width: 80%;
+    height: 80%;
+    margin: 6% auto;
+}
+
+#img-container img {
+    height: 100%;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media only screen and (min-width: 850px) {
