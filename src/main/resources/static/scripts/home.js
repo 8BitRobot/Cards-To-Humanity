@@ -8,6 +8,7 @@ const app = new Vue(
             caption_contains_search_term: "",
             show_modal: false,
             modal_img: "",
+            modal_img_caption: "",
         }
     }
 );

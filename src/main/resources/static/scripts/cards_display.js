@@ -58,7 +58,7 @@ Vue.component("cards-display", {
                     </p>
                 </div>
                 <img v-bind:src="card.media_url" v-bind:alt="card.caption" class="card-image">
-                <a class="view-button" @click="show_modal=true;modal_img=card.media_url;modal_img_caption='card.caption';">View</a>
+                <a class="view-button" @click="$emit('show-modal', [card.media_url, card.caption]);">View</a>
             </div>
         </div>
     `
