@@ -147,7 +147,7 @@ input#number-input {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #00000099;
+    background-color: #000000CB;
 }
 
 #modal-container {
@@ -155,8 +155,8 @@ input#number-input {
     height: 50vh;
     margin-top: 25vh;
     margin-left: 25vw;
-    border: 4px solid black;
-    background-color: #888888;
+    background-color: white;
+    box-shadow: 0px 0 6px 5px #0003;
 }
 
 #close-button {
@@ -166,12 +166,15 @@ input#number-input {
     margin-top: -23px;
     margin-left: -23px;
     border-radius: 30px;
-    border: 3px solid black;
-    background-color: white;
+    background-color: black;
+}
+
+#close-button i {
+    color: white;
 }
 
 #img-container {
-    display: block;
+    display: inline-block;
     width: 80%;
     height: 80%;
     margin: 6% auto;
@@ -179,10 +182,31 @@ input#number-input {
 
 #img-container img {
     height: 100%;
+    width: 90%;
+    object-fit: contain;
     text-align: center;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#modal-side-buttons {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    float: right;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #001F70;
+}
+
+#modal-side-buttons button, #modal-side-buttons a {
+    color: white;
+    background-color: transparent;
+    border: 0;
+    font-size: 200%;
+    text-align: center;
 }
 
 @media only screen and (min-width: 850px) {
@@ -208,6 +232,29 @@ input#number-input {
     }
 }
 
+@media only screen and (max-width: 896px) {
+    
+    #modal-container {
+        width: 84vw;
+        margin-left: 8vw;
+        height: auto;
+    }
+
+    #img-container {
+        width: 100%;
+        display: block;
+        padding: 6% 0;
+        margin: 0;
+    }
+
+    #modal-side-buttons {
+        flex-flow: row;
+        width: 100%;
+        height: 13%;
+        float: unset;
+    }
+}
+
 @media only screen and (max-width: 850px) {
     #flying-cards img:last-child {
         display: none;
@@ -226,7 +273,7 @@ input#number-input {
 
 @media only screen and (max-width: 450px) {
     .card {
-        min-width: unset;
+        min-width: 90vw;
         width: 90vw;
     }
 
@@ -247,13 +294,18 @@ input#number-input {
         padding-bottom: 20px;
     }
 
+    #currently-viewing-dropdown .dropdown-row {
+        display: block;
+    }
+
     #currently-viewing-dropdown span {
         display: block;
         margin-left: 20px;
         text-align: left;
     }
 
-    #currently-viewing-dropdown input {
+    #currently-viewing-dropdown input { 
+        margin-top: 10px;
         margin-left: 20px;
         width: calc(100% - 60px);
     }
@@ -261,10 +313,14 @@ input#number-input {
     #currently-viewing-dropdown #number-input {
         width: 30%;
         margin-left: 0;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     #currently-viewing-dropdown .around-number-input {
         display: inline-block;
+    }
+
+    #currently-viewing-dropdown .around-number-input:nth-child(3) {
+        margin-left: 0;
     }
 }

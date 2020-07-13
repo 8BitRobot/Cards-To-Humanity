@@ -14,14 +14,13 @@ a {
 #cards {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-left: 10vw;
     margin-right: 10vw;
 }
 
 .card {
     border: 3px solid #0057A3;
-    min-width: 400px;
     height: 300px;
     margin-bottom: 25px;
     border-radius: 13px;
@@ -57,6 +56,8 @@ a {
 
 .card-image {
     height: 70%;
+    width: 100%;
     margin: auto;
     display: block;
+    object-fit: contain;
 }

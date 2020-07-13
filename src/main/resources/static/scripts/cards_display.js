@@ -58,7 +58,7 @@ Vue.component("cards-display", {
                     </p>
                 </div>
                 <img v-bind:src="card.media_url" v-bind:alt="card.caption" class="card-image">
-                <a class="view-button" @click="show_modal=true;modal_img=card.media_url;">View</a>
+                <a class="view-button" @click="show_modal=true;modal_img=card.media_url;modal_img_caption='card.caption';">View</a>
             </div>
         </div>
     `
@@ -70,6 +70,7 @@ Vue.component("card-modal", {
     },
     props: {
         modal_img: String,
+        modal_card_caption: String,
     },
     template: `
         <div id="modal-background">
@@ -78,7 +79,13 @@ Vue.component("card-modal", {
                     <i class="fas fa-times"></i>
                 </div>
                 <div id="img-container">
-                    <img :src="modal_img">
+                    <img :src="modal_img" alt="modal_card_caption">
+                </div>
+                <div id="modal-side-buttons">
+                    <button><i class="fas fa-fw fa-heart"></i></button>
+                    <button><i class="fas fa-fw fa-comment"></i></button>
+                    <button><i class="fas fa-fw fa-share"></i></button>
+                    <a :href="modal_img" download><i class="fas fa-fw fa-download"></i></a>
                 </div>
             </div>
         </div>
