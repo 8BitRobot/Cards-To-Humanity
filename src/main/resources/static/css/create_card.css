@@ -65,6 +65,7 @@ input[type="file"] {
 
 .submit-button.disabled {
     background-color: grey;
+    pointer-events: none;
 }
 
 .submit-button.disabled:hover {
@@ -83,6 +84,37 @@ input[type="file"] {
     width: 160px;
     z-index: 2000;
     margin-top: 16px;
+}
+
+@keyframes progress-bar-start {
+    from {
+        background-position: 100%;
+    }
+    to {
+        background-position: 35%;
+    }
+}
+
+@keyframes progress-bar-finish {
+    from {
+        background-position: 35%;
+    }
+    to {
+        background-position: 0%;
+    }
+}
+
+#submit.clicked {
+    background-image: linear-gradient(to left, #EF4764 50%, #FFAAB8 50%);
+    background-size: 200%;
+    background-position: 50%;
+    animation: 2s progress-bar-start cubic-bezier(.76,.41,.36,.99);
+    pointer-events: none;
+}
+
+#submit.finished {
+    background-position: 0%;
+    animation: 1s progress-bar-finish;
 }
 
 #upload-container {

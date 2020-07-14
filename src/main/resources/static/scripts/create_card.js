@@ -34,9 +34,14 @@ const app = new Vue(
                         return;
                     }
 
+                    document.getElementById("submit").classList.add("clicked");
+
                     apiCreateCard(this.title, this.caption, this.tags, this.$refs.file_upload)
                         .then(function(response) {
-                            window.location.href = "/home.html";
+                            document.getElementById("submit").classList.add("finished");
+                            setTimeout(function () {
+                                window.location.href = "/home.html";
+                            }, 1100);
                         })
                         .catch(function(error) {
                             self.error_message = error;
