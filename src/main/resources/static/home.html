@@ -90,7 +90,7 @@
                     <a class="view-button" @click="show_modal=true;modal_img='/img/logo.png';modal_img_caption='cardcaption';">View</a>
                 </div>
             </div> -->
-            <cards-display @show-modal="show_modal=true;modal_img=img[0];modal_img_caption=img[1];" v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
+            <cards-display @show-modal="showModal" v-bind:tagged_with_search_term="tagged_with_search_term" v-bind:top_n_cards="top_n_cards" v-bind:title_contains_search_term="title_contains_search_term" v-bind:caption_contains_search_term="caption_contains_search_term">
             </cards-display> 
             <card-modal @hide-modal="show_modal=false" v-show="show_modal" v-bind:modal_img="modal_img" v-bind:modal_img_caption="modal_img_caption">
             </card-modal>

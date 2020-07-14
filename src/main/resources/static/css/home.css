@@ -175,9 +175,10 @@ input#number-input {
 
 #img-container {
     display: inline-block;
-    width: 80%;
+    width: 85%;
     height: 80%;
     margin: 6% auto;
+    box-sizing: border-box;
 }
 
 #img-container img {
@@ -196,6 +197,7 @@ input#number-input {
     justify-content: space-around;
     float: right;
     height: 100%;
+    width: 12%;
     padding: 10px;
     box-sizing: border-box;
     background-color: #001F70;

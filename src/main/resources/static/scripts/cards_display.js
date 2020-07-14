@@ -79,7 +79,7 @@ Vue.component("card-modal", {
                     <i class="fas fa-times"></i>
                 </div>
                 <div id="img-container">
-                    <img :src="modal_img" alt="modal_card_caption">
+                    <img :src="modal_img" :alt="modal_card_caption">
                 </div>
                 <div id="modal-side-buttons">
                     <button><i class="fas fa-fw fa-heart"></i></button>
