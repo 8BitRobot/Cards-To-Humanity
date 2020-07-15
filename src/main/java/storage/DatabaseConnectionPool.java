@@ -59,7 +59,8 @@ class DatabaseConnectionPool {
                     dataSource.setTestConnectionOnCheckout(true); // TODO: Remove this if at all possible because it impedes performance.
                     dataSource.setMaxConnectionAge(60 * 5);
                     dataSource.setMaxStatementsPerConnection(50);
-                } catch (URISyntaxException exception) {
+                }
+                catch (URISyntaxException exception) {
                     exception.printStackTrace();
                     System.out.println("JAWSDB_MARIA_URL variable contains a malformed URL.");
                 }

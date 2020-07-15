@@ -36,6 +36,12 @@ public class CreateCard implements Handler {
             user_id = ctx.sessionAttribute("user_id");
         }
 
+        // Get the form parameters.
+        String title = ctx.formParam("title", String.class).get();
+        String caption = ctx.formParam("caption", String.class).get();
+        String[] tags = ctx.formParam("tags", String.class).get().split(",");
+
+
         // Get the uploaded media file and validate it, then upload it as a JPEG to Amazon S3.
         UploadedFile uploadedFile = ctx.uploadedFile("media_file");
         if (uploadedFile == null) {
@@ -53,6 +59,11 @@ public class CreateCard implements Handler {
         try {
             // Convert the uploaded image to JPEG.
             BufferedImage image = ImageIO.read(inputStream);
+            if (image == null) {
+                ctx.result("Uploaded image was invalid.");
+                ctx.status(400);
+                return;
+            }
             BufferedImage image_jpeg = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
             image_jpeg.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
             ByteArrayOutputStream jpeg_data_stream = new ByteArrayOutputStream();
@@ -61,7 +72,13 @@ public class CreateCard implements Handler {
             // Save the JPEG data to Amazon S3.
             UUID uuid = UUID.randomUUID();
             String uuidString = uuid.toString() + ".jpeg";
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(s3BucketName).key(uuidString).acl("public-read").contentType("image/jpeg").build();
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                                                                          .bucket(s3BucketName)
+                                                                          .key(uuidString)
+                                                                          .acl("public-read")
+                                                                          .contentType("image/jpeg")
+                                                                          .contentDisposition("attachment;filename=\"" + title + ".jpeg\"")
+                                                                          .build();
             try {
                 s3Client.putObject(putObjectRequest, RequestBody.fromBytes(jpeg_image_data));
             }
@@ -84,10 +101,6 @@ public class CreateCard implements Handler {
             ctx.status(400);
             return;
         }
-
-        String title = ctx.formParam("title", String.class).get();
-        String caption = ctx.formParam("caption", String.class).get();
-        String[] tags = ctx.formParam("tags", String.class).get().split(",");
 
         int card_id = databaseStorage.createCard(user_id, media_id, title, caption);
 
