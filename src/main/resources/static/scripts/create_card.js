@@ -11,7 +11,7 @@ const app = new Vue(
         },
         computed: {
             submitButtonDisabled: function() {
-                return this.title === "" || this.$refs.file_upload.files.length == 0;
+                return this.title === "" || this.caption === "" || this.$refs.file_upload.files.length == 0;
             }
         },
         methods: {
