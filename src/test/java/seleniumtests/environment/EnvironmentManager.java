@@ -1,7 +1,9 @@
 package seleniumtests.environment;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.io.IOException;
 
@@ -18,8 +20,12 @@ public class EnvironmentManager {
     }
 
     public static void initialize() {
-        System.setProperty("webdriver.gecko.driver", "/opt/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", "./geckodriver");
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        firefoxBinary.addCommandLineOptions("--headless");
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setBinary(firefoxBinary);
+        WebDriver driver = new FirefoxDriver(firefoxOptions);
         RunEnvironment.setWebDriver(driver);
 
         Thread thread = new Thread(new JavalinServer());
