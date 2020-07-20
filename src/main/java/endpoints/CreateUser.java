@@ -15,10 +15,10 @@ public class CreateUser implements Handler {
     }
 
     public void handle(Context ctx) {
-        String username = ctx.formParam("username", String.class).get();
-        String display_name = ctx.formParam("display_name", String.class).get();
-        char[] password = ctx.formParam("password", String.class).get().toCharArray();
-        String email = ctx.formParam("email", String.class).get();
+        String username = ctx.formParam("username");
+        String display_name = ctx.formParam("display_name");
+        char[] password = ctx.formParam("password").toCharArray();
+        String email = ctx.formParam("email");
 
         if (username.equals("") || password.equals("") || email.equals("")) {
             ctx.status(400);

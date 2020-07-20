@@ -13,20 +13,21 @@ repositories {
 
 dependencies {
     // Dependencies for the program itself.
-    compile 'io.javalin:javalin:3.8.0'
-    compile 'org.slf4j:slf4j-simple:1.8.0-beta4'
-    compile 'com.google.code.gson:gson:2.8.6'
-    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.1.7'
-    compile platform('software.amazon.awssdk:bom:2.13.26')
-    compile 'software.amazon.awssdk:s3'
-    compile 'com.sendgrid:sendgrid-java:3.0.9'
-    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.5'
-//    compile group: 'com.sendgrid', name: 'sendgrid-java', version: '4.6.0'
+    compile 'io.javalin:javalin:3.8.0'                                                        // Backend web framework.
+    compile 'org.slf4j:slf4j-simple:1.8.0-beta4'                                              // Logging library for Javalin.
+    compile 'com.google.code.gson:gson:2.8.6'                                                 // JSON serialization/deserialization library.
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '1.1.7'          // JDBC driver for accessing MariaDB databases.
+    compile platform('software.amazon.awssdk:bom:2.13.26')                                    // Amazon Web Services platform.
+    compile 'software.amazon.awssdk:s3'                                                       // AWS S3 (storage service) API.
+    compile 'com.sendgrid:sendgrid-java:3.0.9'                                                // Email sending service (SendGrid) API.
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.5'                            // C3P0 database connection pooling library.
     // Dependencies for the tests.
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+    testCompile group: 'junit', name: 'junit', version: '4.12'                                // Unit test framework.
+    testCompile group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'            // Fake data generation library.
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'  // Selenium browser automation library.
 }
 
+// Create shaded jar that includes all dependencies.
 jar {
     manifest {
         attributes "Main-Class": "Main"

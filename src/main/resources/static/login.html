@@ -62,10 +62,10 @@
                     <p id="error_message_p" :class="{ hidden: error_message.length == 0 }">
                         {{ error_message }}
                     </p>
-                    <button @click="loginButtonClicked">
+                    <button id="login_button" @click="loginButtonClicked">
                         Login
                     </button>
-                    <p>Don't have an account? <a href="/signup.html">Sign up!</a></p>
+                    <p>Don't have an account? <a href="/signup.html" id="sign_up_link">Sign up!</a></p>
                 </div>
             </div>
         </div>

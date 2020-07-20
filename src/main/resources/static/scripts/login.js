@@ -13,7 +13,7 @@ const app = new Vue(
                 apiLoginUser(this.username_or_email, this.password)
                     .then(function() {
                         console.log("Success.");
-                        window.location.href = "/html/home.html";
+                        window.location.href = "/home.html";
                     })
                     .catch(function() {
                         console.log("Failure.");

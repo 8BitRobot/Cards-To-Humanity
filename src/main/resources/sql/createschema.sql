@@ -32,7 +32,7 @@ CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifying 
 -- Note that this table's constraints DO NOT prevent a user signing up with somebody else's email as their username. Use the userExists query to check for this attack in the code when a user is signing up.
 
 -- Create the special anonymous user that is associated with all cards/tags/likes from non-registered users.
-INSERT IGNORE INTO users (username, display_name, password_hash, email) VALUES ("anonymous", "Anonymous", "", "");
+INSERT IGNORE INTO users (username, display_name, email) VALUES ("anonymous", "Anonymous", "example@example.com");
 
 -- Create a table to store the Amazon S3 URLs of all uploaded media.
 CREATE TABLE media(media_id INT AUTO_INCREMENT PRIMARY KEY,

@@ -56,13 +56,13 @@
                         <label for="username">Username</label><input name="username" type="text" v-model="username" v-on:keyup.enter="$refs.display_name_field.focus()">
                     </div>
                     <div>
-                        <label for="display_name">Display name</label><input name="username" type="text" v-model="display_name" ref="display_name_field" v-on:keyup.enter="$refs.password_field.focus()">
+                        <label for="display_name">Display name</label><input name="display_name" type="text" v-model="display_name" ref="display_name_field" v-on:keyup.enter="$refs.password_field.focus()">
                     </div>
                     <div>
-                        <label for="password">Password</label><input name="password" type="password" v-model="password" ref="password_field" v-on:keyup.enter="$refs.password_retyped_field.focus()">
+                        <label for="password">Password</label><input name="password" type="password" v-model="password" ref="password_field" v-on:keyup.enter="$refs.password_retyped_field.focus()" @input="checkPasswordsMatch">
                     </div>
                     <div>
-                        <label for="password_retyped">Retype password</label><input name="password_retyped" type="password" v-model="password_retyped" ref="password_retyped_field" v-on:keyup.enter="$refs.email_field.focus()">
+                        <label for="password_retyped">Retype password</label><input name="password_retyped" type="password" v-model="password_retyped" ref="password_retyped_field" v-on:keyup.enter="$refs.email_field.focus()" @input="checkPasswordsMatch">
                     </div>
                     <div>
                         <label for="email" >Email</label><input name="email" type="email" v-model="email" ref="email_field" v-on:keyup.enter="signupButtonClicked">
@@ -70,7 +70,7 @@
                     <p id="error_message_p" :class="{ hidden: error_message.length == 0 }">
                         {{ error_message }}
                     </p>
-                    <button @click="signupButtonClicked">
+                    <button id="signup_button" @click="signupButtonClicked" v-bind:class="{disabled: signupButtonDisabled}">
                         Sign Up
                     </button>
                     <p>Already have an account? <a href="/login.html">Log in!</a></p>
