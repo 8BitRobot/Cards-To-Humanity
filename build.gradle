@@ -38,4 +38,12 @@ jar {
     }
 }
 
+// Make failed tests more verbose.
+test {
+	testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
+}
+
 task stage(dependsOn: ['assemble'])
