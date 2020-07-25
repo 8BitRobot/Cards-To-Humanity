@@ -399,6 +399,9 @@ public class DatabaseStorage {
                 return results.getInt("like_id");
             }
         }
+        catch (java.sql.SQLIntegrityConstraintViolationException exception) {
+            // Ignore duplicate likes.
+        }
         catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -439,5 +442,29 @@ public class DatabaseStorage {
             cleanup(connection, getTagsStatement);
         }
         return new Tag[0];
+    }
+
+    public boolean getCardLiked(int user_id, int card_id) {
+        Connection connection = null;
+        PreparedStatement getCardLikedStatement = null;
+        try {
+            connection = DatabaseConnectionPool.getConnection();
+            getCardLikedStatement = connection.prepareStatement(Queries.getCardLiked);
+
+            getCardLikedStatement.setInt(1, user_id);
+            getCardLikedStatement.setInt(2, card_id);
+
+            ResultSet results = getCardLikedStatement.executeQuery();
+
+            return results.first();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            cleanup(connection, getCardLikedStatement);
+        }
+
+        return false;
     }
 }

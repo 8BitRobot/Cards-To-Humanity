@@ -35,6 +35,8 @@ public class Queries {
 
     public static final String getUserInfo;
 
+    public static final String getCardLiked;
+
     private static ClassLoader classLoader;
 
     private static String readResourceFile(String fileName) {
@@ -58,5 +60,6 @@ public class Queries {
         likeCard = readResourceFile("sql/likecardquery.sql");
         getTags = readResourceFile("sql/gettagsquery.sql");
         getUserInfo = readResourceFile("sql/getuserinfoquery.sql");
+        getCardLiked = readResourceFile("sql/getcardlikedquery.sql");
     }
 }

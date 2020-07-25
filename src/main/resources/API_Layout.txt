@@ -180,3 +180,11 @@ Parameters:
 Response:
     - Responds with HTTP 200 if the card was successfully liked.
     - Responds with HTTP 400 and an error message (card does not exist, etc.) if the like failed.
+
+GET /get_card_liked
+Purpose: Determine whether or not the current user has liked a card.
+Login required: YES
+Parameters:
+    - card_id : The id of the card in question.
+Response:
+    - Responds with JSON like {"result": true} if the card has been liked by the current user or {"result": false} if not.

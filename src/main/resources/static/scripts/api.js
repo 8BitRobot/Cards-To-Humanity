@@ -215,3 +215,22 @@ function apiGetUserInfo() {
             })
     });
 }
+
+function apiGetCardLiked(card_id) {
+    var get_parameters = {};
+    get_parameters.card_id = card_id;
+
+    return new Promise((resolve, reject) => {
+        axios.get("/get_card_liked", {
+            params: get_parameters
+        })
+            .then(function(response) {
+                var decoded = apiDecodeJsonResponse(response.data);
+                resolve(decoded["result"]);
+            })
+            .catch(function(error) {
+                console.log("Get card liked endpoint error.");
+                reject();
+            });
+    });
+}
