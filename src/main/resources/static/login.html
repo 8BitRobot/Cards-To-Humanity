@@ -18,7 +18,7 @@
         <script defer src="https://kit.fontawesome.com/64ed6db49e.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header>
+        <header id="header">
             <a id="logo-link" href="/home.html"><img src="/img/logo.png"></a>
             <i onclick="mobileMenu(this)" id="mobile-dropdown" class="fas fa-chevron-down"></i>
             <div id="nav-links">
@@ -26,7 +26,7 @@
                 <a href="/mission_statement.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
-                <a class="create-card-button sign-up" href="/signup.html">Sign Up</a>
+                <a class="create-card-button sign-up" onclick="logOut()"></a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
             </div>
             <div id="nav-links-mobile">
@@ -34,14 +34,14 @@
                 <a href="/mission_statement.html">Our Mission</a>
                 <a href="/instructions.html">Instructions</a>
                 <a href="PAYPAL_LINK">Donate</a>
-                <a class="create-card-button sign-up" href="/signup.html">Sign Up</a>
+                <a class="create-card-button sign-up" onclick="logOut()"></a>
                 <a class="create-card-button" href="/create_card.html">Submit</a>
             </div>
         </header>
         <script>
             function mobileMenu(el) {
                 el.style.transition = "0.3s";
-                if (document.getElementById("nav-links-mobile").style.display == "none") {
+                if (!document.getElementById("nav-links-mobile").classList.contains("visible")) {
                     document.getElementById("nav-links-mobile").classList.add("visible");
                     el.style.transform = "rotate(180deg)";
                 } else {
@@ -49,7 +49,27 @@
                     el.style.transform = "rotate(0deg)";
                 }
             }
+
+            function logOut() {
+                if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
+                    document.cookie
+                    apiLogoutUser()
+                        .then(() => {
+                            location.reload();
+                        });
+                } else {
+                    window.location.href = "/signup.html";
+                }
+            }
+
             mobileMenu(document.getElementById("mobile-dropdown"));
+            for (let i of document.querySelectorAll(".create-card-button.sign-up")) {
+                if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
+                    i.innerText = "Log Out";
+                } else {
+                    i.innerText = "Sign Up";
+                }
+            }
         </script>
         <div id="vue_div">
             <div id="container">

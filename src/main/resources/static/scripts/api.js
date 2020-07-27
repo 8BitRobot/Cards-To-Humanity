@@ -31,6 +31,7 @@ function apiLoginUser(username_or_email, password) {
 
             axios.post("/login_user", params)
                 .then(function (response) {
+                    document.cookie = "logged_in=true;"
                     resolve("Login successful.");
                 })
                 .catch(function (error) {
@@ -51,6 +52,20 @@ function apiCreateUser(username, display_name, password, email) {
             axios.post("/create_user", params)
                 .then(function(response) {
                     resolve("User created successfully.");
+                })
+                .catch(function(error) {
+                    reject(error.response.data);
+                });
+        }
+    );
+}
+
+function apiLogoutUser() {
+    return new Promise((resolve, reject) => {
+            axios.post("/logout_user", new URLSearchParams())
+                .then(function(response) {
+                    document.cookie = "logged_in=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+                    resolve("User logged out successfully.");
                 })
                 .catch(function(error) {
                     reject(error.response.data);

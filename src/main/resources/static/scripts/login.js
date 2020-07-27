@@ -12,7 +12,7 @@ const app = new Vue(
 
                 apiLoginUser(this.username_or_email, this.password)
                     .then(function() {
-                        console.log("Success.");
+                        document.cookie = "logged_in=true";
                         window.location.href = "/home.html";
                     })
                     .catch(function() {

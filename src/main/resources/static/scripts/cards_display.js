@@ -43,7 +43,13 @@ Vue.component("cards-display", {
                 });
         }
     },
-    // This function runs on initialization.
+    // This function runs when the 
+    created: function() {
+        EventBus.$on("card-liked", (id) => {
+            this.cards[this.cards.findIndex(el => el.card_id === id)].likes++;
+        });
+    },
+    // This function runs when the DOM is rendered.
     mounted: function() {
         var self = this;
         self.fetchCards();
@@ -77,9 +83,9 @@ Vue.component("card-modal", {
     methods: {
         like: function (id) {
             apiLikeCard(id).then((resolved) => {
-                console.log("Done!");
                 this.card_liked = true;
             })
+            EventBus.$emit("card-liked", id);
         }
     },
     template: `
