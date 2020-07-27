@@ -58,7 +58,7 @@ Vue.component("cards-display", {
                     </p>
                 </div>
                 <img v-bind:src="card.media_url" v-bind:alt="card.caption" class="card-image">
-                <a class="view-button" @click="$emit('show-modal', [card.media_url, card.caption]);">View</a>
+                <a class="view-button" @click="$emit('show-modal', [card.media_url, card.caption, card.card_id]);">View</a>
             </div>
         </div>
     `
@@ -69,8 +69,18 @@ Vue.component("card-modal", {
         return {}
     },
     props: {
+        modal_card_id: Number,
         modal_img: String,
         modal_card_caption: String,
+        card_liked: Boolean,
+    },
+    methods: {
+        like: function (id) {
+            apiLikeCard(id).then((resolved) => {
+                console.log("Done!");
+                this.card_liked = true;
+            })
+        }
     },
     template: `
         <div id="modal-background">
@@ -80,9 +90,13 @@ Vue.component("card-modal", {
                 </div>
                 <div id="img-container">
                     <img :src="modal_img" :alt="modal_card_caption">
+                    <div>{{ modal_card_caption }}</div>
                 </div>
                 <div id="modal-side-buttons">
-                    <button><i class="fas fa-fw fa-heart"></i></button>
+                    <button @click="like(modal_card_id)"><i class="fas fa-fw fa-heart" :style="{
+                        color: card_liked ? '#EF476F' : 'white',
+                        cursor: card_liked ? 'not-allowed' : 'pointer',
+                    }"></i></button>
                     <button><i class="fas fa-fw fa-comment"></i></button>
                     <button><i class="fas fa-fw fa-share"></i></button>
                     <a :href="modal_img" download><i class="fas fa-fw fa-download"></i></a>

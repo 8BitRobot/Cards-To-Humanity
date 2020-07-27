@@ -15,6 +15,16 @@ header img {
     margin-left: 3.75vw;
 }
 
+/* #logo-link {
+    position: relative;
+    z-index: 2002;
+} */
+
+/* #mobile-dropdown {
+    position: relative;
+    z-index: 2002;
+} */
+
 #nav-links {
     float: right;
     line-height: 69px;
@@ -43,14 +53,24 @@ header img {
     margin-left: 30px;
 }
 
-#nav-links a:hover, #nav-links #create-card-button:hover {
+#nav-links .create-card-button.sign-up {
+    background-color: #05D69E;
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+#nav-links-mobile .create-card-button.sign-up {
+    background-color: #05D69E;
+}
+
+#nav-links a:hover, #nav-links a.sign-up:hover {
     background-color: #0057A3;
     color: white;
 }
 
 #nav-links-mobile {
-    background-color: white;
     display: none;
+    background-color: white;
     margin-top: -4px;
     padding-bottom: 4px;
     font-size: 22px;
@@ -88,7 +108,14 @@ header img {
     }
 
     #nav-links-mobile {
-        display: none;
+        display: block;
+        transform: translateY(-120%);
+        transition: transform 0.3s;
+    }
+
+    #nav-links-mobile.visible {
+        /* display: block; */
+        transform: translateY(0%);
     }
 
     #mobile-dropdown {
