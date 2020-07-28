@@ -82,10 +82,14 @@ Vue.component("card-modal", {
     },
     methods: {
         like: function (id) {
-            apiLikeCard(id).then((resolved) => {
-                this.card_liked = true;
-            })
-            EventBus.$emit("card-liked", id);
+            if (!this.card_liked) {
+                apiLikeCard(id).then((resolved) => {
+                    this.card_liked = true;
+                    EventBus.$emit("card-liked", id);
+                }).catch((rejected) => {
+                    console.error(rejected);
+                })
+            }
         }
     },
     template: `

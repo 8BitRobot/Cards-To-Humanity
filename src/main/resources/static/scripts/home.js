@@ -20,7 +20,6 @@ const app = new Vue(
                 this.modal_card_id = img[2];
                 apiGetCardLiked(this.modal_card_id)
                     .then((resolved) => {
-                        console.log(resolved);
                         this.modal_card_liked = resolved;
                     })
                     .catch((rejected) => {
