@@ -15,6 +15,7 @@ SELECT
     cards.card_id AS card_id,
     cards.user_id AS user_id,
     media.media_url AS media_url,
+    cards.creation_time AS creation_time,
     title,
     caption,
     (
@@ -38,5 +39,5 @@ FROM cards
         ON cards.card_id = found_cards_ids.card_id
     INNER JOIN media
         ON cards.media_id = media.media_id
-    ORDER BY likes DESC
+    ORDER BY creation_time DESC
     LIMIT ? -- Specifies how many of the most-liked cards to retrieve. Parameter #4.

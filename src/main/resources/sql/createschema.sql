@@ -25,6 +25,7 @@ CREATE TABLE users(user_id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifying 
                    password_hash BINARY(64),                     -- The hash (PBKDF2WithHmacSHA512) of the password used to log this user in.
                    password_salt BINARY(64),                     -- The salt (64 random bytes) used for the password hash.
                    email VARCHAR(100) NOT NULL,                  -- The user's email address.
+                   creation_time BIGINT,                         -- Unix timestamp (in seconds) for when this user was created.
                    UNIQUE INDEX unique_username_index(username), -- Usernames cannot be shared (since they are used to log in).
                    UNIQUE INDEX unique_email_index(email),       -- Emails cannot be shared.
                    UNIQUE INDEX unique_username_or_email_index(username, email) -- Combinations of usernames and emails cannot be shared.
@@ -36,7 +37,8 @@ INSERT IGNORE INTO users (username, display_name, email) VALUES ("anonymous", "A
 
 -- Create a table to store the Amazon S3 URLs of all uploaded media.
 CREATE TABLE media(media_id INT AUTO_INCREMENT PRIMARY KEY,
-                   media_url TEXT
+                   media_url TEXT,
+                   creation_time BIGINT                         -- Unix timestamp (in seconds) for when this media was created.
 );
 
 -- Create a table to store all cards in the system.
@@ -52,12 +54,14 @@ CREATE TABLE cards(card_id INT AUTO_INCREMENT PRIMARY KEY,     -- Identifying ke
                            REFERENCES media(media_id)
                            ON DELETE SET NULL,                 -- If the media attached to this card is deleted, then set the media_id column here to NULL.
                    title TEXT,                                 -- Title of the card.
-                   caption TEXT                                -- Written caption/description for the card.
+                   caption TEXT,                               -- Written caption/description for the card.
+                   creation_time BIGINT                        -- Unix timestamp (in seconds) for when this card was created.
 );
 
 -- Create a table to store all tags for cards (tags are short phrases that are used to group cards, such as "wholesome" or "firefighters").
 CREATE TABLE tags(tag_id INT AUTO_INCREMENT PRIMARY KEY,
                   content VARCHAR(50),
+                  creation_time BIGINT,                       -- Unix timestamp (in seconds) for when this tag was created.
                   UNIQUE INDEX unique_index(content)
 );
 
@@ -88,7 +92,8 @@ CREATE TABLE likes(like_id INT AUTO_INCREMENT PRIMARY KEY,
                        FOREIGN KEY (user_id)
                            REFERENCES users(user_id)
                            ON DELETE SET NULL,
-                    UNIQUE INDEX unique_like_index(card_id, user_id)  -- Users cannot like a post more than once.
+                   creation_time BIGINT,                       -- Unix timestamp (in seconds) for when this like was created.
+                   UNIQUE INDEX unique_like_index(card_id, user_id)  -- Users cannot like a post more than once.
 );
 
 -- Create a table that stores emails to be sent and that have been sent.
@@ -123,4 +128,3 @@ CREATE TABLE email_recipients(email_recipient_id INT AUTO_INCREMENT PRIMARY KEY,
                               recipient_address VARCHAR(254),
                               UNIQUE INDEX unique_email_recipient_index(email_id, recipient_address)
 );
-

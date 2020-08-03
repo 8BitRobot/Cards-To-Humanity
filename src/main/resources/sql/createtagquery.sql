@@ -1,1 +1,1 @@
-INSERT IGNORE INTO tags (content) VALUES (?)
+INSERT IGNORE INTO tags (content, creation_time) VALUES (?, ?)

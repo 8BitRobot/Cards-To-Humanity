@@ -6,16 +6,18 @@ public class Card {
     private String media_url;
     private String title;
     private String caption;
+    private long creation_time;
 
     private int likes;
     private String[] tags;
 
-    public Card(int card_id, int user_id, String media_url, String title, String caption, int likes, String[] tags) {
+    public Card(int card_id, int user_id, String media_url, String title, String caption, int likes, String[] tags, long creation_time) {
         this.card_id = card_id;
         this.user_id = user_id;
         this.media_url = media_url;
         this.title = title;
         this.caption = caption;
+        this.creation_time = creation_time;
 
         this.likes = likes;
         this.tags = tags;
@@ -39,6 +41,10 @@ public class Card {
 
     public String getCaption() {
         return caption;
+    }
+
+    public long getCreationTime() {
+        return creation_time;
     }
 
     public String toString() {

@@ -53,7 +53,8 @@ Response:
     {
         username: "dogsarekool",
         display_name: "Dogs Are Cool",
-        email: "dogsarekool@gmail.com"
+        email: "dogsarekool@gmail.com",
+        creation_time: 34234234234
     }
     - Responds with HTTP 400 and an error message if something failed.
 
@@ -82,7 +83,8 @@ Response:
         "title": "Thank You to the Firefighters",
         "caption": "Just a card to say how grateful we are for all the hard work you do.",
         "likes": 345,
-        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"],
+        creation_time: 34234234234
     }
     - Responds with HTTP 400 and an error message if the card could not be retrieved.
 
@@ -104,7 +106,8 @@ Response:
                         "title": "Thank You to the Firefighters",
                         "caption": "Just a card to say how grateful we are for all the hard work you do.",
                         "likes": 345,
-                        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"]
+                        "tags": ["firefighter", "firefighters", "english", "wholesome", "grateful"],
+                        creation_time: 34234234234
                     },
                     {
                         "card_id": 2,
@@ -112,7 +115,8 @@ Response:
                         "title": "Gratitude for Our Nurses",
                         "caption": "Just wanna say thanks!",
                         "likes": 45,
-                        "tags": ["thank you", "nurses"]
+                        "tags": ["thank you", "nurses"],
+                        creation_time: 34234234234
                     },
                     {
                         "card_id": 32,
@@ -120,7 +124,8 @@ Response:
                         "title": "Our Heroes",
                         "caption": "You are the real superheroes.",
                         "likes": 245,
-                        "tags": ["Marvel", "superhero"]
+                        "tags": ["Marvel", "superhero"],
+                        creation_time: 34234234234
                     }
         ]
     }
@@ -157,17 +162,20 @@ Response:
             {
                 "tag_id": 1,
                 "content": "Spanish",
-                "cards_tagged": 27
+                "cards_tagged": 27,
+                creation_time: 34234234234
             },
             {
                 "tag_id": 47,
                 "content": "nurses",
-                "cards_tagged": 500
+                "cards_tagged": 500,
+                creation_time: 34234234234
             },
             {
                 "tag_id": 21
                 "content": "firefighters",
-                "cards_tagged": 29
+                "cards_tagged": 29,
+                creation_time: 34234234234
             }
         ]
     }

@@ -71,7 +71,8 @@ public class DatabaseStorage {
                 String username = results.getString("username");
                 String display_name = results.getString("display_name");
                 String email = results.getString("email");
-                return new UserInfo(username, display_name, email);
+                long creation_time = results.getLong("creation_time");
+                return new UserInfo(username, display_name, email, creation_time);
             }
         }
         catch (SQLException exception) {
@@ -83,7 +84,7 @@ public class DatabaseStorage {
         return null;
     }
 
-    public int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email) {
+    public int createUser(String username, String display_name, byte[] password_hash, byte[] password_salt, String email, long creation_time) {
         Connection connection = null;
         PreparedStatement createUserStatement = null;
 
@@ -96,6 +97,7 @@ public class DatabaseStorage {
             createUserStatement.setBytes(3, password_hash);
             createUserStatement.setBytes(4, password_salt);
             createUserStatement.setString(5, email);
+            createUserStatement.setLong(6, creation_time);
             createUserStatement.executeUpdate();
             ResultSet generated_keys = createUserStatement.getGeneratedKeys();
             if (generated_keys.first()) {
@@ -159,7 +161,7 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public int createMedia(String image_url) {
+    public int createMedia(String image_url, long creation_time) {
         Connection connection = null;
         PreparedStatement createMediaStatement = null;
 
@@ -168,6 +170,7 @@ public class DatabaseStorage {
             createMediaStatement = connection.prepareStatement(Queries.createMedia, Statement.RETURN_GENERATED_KEYS);
 
             createMediaStatement.setString(1, image_url);
+            createMediaStatement.setLong(2, creation_time);
             createMediaStatement.executeUpdate();
             ResultSet results = createMediaStatement.getGeneratedKeys();
             if (results.first()) {
@@ -183,7 +186,7 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public int createCard(int user_id, int media_id, String title, String caption) {
+    public int createCard(int user_id, int media_id, String title, String caption, long creation_time) {
         Connection connection = null;
         PreparedStatement createCardStatement = null;
 
@@ -195,6 +198,7 @@ public class DatabaseStorage {
             createCardStatement.setInt(2, media_id);
             createCardStatement.setString(3, title);
             createCardStatement.setString(4, caption);
+            createCardStatement.setLong(5, creation_time);
             createCardStatement.executeUpdate();
             ResultSet results = createCardStatement.getGeneratedKeys();
             if (results.first()) {
@@ -228,6 +232,7 @@ public class DatabaseStorage {
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
+                long creation_time = results.getLong("creation_time");
                 String[] tags;
                 if (results.getString("tags").equals("")) {
                     tags = new String[0];
@@ -235,7 +240,7 @@ public class DatabaseStorage {
                 else {
                     tags = results.getString("tags").split(",");
                 }
-                return new Card(card_id, user_id, media_url, title, caption, likes, tags);
+                return new Card(card_id, user_id, media_url, title, caption, likes, tags, creation_time);
             }
         }
         catch (Exception exception) {
@@ -286,6 +291,7 @@ public class DatabaseStorage {
                 String title = results.getString("title");
                 String caption = results.getString("caption");
                 int likes = results.getInt("likes");
+                long creation_time = results.getLong("creation_time");
                 String[] tags;
                 if (results.getString("tags").equals("")) {
                     tags = new String[0];
@@ -293,7 +299,7 @@ public class DatabaseStorage {
                 else {
                     tags = results.getString("tags").split(",");
                 }
-                cards.add(new Card(card_id, user_id, media_url, title, caption, likes, tags));
+                cards.add(new Card(card_id, user_id, media_url, title, caption, likes, tags, creation_time));
             }
             Card[] cardsArray = new Card[cards.size()];
             cards.toArray(cardsArray);
@@ -331,7 +337,7 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public int createTagOrFindExisting(String content) {
+    public int createTagOrFindExisting(String content, long creation_time) {
         Connection connection = null;
         PreparedStatement createTagStatement = null;
 
@@ -340,6 +346,7 @@ public class DatabaseStorage {
             createTagStatement = connection.prepareStatement(Queries.createTag, Statement.RETURN_GENERATED_KEYS);
 
             createTagStatement.setString(1, content);
+            createTagStatement.setLong(2, creation_time);
             createTagStatement.executeUpdate();
             ResultSet results = createTagStatement.getGeneratedKeys();
             if (results == null) {
@@ -383,7 +390,7 @@ public class DatabaseStorage {
         return -1;
     }
 
-    public int likeCard(int card_id, int user_id) {
+    public int likeCard(int card_id, int user_id, long creation_time) {
         Connection connection = null;
         PreparedStatement likeCardStatement = null;
 
@@ -393,6 +400,7 @@ public class DatabaseStorage {
 
             likeCardStatement.setInt(1, card_id);
             likeCardStatement.setInt(2, user_id);
+            likeCardStatement.setLong(3, creation_time);
             likeCardStatement.executeUpdate();
             ResultSet results = likeCardStatement.getGeneratedKeys();
             if (results.first()) {
@@ -429,7 +437,8 @@ public class DatabaseStorage {
                 int tag_id = results.getInt("tag_id");
                 String content = results.getString("content");
                 int cards_tagged = results.getInt("cards_tagged");
-                tags.add(new Tag(tag_id, content, cards_tagged));
+                long creation_time = results.getLong("creation_time");
+                tags.add(new Tag(tag_id, content, cards_tagged, creation_time));
             }
             Tag[] tags_array = new Tag[tags.size()];
             tags.toArray(tags_array);

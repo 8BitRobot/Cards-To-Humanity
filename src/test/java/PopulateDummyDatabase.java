@@ -39,7 +39,7 @@ public class PopulateDummyDatabase {
             String display_name = faker.name().fullName();
             String email = faker.internet().emailAddress();
             HashedPassword hashedPassword = new HashedPassword(password.toCharArray());
-            int user_id = database.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email);
+            int user_id = database.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email, System.currentTimeMillis() / 1000);
             if (user_id == -1) {
                 System.out.println("Failed to create user.");
                 continue;
@@ -78,7 +78,7 @@ public class PopulateDummyDatabase {
             }
             */
             // Add a media object that links to a placeholder image. The random n= parameter is there just so that the URLs look different in the database.
-            int media_id = database.createMedia("https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg?n=" + random.nextInt(1000));
+            int media_id = database.createMedia("https://cardstohumanity-testing.s3-us-west-1.amazonaws.com/Placeholder+Image.jpeg?n=" + random.nextInt(1000), System.currentTimeMillis() / 1000);
             if (media_id == -1) {
                 System.out.println("Failed to create media in database.");
                 continue;
@@ -87,7 +87,7 @@ public class PopulateDummyDatabase {
             String title = faker.funnyName().name();
             String caption = faker.shakespeare().hamletQuote();
             int user_id = user_ids.get(random.nextInt(user_ids.size()));
-            int card_id = database.createCard(user_id, media_id, title, caption);
+            int card_id = database.createCard(user_id, media_id, title, caption, System.currentTimeMillis() / 1000);
             if (card_id == -1) {
                 System.out.println("Failed to create card in database.");
                 continue;
@@ -103,7 +103,7 @@ public class PopulateDummyDatabase {
                 System.out.println(((i / (float) tags_to_generate) * 100.0) + "%");
             }
             String content = faker.cat().breed();
-            int tag_id = database.createTagOrFindExisting(content);
+            int tag_id = database.createTagOrFindExisting(content, System.currentTimeMillis() / 1000);
             if (tag_id == -1) {
                 System.out.println("Failed to create tag.");
                 continue;
@@ -137,7 +137,7 @@ public class PopulateDummyDatabase {
                 if (likes_done.containsKey(user_id) && likes_done.get(user_id).contains(card_id)) {
                     continue;
                 }
-                database.likeCard(card_id, user_id);
+                database.likeCard(card_id, user_id, System.currentTimeMillis() / 1000);
                 if (likes_done.containsKey(user_id)) {
                     likes_done.get(user_id).add(card_id);
                 }
