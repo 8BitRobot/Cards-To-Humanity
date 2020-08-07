@@ -39,8 +39,7 @@ public class CreateCard implements Handler {
         // Get the form parameters.
         String title = ctx.formParam("title", String.class).get();
         String caption = ctx.formParam("caption", String.class).get();
-        String[] tags = ctx.formParam("tags", String.class).get().split(",");
-
+        String[] tags = ctx.formParam("tags").split(",");
 
         // Get the uploaded media file and validate it, then upload it as a JPEG to Amazon S3.
         UploadedFile uploadedFile = ctx.uploadedFile("media_file");
