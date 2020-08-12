@@ -107,8 +107,8 @@ Vue.component("card-modal", {
                         color: card_liked ? '#EF476F' : 'white',
                         cursor: card_liked ? 'not-allowed' : 'pointer',
                     }"></i></button>
-                    <button><i class="fas fa-fw fa-comment"></i></button>
-                    <button><i class="fas fa-fw fa-share"></i></button>
+                    <!-- <button><i class="fas fa-fw fa-comment"></i></button>
+                    <button><i class="fas fa-fw fa-share"></i></button> -->
                     <a :href="modal_img" download><i class="fas fa-fw fa-download"></i></a>
                 </div>
             </div>
