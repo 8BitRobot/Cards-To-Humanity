@@ -1,1 +1,1 @@
-INSERT INTO media (media_url) VALUES (?)
+INSERT INTO media (media_url, creation_time) VALUES (?, ?)

@@ -13,6 +13,6 @@ public class CreateOrFindTag implements Handler {
     public void handle(Context ctx) {
         String content = ctx.formParam("content", String.class).get();
         ctx.contentType("text/plain");
-        ctx.result(String.valueOf(databaseStorage.createTagOrFindExisting(content)));
+        ctx.result(String.valueOf(databaseStorage.createTagOrFindExisting(content, System.currentTimeMillis() / 1000)));
     }
 }

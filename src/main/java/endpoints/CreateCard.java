@@ -39,8 +39,7 @@ public class CreateCard implements Handler {
         // Get the form parameters.
         String title = ctx.formParam("title", String.class).get();
         String caption = ctx.formParam("caption", String.class).get();
-        String[] tags = ctx.formParam("tags", String.class).get().split(",");
-
+        String[] tags = ctx.formParam("tags").split(",");
 
         // Get the uploaded media file and validate it, then upload it as a JPEG to Amazon S3.
         UploadedFile uploadedFile = ctx.uploadedFile("media_file");
@@ -89,7 +88,7 @@ public class CreateCard implements Handler {
                 return;
             }
             // Save the S3 URL of the image to the database.
-            media_id = databaseStorage.createMedia("https://" + s3BucketName + ".s3-us-west-1.amazonaws.com/" + uuidString);
+            media_id = databaseStorage.createMedia("https://" + s3BucketName + ".s3-us-west-1.amazonaws.com/" + uuidString, System.currentTimeMillis() / 1000);
             if (media_id < 0) {
                 ctx.result("Database failed to create media.");
                 ctx.status(400);
@@ -102,7 +101,8 @@ public class CreateCard implements Handler {
             return;
         }
 
-        int card_id = databaseStorage.createCard(user_id, media_id, title, caption);
+        long creation_time = System.currentTimeMillis() / 1000;
+        int card_id = databaseStorage.createCard(user_id, media_id, title, caption, creation_time);
 
         if (card_id < 0) {
             ctx.result("Card could not be created.");
@@ -110,7 +110,7 @@ public class CreateCard implements Handler {
         }
         else {
             for (String tag : tags) {
-                databaseStorage.tagCard(card_id, databaseStorage.createTagOrFindExisting(tag));
+                databaseStorage.tagCard(card_id, databaseStorage.createTagOrFindExisting(tag, creation_time));
             }
             ctx.result(String.valueOf(card_id));
             ctx.status(200);

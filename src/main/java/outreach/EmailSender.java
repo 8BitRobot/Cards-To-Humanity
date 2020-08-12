@@ -20,7 +20,7 @@ public class EmailSender {
         @Override
         public void run() {
             while (!stopFlag) {
-                System.out.println("SENDING EMAIL...");
+                //System.out.println("SENDING EMAIL...");
                 try {
                     Thread.sleep(60L * 1000L);
                     //PendingEmail[] pendingEmails = databaseStorage.getPendingEmails();

@@ -57,7 +57,7 @@ public class CreateUser implements Handler {
         }
 
         HashedPassword hashedPassword = new HashedPassword(password);
-        databaseStorage.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email);
+        databaseStorage.createUser(username, display_name, hashedPassword.getHash(), hashedPassword.getSalt(), email, System.currentTimeMillis() / 1000);
         hashedPassword.erase();
 
         ctx.status(200);

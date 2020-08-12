@@ -2,6 +2,7 @@ SELECT user_id,
        title,
        media.media_url AS media_url,
        caption,
+       creation_time,
        (
            SELECT COUNT(*) FROM likes
                WHERE

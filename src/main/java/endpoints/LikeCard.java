@@ -23,7 +23,7 @@ public class LikeCard implements Handler {
 
         int user_id = ctx.sessionAttribute("user_id");
 
-        int like_id = databaseStorage.likeCard(card_id, user_id);
+        int like_id = databaseStorage.likeCard(card_id, user_id, System.currentTimeMillis() / 1000);
 
         if (like_id > 0) {
             ctx.status(200);
