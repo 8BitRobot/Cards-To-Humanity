@@ -43,4 +43,5 @@ footer div div button:not(:first-child) {
     color: white;
     border: none;
     text-decoration: underline;
+    line-height: 32px;
 }
