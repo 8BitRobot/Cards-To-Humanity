@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/global.css">
         <link rel="stylesheet" href="/css/create_card.css">
-        <script defer src="https://kit.fontawesome.com/64ed6db49e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/dailycardpopup.css">
+        <script defer src="scripts/fontawesome.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header id="header">
@@ -51,7 +52,6 @@
 
             function logOut() {
                 if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
-                    document.cookie
                     apiLogoutUser()
                         .then(() => {
                             location.reload();
@@ -61,7 +61,6 @@
                 }
             }
 
-            mobileMenu(document.getElementById("mobile-dropdown"));
             for (let i of document.querySelectorAll(".create-card-button.sign-up")) {
                 if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
                     i.innerText = "Log Out";
@@ -105,10 +104,21 @@
                 <img src="/img/create_card/cards_and_circles_right.png">
             </div>
         </div>
-        <footer style="background-color: white; height: 168px; z-index: 1000; position: absolute; bottom: 0;"></footer>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/scripts/api.js"></script>
         <script src="/scripts/create_card.js"></script>
+        
+        <footer id="footer" v-show="showFooter">
+            <div>
+                <p>Would you like to sign up to receive cards daily?</p>
+                <div>
+                    <button @click="redirectToDailyPage">Yes, show me how!</button>
+                    <button @click="closeForNow">Not now</button>
+                    <button @click="neverAskAgain">Don't ask again</button>
+                </div>
+            </div>
+        </footer>
+        <script src="/scripts/dailycard.js"></script>
     </body>
 </html>

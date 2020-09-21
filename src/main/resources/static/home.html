@@ -16,7 +16,8 @@
         <link rel="stylesheet" href="/css/global.css">
         <link rel="stylesheet" href="/css/home.css">
         <link rel="stylesheet" href="/css/cards_display.css">
-        <script src="https://kit.fontawesome.com/64ed6db49e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/dailycardpopup.css">
+        <script defer src="scripts/fontawesome.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header id="header">
@@ -63,7 +64,6 @@
                 }
             }
 
-            mobileMenu(document.getElementById("mobile-dropdown"));
             for (let i of document.querySelectorAll(".create-card-button.sign-up")) {
                 if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
                     i.innerText = "Log Out";
@@ -118,11 +118,22 @@
             </card-modal>
             </div>
         </div>
+        <footer id="footer" v-show="showFooter">
+            <div>
+                <p>Would you like to sign up to receive cards daily?</p>
+                <div>
+                    <button @click="redirectToDailyPage">Yes, show me how!</button>
+                    <button @click="closeForNow">Not now</button>
+                    <button @click="neverAskAgain">Don't ask again</button>
+                </div>
+            </div>
+        </footer>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="/scripts/eventbus.js"></script>
         <script src="/scripts/api.js"></script>
         <script src="/scripts/cards_display.js"></script>
         <script src="/scripts/home.js"></script>
+        <script src="/scripts/dailycard.js"></script>
     </body>
 </html>

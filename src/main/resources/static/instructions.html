@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,600;1,300;1,500;1,600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/global.css">
         <link href="/css/mission_statement.css" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/64ed6db49e.js" crossorigin="anonymous"></script>
+        <script defer src="scripts/fontawesome.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header id="header">
@@ -57,7 +57,6 @@
                 }
             }
 
-            mobileMenu(document.getElementById("mobile-dropdown"));
             for (let i of document.querySelectorAll(".create-card-button.sign-up")) {
                 if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
                     i.innerText = "Log Out";
@@ -74,10 +73,10 @@
         <div id="mission-statement-tm-divider" class="divider"></div>
         <section id="mission-statement-middle" class="mission-statement-text instructions-text instructions-text-bottom">
             <h3>Submitting</h3>
-            <p>Go to our <a href="/create_card.html">Submit</a> link in the header and fill out the fields on the page! If you don't 
+            <p>Go to our <a href="/create_card.html">Submit</a> link in the header and fill out the fields on the page!<p>
             <h3>Guidelines</h3>
             <p class="ol-on-a-budget">1. Please avoid any sort of profanity, vulgarity, or otherwise obscene or inflammatory content in your cards. After all, this site is meant to be a hub for positivity :)</p>
-            <p class="ol-on-a-budget">2. While your cards <em>can</em> target specific populations, we encourage you to also submit cards that everyone can enjoy!</p>
+            <p class="ol-on-a-budget">2. While your cards <em>can</em> target specific groups, we encourage you to also submit cards that everyone can enjoy!</p>
             <p class="ol-on-a-budget">3. Try to avoid mentioning any depressing events, news, or ideas in your card; rather, emphasize the good moments and ideas that would leave your readers happier than before they saw your card.</p>
         </section>
     </body>

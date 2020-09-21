@@ -43,7 +43,6 @@ Vue.component("cards-display", {
                 });
         }
     },
-    // This function runs when the 
     created: function() {
         EventBus.$on("card-liked", (id) => {
             this.cards[this.cards.findIndex(el => el.card_id === id)].likes++;

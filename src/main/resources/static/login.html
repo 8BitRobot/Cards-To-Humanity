@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="/css/global.css">
         <link rel="stylesheet" href="/css/login.css">
         <link rel="stylesheet" href="/css/signup.css">
-        <script defer src="https://kit.fontawesome.com/64ed6db49e.js" crossorigin="anonymous"></script>
+        <script defer src="scripts/fontawesome.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header id="header">
@@ -62,7 +62,6 @@
                 }
             }
 
-            mobileMenu(document.getElementById("mobile-dropdown"));
             for (let i of document.querySelectorAll(".create-card-button.sign-up")) {
                 if (document.cookie.split(';').some((item) => item.trim().startsWith('logged_in='))) {
                     i.innerText = "Log Out";

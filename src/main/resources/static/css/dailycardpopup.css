@@ -1,0 +1,46 @@
+footer {
+    position: fixed;
+    width: 100%;
+    background-color: #333;
+    bottom: 0;
+    color: white;
+    padding: 15px;
+}
+
+footer div p {
+    display: inline-block;
+    font-size: 20px;
+    line-height: 28px;
+    margin-right: 20px;
+}
+
+footer div div {
+    display: inline-block;
+}
+
+footer div div button {
+    margin-right: 10px;
+}
+
+footer div div button:hover {
+    cursor: pointer;
+}
+
+footer div div button:first-child {
+    background-color: #018F69;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+footer div div button:first-child:hover {
+    background-color: #0057A3;
+}
+
+footer div div button:not(:first-child) {
+    background-color: transparent;
+    color: white;
+    border: none;
+    text-decoration: underline;
+}

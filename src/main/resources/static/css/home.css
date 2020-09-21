@@ -219,6 +219,7 @@ input#number-input {
     border: 0;
     font-size: 200%;
     text-align: center;
+    outline: none;
 }
 
 @media only screen and (min-width: 850px) {
