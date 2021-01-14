@@ -249,3 +249,22 @@ function apiGetCardLiked(card_id) {
             });
     });
 }
+
+function apiSignUpEmail(email_address, first_name, last_name) {
+    return new Promise((resolve, reject) => {
+            const params = new URLSearchParams();
+            params.append("email_address", email_address);
+            params.append("first_name", first_name);
+            params.append("last_name", last_name);
+
+            axios.post("/sign_up_email", params)
+                .then(function(response) {
+                    resolve();
+                })
+                .catch(function(error) {
+                    console.log("Sign up email endpoint error.");
+                    reject(error.response.data);
+                })
+        }
+    );
+}

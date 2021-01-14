@@ -1,0 +1,1 @@
+INSERT INTO email_signups (email_address, first_name, last_name, signup_time) VALUES (?, ?, ?, ?);
