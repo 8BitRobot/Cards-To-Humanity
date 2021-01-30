@@ -39,6 +39,7 @@ header img {
     padding-left: 12px;
     padding-right: 12px;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 #nav-links .create-card-button, #nav-links-mobile .create-card-button {
