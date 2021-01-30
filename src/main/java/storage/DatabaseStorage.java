@@ -476,4 +476,34 @@ public class DatabaseStorage {
 
         return false;
     }
+
+    public int signUpEmail(String email_address, String first_name, String last_name, long signup_time) {
+        Connection connection = null;
+        PreparedStatement signUpEmailStatement = null;
+
+        try {
+            connection = DatabaseConnectionPool.getConnection();
+            signUpEmailStatement = connection.prepareStatement(Queries.signUpEmail, Statement.RETURN_GENERATED_KEYS);
+
+            signUpEmailStatement.setString(1, email_address);
+            signUpEmailStatement.setString(2, first_name);
+            signUpEmailStatement.setString(3, last_name);
+            signUpEmailStatement.setLong(4, signup_time);
+            signUpEmailStatement.executeUpdate();
+            ResultSet results = signUpEmailStatement.getGeneratedKeys();
+            if (results.first()) {
+                return results.getInt("email_signup_id");
+            }
+        }
+        catch (java.sql.SQLIntegrityConstraintViolationException exception) {
+            // Ignore duplicate emails.
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            cleanup(connection, signUpEmailStatement);
+        }
+        return -1;
+    }
 }

@@ -196,3 +196,14 @@ Parameters:
     - card_id : The id of the card in question.
 Response:
     - Responds with JSON like {"result": true} if the card has been liked by the current user or {"result": false} if not.
+
+POST /sign_up_email
+Purpose: Register somebody to receive a daily card.
+Login required: NO
+Parameters:
+    - email : The recipient's email.
+    - first_name : The recipient's first name.
+    - last_name : The recipient's last name.
+Response:
+    - Responds with HTTP 200 if the registration completed successfully.
+    - Responds with HTTP 400 and an error message if not.

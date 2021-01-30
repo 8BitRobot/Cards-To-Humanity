@@ -106,6 +106,7 @@ public class Main {
         endpoints.LikeCard like_card_endpoint = new endpoints.LikeCard(databaseStorage);
         endpoints.GetUserInfo get_user_info_endpoint = new endpoints.GetUserInfo(gson, databaseStorage);
         endpoints.GetCardLiked get_card_liked_endpoint = new endpoints.GetCardLiked(gson, databaseStorage);
+        endpoints.SignUpEmail sign_up_email_endpoint = new endpoints.SignUpEmail(databaseStorage);
         app.get("/", home_endpoint);
         app.get("/user_exists", user_exists_endpoint);
         app.post("/login_user", login_user_endpoint);
@@ -120,6 +121,7 @@ public class Main {
         app.post("/like_card", like_card_endpoint);
         app.get("/get_user_info", get_user_info_endpoint);
         app.get("/get_card_liked", get_card_liked_endpoint);
+        app.post("/sign_up_email", sign_up_email_endpoint);
 
         EmailSender emailSender = null;
         String SENDGRID_API_KEY = System.getenv("SENDGRID_API_KEY");

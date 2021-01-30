@@ -128,3 +128,12 @@ CREATE TABLE email_recipients(email_recipient_id INT AUTO_INCREMENT PRIMARY KEY,
                               recipient_address VARCHAR(254),
                               UNIQUE INDEX unique_email_recipient_index(email_id, recipient_address)
 );
+
+-- Create a table that stores a list of people who want to receive emails.
+CREATE TABLE email_signups(email_signup_id INT AUTO_INCREMENT PRIMARY KEY,
+                           email_address   VARCHAR(254),
+                           first_name      VARCHAR(255),
+                           last_name       VARCHAR(255),
+                           signup_time     BIGINT,
+                           UNIQUE INDEX unique_email_address_index(email_address)
+);
